@@ -1,0 +1,42 @@
+header {
+	height: 100px;
+	width: 100%;
+	/* position: relative; */
+	/* top: 0;
+	left: 0; */
+	background-color: black;
+}
+
+#conteneur {
+	display: flex;
+	justify-content: space-around;
+	align-items: center;
+}
+.element
+{
+    margin: auto;
+}
+
+.element:nth-child(2) {
+	flex: 1;
+	justify-content: space-around;
+}
+
+header p
+{
+    font-size: 25px; /* Paragraphes de 14 pixels */
+	color: white;
+}
+
+.fLeft {
+    float: left;
+}
+
+#search {	
+	padding-top: 50px;
+}
+
+.search {	
+	padding-left: 100px;
+}
+
