@@ -9,8 +9,11 @@ import fr.demos.projet.metier.Livre;
 
 public class Donnees {
 
-	List<Article> liste = new ArrayList<>();
+	List<Article> liste;
 	
+	public Donnees() {
+		liste = new ArrayList<>();
+	}
 	
 	public List<Article> remplirCatalogue() {
 		

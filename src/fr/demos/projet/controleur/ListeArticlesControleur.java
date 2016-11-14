@@ -37,7 +37,7 @@ public class ListeArticlesControleur extends HttpServlet {
 			throws ServletException, IOException {
 		if (request.getParameter("consultation") != null 
 				&& request.getParameter("consultation").equals("true")) {
-			Donnees d = (Donnees) request.getSession().getAttribute("donnees");
+			Donnees d = (Donnees) request.getServletContext().getAttribute("donnees");
 			String reference = request.getParameter("ref");
 			System.out.println("ref = " + reference);
 			Article a = d.rechercheArticle(reference);
@@ -49,15 +49,7 @@ public class ListeArticlesControleur extends HttpServlet {
 			rd.forward(request, response);
 		}
 		else {
-		
-			Donnees donnees = new Donnees();
-			List<Article> listeArticles = donnees.remplirCatalogue();
-			Panier panier = new Panier();
-
-			request.getSession().setAttribute("donnees", donnees);
-			request.setAttribute("listeArticles", listeArticles);
-			request.getSession().setAttribute("panier", panier);
-
+			
 			RequestDispatcher rd = request.getRequestDispatcher("/ListeArticlesVue.jsp");
 			rd.forward(request, response);
 		}
@@ -69,20 +61,8 @@ public class ListeArticlesControleur extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		/*
-		 * System.out.println(request.getParameter("reference")); Donnees d =
-		 * (Donnees) request.getSession().getAttribute("donnees"); List<Article>
-		 * liste = (List<Article>) request.getAttribute("listeArticles"); String
-		 * reference = request.getParameter("ref"); System.out.println("ref = "
-		 * + reference); Article a = d.rechercheArticle(reference);
-		 * 
-		 * request.setAttribute("article", a);
-		 * 
-		 * 
-		 * RequestDispatcher rd =
-		 * request.getRequestDispatcher("/ArticleVue.jsp"); rd.forward(request,
-		 * response);
-		 */
+		
+		
 
 	}
 

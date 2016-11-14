@@ -50,11 +50,12 @@ public class PanierControleur extends HttpServlet {
 			throws ServletException, IOException {
 
 		HttpSession session = request.getSession();
-		Donnees d = (Donnees) session.getAttribute("donnees");
-		List<Article> liste = d.remplirCatalogue();
+		Donnees d = (Donnees) request.getServletContext().getAttribute("donnees");
+		//List<Article> liste = d.remplirCatalogue();
 		String action = request.getParameter("ajoutPanier");
 		Panier panier = (Panier) session.getAttribute("panier");
-		
+		String consultation = request.getParameter("consultation");
+				
 		if (action != null && action.equals("Ajouter au panier")) {
 			String qteStr = request.getParameter("qte");
 			String reference = request.getParameter("ref");

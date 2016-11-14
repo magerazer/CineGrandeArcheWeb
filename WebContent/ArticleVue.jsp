@@ -13,23 +13,23 @@
 
 	<c:import url="/header.jsp" />
 
-<table>
-	<!-- <tr>
-	<th></th>
-	</tr> -->
-	
-	<td>
-		${ article.nom } 
-	</td>
-	<td>
-		${ article.prixHT } 
-	</td>
-	<td>
-	
-	</td>
-	
-	
-</table>	
+	<table>
+		<!-- <tr>
+		<th></th>
+		</tr> -->
+		
+		<td>
+			${ article.nom } 
+		</td>
+		<td>
+			${ article.prixHT } 
+		</td>
+		<td>
+		
+		</td>
+		
+		
+	</table>	
 
 	<form action="PanierControleur" method="POST">
 		<p>
@@ -38,7 +38,7 @@
 			<input type="text" name="qte" value="" />
 			<!-- 	<input type="submit" value="Ajouter" name="addItem" /> 
 					 -->
-			<input type="submit" value="Ajouter au panier" name="ajoutPanier" />
+			<input type="submit" value="Ajouter" name="ajoutPanier" />
 
 		</p>
 	</form>
