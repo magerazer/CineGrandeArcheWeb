@@ -1,6 +1,7 @@
 package fr.demos.projet.controleur;
 
 import java.io.IOException;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -13,6 +14,7 @@ import javax.servlet.http.HttpSession;
 
 import fr.demos.projet.donnees.Donnees;
 import fr.demos.projet.metier.Article;
+import fr.demos.projet.metier.LignePanier;
 import fr.demos.projet.metier.Panier;
 import fr.demos.projet.metier.StockException;
 
@@ -47,7 +49,7 @@ public class PanierControleur extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-	/*	HttpSession session = request.getSession();
+		HttpSession session = request.getSession();
 		Donnees d = (Donnees) session.getAttribute("donnees");
 		List<Article> liste = d.remplirCatalogue();
 		String action = request.getParameter("ajoutPanier");
@@ -69,11 +71,13 @@ public class PanierControleur extends HttpServlet {
 			} catch (StockException e) {
 				
 				e.printStackTrace();
-			}
-			
+			}			
 		}
-*/
-		RequestDispatcher rd = request.getRequestDispatcher("/ArticleVue.jsp");
+		System.out.println("" + panier);
+		 Iterator<LignePanier> lignes = panier.iterator();
+		 request.setAttribute("lignes", lignes);
+		 
+		RequestDispatcher rd = request.getRequestDispatcher("/PanierVue.jsp");
 		rd.forward(request, response);
 
 	}

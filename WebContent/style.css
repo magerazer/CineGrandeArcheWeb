@@ -1,10 +1,17 @@
 header {
 	height: 100px;
 	width: 100%;
-	/* position: relative; */
-	/* top: 0;
-	left: 0; */
+	position: relative;
+	top: 0px;
+	left: 0px;  
 	background-color: black;
+	/* display: inline-block;
+	overflow:auto; */
+    /*margin: 0px;
+    margin-top: 0px;
+    margin-right: 0px;
+    margin-bottom: 0px;
+    margin-left: 0px; */
 }
 
 #conteneur {

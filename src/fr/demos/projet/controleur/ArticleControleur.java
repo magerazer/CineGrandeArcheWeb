@@ -33,17 +33,17 @@ public class ArticleControleur extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		Donnees d = (Donnees) request.getSession().getAttribute("donnees");
-		List<Article> liste = (List<Article>) request.getAttribute("listeArticles");
-		String reference = request.getParameter("ref");
-		System.out.println("ref = " + reference);
-		Article a = d.rechercheArticle(reference);
-		
-		request.setAttribute("article", a);
-		
-		
-		RequestDispatcher rd = request.getRequestDispatcher("/ArticleVue.jsp");
-		rd.forward(request, response);
+//		Donnees d = (Donnees) request.getSession().getAttribute("donnees");
+//		List<Article> liste = (List<Article>) request.getAttribute("listeArticles");
+//		String reference = request.getParameter("ref");
+//		System.out.println("ref = " + reference);
+//		Article a = d.rechercheArticle(reference);
+//		
+//		request.setAttribute("article", a);
+//		
+//		
+//		RequestDispatcher rd = request.getRequestDispatcher("/ArticleVue.jsp");
+//		rd.forward(request, response);
 	}
 
 	/**

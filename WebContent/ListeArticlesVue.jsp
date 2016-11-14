@@ -27,9 +27,9 @@
 		<c:forEach var="article" items="${listeArticles}">
 			<tr>
 				<%-- 				<td>${article.getClass()}</td> --%>
-				<td><a href="ArticleControleur?ref=${ article.ref }"><img src="${ article.image }" alt="test1"/></a></td>
+				<td><a href="ListeArticlesControleur?consultation=true&ref=${ article.ref }"><img src="${ article.image }" alt="test1"/></a></td>
 				<td>
-					<a href="ArticleControleur?ref=${ article.ref }">${article.nom}</a>
+					<a href="ListeArticlesControleur?consultation=true&ref=${ article.ref }">${article.nom}</a>
 				</td>
 				<td>${article.auteur}</td>
 				<td>${article.prixHT} €</td>
