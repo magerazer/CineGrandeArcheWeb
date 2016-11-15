@@ -2,9 +2,9 @@ package fr.demos.projet.metier;
 
 public class Dematerialise {
 
-	String format;
-	int taille;
-	String url;
+	private String format;
+	private int taille;
+	private String url;
 	
 	public Dematerialise(String format, String url) {
 		this.format = format;

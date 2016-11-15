@@ -76,6 +76,10 @@ public class Article {
 	public Materialise getMat() {
 		return mat;
 	}
+	
+	public boolean isMat() {
+		return !(mat == null);
+	}
 
 	public double getPrixHT() {
 		return prixHT;

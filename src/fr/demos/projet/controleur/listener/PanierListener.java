@@ -30,7 +30,7 @@ public class PanierListener implements ServletContextListener, HttpSessionListen
      * @see HttpSessionListener#sessionCreated(HttpSessionEvent)
      */
     public void sessionCreated(HttpSessionEvent arg0)  { 
-    	Panier panier = new Panier();    	
+    	Panier panier = new Panier();      	
     	arg0.getSession().setAttribute("panier", panier);
     }
 

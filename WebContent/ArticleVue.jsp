@@ -11,7 +11,7 @@
 </head>
 <body>
 
-	<c:import url="/header.jsp" />
+	<c:import url="/Menu.jsp" />
 
 	<table>
 		<!-- <tr>
@@ -32,13 +32,13 @@
 	</table>	
 
 	<form action="PanierControleur" method="POST">
-		<p>
-			<!-- <label> Qté : </label> <input type="text" value="" name="Qty" />  -->
-			<input type="hidden" name="ref" value="${article.ref}" />
-			<input type="text" name="qte" value="" />
-			<!-- 	<input type="submit" value="Ajouter" name="addItem" /> 
-					 -->
-			<input type="submit" value="Ajouter" name="ajoutPanier" />
+		<p>			
+		<input type="hidden" name="ref" value="${article.ref}" />
+		<input type="hidden" name="consulter" value="true" />
+		<label> Quantité : </label>
+		<input type="text" name="qte" value="" />
+		
+		<input type="submit" value="Ajouter" name="ajouter" />
 
 		</p>
 	</form>

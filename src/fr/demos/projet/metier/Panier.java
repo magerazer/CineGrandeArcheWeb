@@ -24,31 +24,29 @@ public class Panier implements Iterable<LignePanier> {
 		}
 		return prixTotal;
 	}
-	public void ajouter(Article a) {		
-		if (!panier.contains(a)) {
-			panier.add(new LignePanier(a, 1));
-		}		
 
+	public ArrayList<LignePanier> getPanier() {
+		return panier;
 	}
-	
+
 	private void verifStock(Article a, int qte) throws StockException {
 		int stock = 0;
-		if (a.getMat() != null) {
-			stock = a.getMat().getStock();
-		}
+
+		stock = a.getMat().getStock();
+
 		if (qte > stock) {
 			throw new StockException(a, stock, qte);
 		}
 
-	}	
+	}
 
 	public void ajouter(Article a, int qte) throws StockException {
 		if (qte < 0) {
 			throw new IllegalArgumentException("La quantite est negative");
 		}
 		/*
-		 On crée une ligne du panier à partir de l'article car la comparaison de 
-		 2 lignes se fait selon l'article. 2 cas se présentent :
+		 * On crée une ligne du panier à partir de l'article car la comparaison
+		 * de 2 lignes se fait selon l'article. 2 cas se présentent :
 		 */
 		LignePanier l = new LignePanier(a, qte);
 		int index = panier.indexOf(l);
@@ -60,15 +58,16 @@ public class Panier implements Iterable<LignePanier> {
 
 			// gestion de l'erreur sur le stock dans le cas d'une ligne
 			// existante
-
-			verifStock(a, qte);
-
+			if (a.isMat()) {
+				verifStock(a, qte);
+			}
 			ligneExistante.setQuantite(qte);
 		}
 		// 2) cas d'une ligne inexistante
-		else
-		{
-			verifStock(a, qte);
+		else {
+			if (a.isMat()) {
+				verifStock(a, qte);
+			}
 			panier.add(l);
 		}
 
@@ -81,13 +80,19 @@ public class Panier implements Iterable<LignePanier> {
 			panier.remove(index);
 	}
 
-	public void modifierQte(Article argA, int qte) {
+	public void modifierQte(Article argA, int qte) throws StockException, ArticleInconnuException, DematerialiseException {
+		if(!argA.isMat()) {
+			throw new DematerialiseException(argA);
+		}
 		LignePanier l = new LignePanier(argA, qte);
 		int index = panier.indexOf(l);
-		if (index != -1) {
-			LignePanier lp = panier.get(index);
-			lp.setQuantite(qte);
+		if(index==-1) {
+			throw new ArticleInconnuException(argA);
 		}
+		verifStock(argA, qte);
+		LignePanier lp = panier.get(index);
+		lp.setQuantite(qte);
+
 	}
 
 	public void diminuerQuantite(Article argA) {
@@ -127,7 +132,7 @@ public class Panier implements Iterable<LignePanier> {
 
 	@Override
 	public Iterator<LignePanier> iterator() {
-		
+
 		return panier.iterator();
 	}
 

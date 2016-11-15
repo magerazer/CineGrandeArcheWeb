@@ -1,8 +1,8 @@
 package fr.demos.projet.controleur;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -40,6 +40,8 @@ public class PanierControleur extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
+		RequestDispatcher rd = request.getRequestDispatcher("/PanierVue.jsp");
+		rd.forward(request, response);
 	}
 
 	/**
@@ -51,34 +53,62 @@ public class PanierControleur extends HttpServlet {
 
 		HttpSession session = request.getSession();
 		Donnees d = (Donnees) request.getServletContext().getAttribute("donnees");
-		//List<Article> liste = d.remplirCatalogue();
-		String action = request.getParameter("ajoutPanier");
+		// List<Article> liste = d.remplirCatalogue();
+		String ajouter = request.getParameter("ajouter");
 		Panier panier = (Panier) session.getAttribute("panier");
-		String consultation = request.getParameter("consultation");
-				
-		if (action != null && action.equals("Ajouter au panier")) {
+		// permet de se repositionner sur la page à partir de laquelle on a
+		// ajoute l'article
+		String consulter = request.getParameter("consulter");
+		String reference = request.getParameter("ref");
+		String modifier = request.getParameter("modifierPanier");
+		
+		if ((ajouter != null && ajouter.equals("Ajouter")) || (
+				modifier != null)) {
 			String qteStr = request.getParameter("qte");
-			String reference = request.getParameter("ref");
+
 			int qte = 0;
 			try {
 				qte = Integer.parseInt(qteStr);
 			} catch (NumberFormatException ex) {
 				// gestion erreur conversion
 			}
-
+			//System.out.println("panier rempli : " + panier);
 			Article a = d.rechercheArticle(reference);
+			//System.out.println("article rempli : " + a);
 			try {
 				panier.ajouter(a, qte);
 			} catch (StockException e) {
-				
+
 				e.printStackTrace();
-			}			
+			}
 		}
-		System.out.println("" + panier);
-		 Iterator<LignePanier> lignes = panier.iterator();
-		 request.setAttribute("lignes", lignes);
-		 
-		RequestDispatcher rd = request.getRequestDispatcher("/PanierVue.jsp");
+		
+		ArrayList<LignePanier> l = panier.getPanier();
+		session.setAttribute("lignes", l);
+			
+		
+		RequestDispatcher rd = null;
+		if (consulter != null) {
+			if (consulter.equals("false")) {
+
+				rd = request.getRequestDispatcher("/ListeArticlesVue.jsp");
+			} else{// garder l'article sur lequel on etait positionne
+
+				System.out.println("ref = " + reference);
+				Article a = d.rechercheArticle(reference);
+
+				request.setAttribute("article", a);
+				rd = request.getRequestDispatcher("/ArticleVue.jsp");
+			} 
+		} 
+		
+		if(modifier != null) {
+
+			rd = request.getRequestDispatcher("/PanierVue.jsp");
+
+		}
+		
+		
 		rd.forward(request, response);
 
 	}

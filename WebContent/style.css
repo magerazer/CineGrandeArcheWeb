@@ -16,18 +16,18 @@ header {
 
 #conteneur {
 	display: flex;
-	justify-content: space-around;
+	justify-content: center;
 	align-items: center;
 }
 .element
 {
     margin: auto;
 }
-
+/* 
 .element:nth-child(2) {
 	flex: 1;
 	justify-content: space-around;
-}
+} */
 
 header p
 {
