@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import fr.demos.projet.metier.Compte;
+
 /**
  * Servlet implementation class CompteControleur
  */
@@ -28,20 +30,39 @@ public class CompteControleur extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+
+		RequestDispatcher rd = request.getRequestDispatcher("/ListeArticlesVue.jsp");
+		rd.forward(request, response);
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	
-		String action = request.getParameter("action");
-		if (action != null && action.equals("Se connecter")) {
-			RequestDispatcher rd = request.getRequestDispatcher("/ListeArticlesVue.jsp");
-			rd.forward(request, response);
+		
+		String connection = request.getParameter("connection");
+		String deconnection = request.getParameter("deconnection");
+		Compte compte;
+		String mail;
+		String pwd;
+		if (connection != null) {
+			compte = new Compte();
+			mail = request.getParameter("mail");
+			pwd = request.getParameter("pwd");
+			compte.setMail(mail);
+			compte.setPwd(pwd);
+			
+			request.getSession().setAttribute("compte", compte);
+			
+		
+		}
+		if (deconnection != null) {
+			request.getSession().setAttribute("compte", null);
+			
 		}
 	
+		RequestDispatcher rd = request.getRequestDispatcher("/ListeArticlesVue.jsp");
+		rd.forward(request, response);
 	}
 
 }

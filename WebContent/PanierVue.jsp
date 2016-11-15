@@ -15,31 +15,40 @@
 	<p>panier : ${ lignes }</p>
 	<table>
 		<c:forEach var="lignePanier" items="${lignes}">
-			<tr>			
+			<tr>
 				<td>${lignePanier.article.ref}</td>
 				<td>${lignePanier.article.nom}</td>
 				<td>${lignePanier.article.prixHT}</td>
 				<td>${lignePanier.quantite}</td>
 				<td>
 					<form action="PanierControleur" method="POST">
-						<input type="hidden" name="ref" value="${lignePanier.article.ref}" /> 
-						<label> Quantité : </label> 
-						<input type="text" name="qte" value=""  /> 
-						<input type="submit" value="Modifier quantité" name="modifierPanier" />
+						<input type="hidden" name="ref" value="${lignePanier.article.ref}" />
+						<label> QuantitÃ© : </label> <input type="text" name="qte" value="" />
+						<input type="submit" value="Modifier quantitÃ©"
+							name="modifierPanier" />
 					</form>
-						
+
 				</td>
 				<td>
 					<form action="PanierControleur" method="POST">
-						<input type="hidden" name="ref" value="${lignePanier.article.ref}" /> 						
+						<input type="hidden" name="ref" value="${lignePanier.article.ref}" />
 						<input type="submit" value="Delete" name="delete" />
 					</form>
-						
+
 				</td>
 
 			</tr>
 		</c:forEach>
 	</table>
+
+	<div>
+		${ prixTotal } â‚¬
+	</div>
+
+	<form action="CommandeControleur" method="POST">	
+		<input type="submit" value="Commander" name="commander" />
+	</form>
+
 
 </body>
 </html>

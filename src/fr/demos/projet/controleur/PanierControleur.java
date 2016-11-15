@@ -2,7 +2,6 @@ package fr.demos.projet.controleur;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Iterator;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -39,7 +38,10 @@ public class PanierControleur extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-
+				
+		Panier panier = (Panier) request.getSession().getAttribute("panier");
+		int prixTotal = panier.getPrixTotal();
+		request.setAttribute("prixTotal", prixTotal);
 		RequestDispatcher rd = request.getRequestDispatcher("/PanierVue.jsp");
 		rd.forward(request, response);
 	}
@@ -61,6 +63,11 @@ public class PanierControleur extends HttpServlet {
 		String consulter = request.getParameter("consulter");
 		String reference = request.getParameter("ref");
 		String modifier = request.getParameter("modifierPanier");
+		String delete = request.getParameter("delete");
+
+		Article a = d.rechercheArticle(reference);
+		
+		
 		
 		if ((ajouter != null && ajouter.equals("Ajouter")) || (
 				modifier != null)) {
@@ -73,7 +80,7 @@ public class PanierControleur extends HttpServlet {
 				// gestion erreur conversion
 			}
 			//System.out.println("panier rempli : " + panier);
-			Article a = d.rechercheArticle(reference);
+			
 			//System.out.println("article rempli : " + a);
 			try {
 				panier.ajouter(a, qte);
@@ -95,8 +102,7 @@ public class PanierControleur extends HttpServlet {
 			} else{// garder l'article sur lequel on etait positionne
 
 				System.out.println("ref = " + reference);
-				Article a = d.rechercheArticle(reference);
-
+				
 				request.setAttribute("article", a);
 				rd = request.getRequestDispatcher("/ArticleVue.jsp");
 			} 
@@ -108,7 +114,11 @@ public class PanierControleur extends HttpServlet {
 
 		}
 		
-		
+		if(delete != null) {
+			panier.supprimerLigne(a);
+			rd = request.getRequestDispatcher("/PanierVue.jsp");
+
+		}
 		rd.forward(request, response);
 
 	}
