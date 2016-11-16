@@ -2,6 +2,8 @@ package fr.demos.projet.controleur;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -40,8 +42,8 @@ public class PanierControleur extends HttpServlet {
 			throws ServletException, IOException {
 				
 		Panier panier = (Panier) request.getSession().getAttribute("panier");
-		int prixTotal = panier.getPrixTotal();
-		request.setAttribute("prixTotal", prixTotal);
+		//int prixTotal = panier.getPrixTotal();
+		//request.setAttribute("prixTotal", prixTotal);
 		RequestDispatcher rd = request.getRequestDispatcher("/PanierVue.jsp");
 		rd.forward(request, response);
 	}
@@ -67,10 +69,9 @@ public class PanierControleur extends HttpServlet {
 
 		Article a = d.rechercheArticle(reference);
 		
+		Map<Article, String> erreurs = (Map<Article, String>) session.getAttribute("erreurs");
 		
-		
-		if ((ajouter != null && ajouter.equals("Ajouter")) || (
-				modifier != null)) {
+		if (ajouter != null || modifier != null) {
 			String qteStr = request.getParameter("qte");
 
 			int qte = 0;
@@ -84,9 +85,10 @@ public class PanierControleur extends HttpServlet {
 			//System.out.println("article rempli : " + a);
 			try {
 				panier.ajouter(a, qte);
+				
 			} catch (StockException e) {
-
-				e.printStackTrace();
+				erreurs.put(a, e.getMessage());
+				
 			}
 		}
 		

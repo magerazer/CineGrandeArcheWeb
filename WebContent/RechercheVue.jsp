@@ -1,9 +1,8 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
+<%@ page pageEncoding="UTF-8" %>
 
 <form action="ListeArticlesControleur" method="POST">
 	<p>
-		<input type="text" name="ref" value="" placeholder="Référence"/> 
+		<input type="text" name="ref" value="" placeholder="RÃ©fÃ©rence"/> 
 		<input type=""text" name="titre" value="" placeholder="Titre"/> 
 			
 		<input type="submit" value="Rechercher" name="action" />

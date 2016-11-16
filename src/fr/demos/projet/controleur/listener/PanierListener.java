@@ -1,6 +1,8 @@
 package fr.demos.projet.controleur.listener;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
@@ -32,6 +34,17 @@ public class PanierListener implements ServletContextListener, HttpSessionListen
     public void sessionCreated(HttpSessionEvent arg0)  { 
     	Panier panier = new Panier();      	
     	arg0.getSession().setAttribute("panier", panier);
+    	
+
+		/*
+		 * gestion des erreurs avec la HashMap
+		 */
+		 Map<Article, String> erreurs = new HashMap<Article, String>();
+		arg0.getSession().setAttribute("erreurs", erreurs);
+		
+		Map<String, String> erreursConnexion = new HashMap<String, String>();
+		arg0.getSession().setAttribute("erreursConnexion", erreursConnexion);
+		
     }
 
 	/**

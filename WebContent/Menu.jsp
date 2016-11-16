@@ -1,6 +1,5 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
+<%@ page pageEncoding="UTF-8" %>
 
 <header>
 
@@ -14,21 +13,22 @@
 		<div class="element">
 			<form action="CompteControleur" method="POST">
 				<p>
-					<input type="text" name="mail" value="" placeholder="mail" /> <input
-						type="text" name="pwd" value="" placeholder="mot de passe" /> <input
-						type="submit" value="Se connecter" name="connection" />
-
+					<input type="text" name="mail" value="" placeholder="mail" /> 
+					<span class="erreur">${ erreursConnexion['mail'] }</span>
+					<input type="text" name="pwd" value="" placeholder="mot de passe" /> 
+					<span class="erreur">${ erreursConnexion['pwd'] }</span>
+					<input type="submit" value="Se connecter" name="connexion" />
 				</p>
 			</form>
 		</div>
 		</c:if>
 		<c:if test="${ not empty sessionScope.compte }">
 			<div class="element">
-				<span class="connecteMsg">${sessionScope.compte.mail} est connecté</span>
+				<span class="connecteMsg">${sessionScope.compte.mail} est connectÃ©</span>
 				<a href="CompteControleur"> Compte </a>
 				<form action="CompteControleur" method="POST">
 				<p>
-					<input type="submit" value="Se déconnecter" name="deconnection" />
+					<input type="submit" value="Se dÃ©connecter" name="deconnexion" />
 
 				</p>
 			</div>

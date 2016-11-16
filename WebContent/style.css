@@ -1,17 +1,21 @@
 header {
 	height: 100px;
 	width: 100%;
-	position: relative;
-	top: 0px;
-	left: 0px;  
+	position: fixed;  	
 	background-color: black;
-	/* display: inline-block;
-	overflow:auto; */
+	display: block;	
+	top: 0;
+	left: 0;
+	/* overflow:true; */ 
     /*margin: 0px;
     margin-top: 0px;
     margin-right: 0px;
     margin-bottom: 0px;
     margin-left: 0px; */
+}
+
+.headerDiv {
+	display: block;
 }
 
 #conteneur {
@@ -49,5 +53,14 @@ header p
 
 .connecteMsg {
 	color : white;
+}
+
+.erreur {
+    color: #900;
+}
+
+img {
+	max-width: 400px;
+	height: auto;
 }
 
