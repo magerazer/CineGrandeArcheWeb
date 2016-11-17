@@ -1,5 +1,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ page pageEncoding="UTF-8" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 
 <header>
 
@@ -10,7 +11,7 @@
 			</a>
 		</div>
 		<c:if test="${ empty sessionScope.compte }">
-		<div class="element">
+		<div class="elementMenu">
 			<form action="CompteControleur" method="POST">
 				<p>
 					<input type="text" name="mail" value="" placeholder="mail" /> 

@@ -1,18 +1,18 @@
 header {
 	height: 100px;
 	width: 100%;
-	position: fixed;  	
+	position: relative;  	
 	background-color: black;
 	display: block;	
 	top: 0;
 	left: 0;
-	/* overflow:true; */ 
-    /*margin: 0px;
-    margin-top: 0px;
-    margin-right: 0px;
-    margin-bottom: 0px;
-    margin-left: 0px; */
+	
 }
+
+body {
+	background-color: antiquewhite;
+}
+
 
 .headerDiv {
 	display: block;
@@ -23,7 +23,7 @@ header {
 	justify-content: center;
 	align-items: center;
 }
-.element
+.elementMenu
 {
     margin: auto;
 }
@@ -59,21 +59,52 @@ header p
     color: #900;
 }
 
-img {
-/* 	max-width: 400px;
-	height: auto; */
+.img{
+	padding-right: 100px;
+	/* border: 1px solid #000; */
+}
+
+li:nth-child(n+2) {
+ border-top: 1px solid #DDD;
+}
+
+li {
+	
+	backround-color: blue;
+}
+
+ul {
+list-style:none;
+background-color: antiquewhite;
+/* display: flex; */
+
+
+}
+
+.container {
+	padding: 7px;
+	display: flex;
+	justify-content: space-around; 
+}
+
+/* .ajouterADroite:nth-child(3) {
+	align-self: flex-end;
+} */
+
+.elementLi:nth-child(1) {
+	display : flex;
+	justify-content: space-around;
 	
 }
 
-table {
-	border: 1px solid #000;
-	margin: 10px 0;
-	width: 100%:
-	text-align: left:
-	/*border-collapse: collapse:*/
+.imgLi {
+	padding-right: 100px;
 }
 
-table td {
-	padding: 10px;
-	border: 1px solid #000;
+.nomLi {
+	font-size: 24px;
+}
+.recherche {
+	display: flex;
+	justify-content: space-around;
 }
