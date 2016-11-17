@@ -32,7 +32,7 @@
 				<%-- 				<td>${article.getClass()}</td> --%>
 				<td class="img"><a
 					href="ListeArticlesControleur?consultation=true&ref=${ article.ref }">
-					<img src="${ article.image }" alt="test1" /></a></td>
+					<img src="${ article.image }" alt="test1"  width="160" height="160" /></a></td>
 				<td><a
 					href="ListeArticlesControleur?consultation=true&ref=${ article.ref }">${article.nom}</a>
 				</td>

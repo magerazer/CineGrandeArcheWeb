@@ -60,7 +60,20 @@ header p
 }
 
 img {
-	max-width: 400px;
-	height: auto;
+/* 	max-width: 400px;
+	height: auto; */
+	
 }
 
+table {
+	border: 1px solid #000;
+	margin: 10px 0;
+	width: 100%:
+	text-align: left:
+	/*border-collapse: collapse:*/
+}
+
+table td {
+	padding: 10px;
+	border: 1px solid #000;
+}
