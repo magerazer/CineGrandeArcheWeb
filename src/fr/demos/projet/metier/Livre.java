@@ -17,18 +17,21 @@ public class Livre extends Article {
 		super(ref, prixHT, nom, format, url);
 		this.auteur = auteur;
 		this.isbn =isbn;
+		this.type = "Livre";
 	}
 	// livre reel
 	public Livre(String ref, double prixHT, String nom, int stock, String auteur, String isbn) {
 		super(ref, prixHT, nom, stock);
 		this.auteur = auteur;
 		this.isbn = isbn;
+		this.type = "Livre";
 	}
 	// livre reel d'occasion
 	public Livre(String ref, double prixHT, String nom, int stock, Etat etat, String auteur, String isbn) {
 		super(ref, prixHT, nom, stock, etat);
 		this.auteur = auteur;
 		this.isbn = isbn;
+		this.type = "Livre";
 	}
 	
 	

@@ -34,9 +34,9 @@
 				</p>
 			</div>
 		</c:if>
-		<div class="element">
+		<div >
 			<p>
-				<a href="PanierControleur">Panier : </a>
+				<a href="PanierControleur" class="panierStyle" >Panier : ${ panier.quantite }</a>
 			</p>
 		</div>
 

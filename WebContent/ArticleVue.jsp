@@ -12,6 +12,7 @@
 </head>
 <body>
 
+<div class="corps">
 	<c:import url="/Menu.jsp" />
 <section>
 	<div id="conteneur">
@@ -24,10 +25,11 @@
 		<h1>
 			${ article.nom } 
 		</h1>
-		 <c:if test="${ article.getClass().name == 'fr.demos.projet.metier.Livre' }">
-			<div class="infoAvecTitre">
+		 	<div class="infoAvecTitre">
+			<c:if test="${ article.type }">
 			Format : ${ article.format } <br>
 			Auteur : ${ article.auteur } <br>
+			</c:if>
 			</div>
 			<div class="infoAchat">
 			<c:if test="${ not empty article.mat}">			
@@ -40,26 +42,28 @@
 			<p>
 		Prix : ${ article.prixHT } €
 		</p>
-
+<c:if test="${ not empty article.mat }">
 		<form action="PanierControleur" method="POST">
 			<p>
 				 <input type="hidden" name="ref" value="${article.ref}" />
 				  <input type="hidden" name="consulter" value="true" /> 
 				  <!-- <label>
 					Quantité : </label> <input type="text" name="qte" value="" /> --> 
-				Quantité : <input type="number" min="0"/>
+				Quantité : <input type="number" min="0" name="qte" value="${ 1 }"/>
 				<input type="submit" value="Ajouter au panier" name="ajouter" />
 
  				
 			</p>
 		</form>
 			
-					
-		 </c:if>
+		</c:if>			
+		
 		 <div class="infoDetail">
-		Détails sur le produit : <br>
-		isbn : ${ article.isbn } <br>
-		reference : ${ article.ref } <br>
+		 Détails sur le produit : <br>
+		 <c:if test="${ article.type == 'Livre'}">
+		 isbn : ${ article.isbn } <br> 
+		 </c:if>
+		 reference : ${ article.ref } <br>
 		</div>
 	
 		
@@ -76,7 +80,7 @@
 
 </section>
 
-
+</div>
 
 </body>
 </html>

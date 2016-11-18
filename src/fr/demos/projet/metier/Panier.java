@@ -7,7 +7,8 @@ public class Panier implements Iterable<LignePanier> {
 
 	private Compte compte;
 	private ArrayList<LignePanier> panier = new ArrayList<>();;
-
+	
+	
 	public Panier() {
 		compte = new Compte();
 	}
@@ -60,6 +61,7 @@ public class Panier implements Iterable<LignePanier> {
 			// existante
 			if (a.getMat() != null) {
 				verifStock(a, qte);
+				//a.getMat().diminuerStock(qte);
 			}
 			ligneExistante.setQuantite(qte);
 		}
@@ -135,5 +137,15 @@ public class Panier implements Iterable<LignePanier> {
 
 		return panier.iterator();
 	}
+
+	public int getQuantite() {
+		int qte = 0;
+		for (LignePanier lignePanier : panier) {
+			qte += lignePanier.getQuantite() ;
+		}
+		return qte;
+	}
+	
+	
 
 }

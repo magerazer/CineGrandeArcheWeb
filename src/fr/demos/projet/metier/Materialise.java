@@ -11,7 +11,9 @@ public class Materialise {
 		this.stock = stock;
 	}
 	
-	
+//	public void diminuerStock(int qte) {
+//		this.stock -= qte;
+//	}
 
 	@Override
 	public String toString() {

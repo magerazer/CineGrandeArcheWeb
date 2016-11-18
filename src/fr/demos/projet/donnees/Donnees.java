@@ -26,15 +26,15 @@ public class Donnees {
 	
 	public List<Article> remplirCatalogue() {
 		
-		Article livre1 = new Livre("ref1", 25.0, "seigneur des anneaux1", 5, "Tolkien", "matLivre1");
-		Article livre2 = new Livre("ref2", 20.0, "seigneur des anneaux2", 6, Etat.NEUF, "Tolkien", "matOccasLivre1");
-		Article livre3 = new Livre("ref3", 80.0, "seigneur des anneaux3", "kindle", "https://livrevirtuel.fr", "Tolkien","dematLivre1");
+		Article livre1 = new Livre("matLivre1", 25.0, "seigneur des anneaux1", 5, "Tolkien", "matLivre1");
+		Article livre2 = new Livre("matOccasLivre1", 20.0, "seigneur des anneaux2", 6, Etat.NEUF, "Tolkien", "matOccasLivre1");
+		Article livre3 = new Livre("dematLivre1", 80.0, "seigneur des anneaux3", "kindle", "https://livrevirtuel.fr", "Tolkien","dematLivre1");
 		
 		Article dvd1 = new ArticleDivers("dvd1", 10.0, "Le cinma d'almodovar", 3);
 		Article affiche1 = new ArticleDivers("affiche1", 5.0, "anneau", 1);
 		
 		Article pdf1 = new Livre("demat1", 3.0, "seigneurs des anneaux1", "pdf", "https://pdf1.com", "Tolkien", "123");
-		Article kindle1 = new Livre("demat2", 4.0, "Cinéma: Charlot", "kindle", "https://kindle1.com", "Felix", "123");
+		Article kindle1 = new Livre("dematLivre2", 4.0, "Cinéma: Charlot", "kindle", "https://kindle1.com", "Felix", "123");
 		 
 		livre1.setImage("images/ref1.jpg");
 		livre2.setImage("images/ref2.jpg");

@@ -15,6 +15,8 @@ import javax.servlet.http.HttpSession;
 
 import fr.demos.projet.donnees.Donnees;
 import fr.demos.projet.metier.Article;
+import fr.demos.projet.metier.ArticleInconnuException;
+import fr.demos.projet.metier.DematerialiseException;
 import fr.demos.projet.metier.LignePanier;
 import fr.demos.projet.metier.Panier;
 import fr.demos.projet.metier.StockException;
@@ -58,10 +60,11 @@ public class PanierControleur extends HttpServlet {
 		HttpSession session = request.getSession();
 		Donnees d = (Donnees) request.getServletContext().getAttribute("donnees");
 		// List<Article> liste = d.remplirCatalogue();
-		String ajouter = request.getParameter("ajouter");
+	
 		Panier panier = (Panier) session.getAttribute("panier");
 		// permet de se repositionner sur la page à partir de laquelle on a
 		// ajoute l'article
+		String ajouter = request.getParameter("ajouter");
 		String consulter = request.getParameter("consulter");
 		String reference = request.getParameter("ref");
 		String modifier = request.getParameter("modifierPanier");
@@ -84,17 +87,26 @@ public class PanierControleur extends HttpServlet {
 			
 			//System.out.println("article rempli : " + a);
 			try {
-				panier.ajouter(a, qte);
+				if(ajouter != null)
+					panier.ajouter(a, qte);
+				if(modifier != null)
+					panier.modifierQte(a, qte);
 				
 			} catch (StockException e) {
 				erreurs.put(a, e.getMessage());
 				
+			} catch (ArticleInconnuException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (DematerialiseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
 		}
 		
-		ArrayList<LignePanier> l = panier.getPanier();
-		session.setAttribute("lignes", l);
-			
+//		ArrayList<LignePanier> l = panier.getPanier();
+//		session.setAttribute("lignes", l);
+//			
 		
 		RequestDispatcher rd = null;
 		if (consulter != null) {

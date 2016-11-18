@@ -1,7 +1,6 @@
 package fr.demos.projet.controleur;
 
 import java.io.IOException;
-import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -9,6 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import fr.demos.projet.donnees.Donnees;
 import fr.demos.projet.metier.Article;
@@ -37,10 +37,12 @@ public class ListeArticlesControleur extends HttpServlet {
 			throws ServletException, IOException {
 		if (request.getParameter("consultation") != null 
 				&& request.getParameter("consultation").equals("true")) {
+			HttpSession session = request.getSession();
 			Donnees d = (Donnees) request.getServletContext().getAttribute("donnees");
 			String reference = request.getParameter("ref");
 			System.out.println("ref = " + reference);
 			Article a = d.rechercheArticle(reference);
+			Panier p = (Panier) session.getAttribute("panier");
 			
 			request.setAttribute("article", a);
 			

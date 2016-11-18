@@ -9,8 +9,11 @@ public class Article {
 	private String nom;
 	private String description;
 	private String image;
+	protected String type;
 	
-	
+	public String getType() {
+		return type;
+	}
 	public Article(String ref, double prixHT, String nom) {
 		this.ref = ref; 
 		this.prixHT = prixHT;

@@ -10,9 +10,19 @@ header {
 }
 
 body {
-	background-color: antiquewhite;
+	background-color:antiquewhite;
+	/* font-family:' UniversRoman','Trebuchet MS', Arial, sans-serif;
+	background: #adb9c7 url('images/body_bg.jpg') repeat-y scroll center top;
+ */
 }
 
+.corps {
+	background-color:antiquewhite;
+    padding:15px;
+    width: 900px;
+    margin: auto;
+	box-shadow:#464040 0px 0px 8px;
+}
 
 .headerDiv {
 	display: block;
@@ -91,10 +101,18 @@ background-color: antiquewhite;
 	align-self: flex-end;
 } */
 
-.elementLi:nth-child(1) {
+.elementLi1:nth-child(1){
 	display : flex;
 	justify-content: space-around;
 	
+}
+.elementLi2:nth-child(1){
+	display : flex;
+	justify-content: space-between;
+	
+}
+.elementLi1 {
+	max-width:50%;
 }
 
 .imgLi {
@@ -107,4 +125,16 @@ background-color: antiquewhite;
 .recherche {
 	display: flex;
 	justify-content: space-around;
+}
+
+.infoListe {
+	display : flex;
+	flex-direction : column;
+	justify-content : space-around;
+	width: 500px;
+}
+
+.panierStyle {
+	color : white;
+	text-decoration: none;
 }

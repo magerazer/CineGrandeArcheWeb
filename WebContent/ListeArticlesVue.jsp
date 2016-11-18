@@ -10,12 +10,12 @@
 </head>
 <body>
 
-
+<!-- <div class="corps"> -->
 	<jsp:include page="/Menu.jsp" />
 
 
 
-<div class="corps">
+
 
 	<c:import url="/RechercheVue.jsp" />
 
@@ -27,12 +27,13 @@
 		<c:forEach var="article" items="${listeArticles}">
 			<li>
 			<div class="container">
-				<div class="elementLi">
+				<div class="elementLi1">
 				<%-- 				<td>${article.getClass()}</td> --%>
 				<div class="imgLi">
 				<a
 					href="ListeArticlesControleur?consultation=true&ref=${ article.ref }">
 				<img src="${ article.image }" alt="test1"  width="160" /></a>
+				
 				</div>
 				<div class="infoListe">
 				<div class="nomLi">
@@ -43,11 +44,22 @@
 				<%-- <td>${article.auteur}</td> --%>
 				</div>
 				<div>
+				<c:if test="${ article.type == 'Livre' }">
+					Auteur : ${ article.auteur }
+				</c:if>
+				</div>
+				<div>
 				${article.prixHT}€
 				</div>
+				<c:if test="${not empty article.mat }">
+				
+				Stock : ${article.mat.stock } <br>
+				<span class="erreur">${erreurs[article] }</span>
+				</c:if>
+				
 				</div>
 			</div>
-				<div class="elementLi">			
+				<div class="elementLi2">			
 					<form action="PanierControleur" method="POST">
 						<p>
 							<input type="hidden" name="ref" value="${article.ref}" /> 
@@ -62,7 +74,7 @@
 				
 					<%-- <span class="erreur">${erreurs[article] }</span> --%>
 				</div>
-				</li>
+			</li>
 				
 				<br>
 			
@@ -70,7 +82,7 @@
 
 </ul>
 	
-</div>
+<!-- </div> -->
 
 
 </body>
