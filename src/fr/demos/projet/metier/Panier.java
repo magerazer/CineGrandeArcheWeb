@@ -58,14 +58,14 @@ public class Panier implements Iterable<LignePanier> {
 
 			// gestion de l'erreur sur le stock dans le cas d'une ligne
 			// existante
-			if (a.isMat()) {
+			if (a.getMat() != null) {
 				verifStock(a, qte);
 			}
 			ligneExistante.setQuantite(qte);
 		}
 		// 2) cas d'une ligne inexistante
 		else {
-			if (a.isMat()) {
+			if (a.getMat() != null) {
 				verifStock(a, qte);
 			}
 			panier.add(l);
@@ -81,7 +81,7 @@ public class Panier implements Iterable<LignePanier> {
 	}
 
 	public void modifierQte(Article argA, int qte) throws StockException, ArticleInconnuException, DematerialiseException {
-		if(!argA.isMat()) {
+		if(argA.getMat() == null) {
 			throw new DematerialiseException(argA);
 		}
 		LignePanier l = new LignePanier(argA, qte);

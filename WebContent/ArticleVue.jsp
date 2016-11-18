@@ -24,26 +24,51 @@
 		<h1>
 			${ article.nom } 
 		</h1>
-		<c:if test="${ article.getClass().name == 'fr.demos.projet.metier.Livre' }">de ${ article.auteur }</c:if>
-		</div>
-		
-		<aside>
-		<p>
-		${ article.prixHT }
+		 <c:if test="${ article.getClass().name == 'fr.demos.projet.metier.Livre' }">
+			<div class="infoAvecTitre">
+			Format : ${ article.format } <br>
+			Auteur : ${ article.auteur } <br>
+			</div>
+			<div class="infoAchat">
+			<c:if test="${ not empty article.mat}">			
+			Etat : ${ article.mat.etat } <br>
+			Stock : ${ article.mat.stock } <br>
+			Cout livraison : ${ article.mat.coutLivraison } <br>
+			</div>
+			</c:if>
+			
+			<p>
+		Prix : ${ article.prixHT } €
 		</p>
 
 		<form action="PanierControleur" method="POST">
 			<p>
-				<input type="hidden" name="ref" value="${article.ref}" /> <input
-					type="hidden" name="consulter" value="true" /> <label>
-					Quantité : </label> <input type="text" name="qte" value="" /> <input
-					type="submit" value="Ajouter" name="ajouter" />
+				 <input type="hidden" name="ref" value="${article.ref}" />
+				  <input type="hidden" name="consulter" value="true" /> 
+				  <!-- <label>
+					Quantité : </label> <input type="text" name="qte" value="" /> --> 
+				Quantité : <input type="number" min="0"/>
+				<input type="submit" value="Ajouter au panier" name="ajouter" />
 
+ 				
 			</p>
 		</form>
-
-	</aside>
+			
+					
+		 </c:if>
+		 <div class="infoDetail">
+		Détails sur le produit : <br>
+		isbn : ${ article.isbn } <br>
+		reference : ${ article.ref } <br>
+		</div>
+	
 		
+		<p>
+		Description du produit : <br>
+			${ article.description }
+		</p>
+
+		</div>
 		
 
 

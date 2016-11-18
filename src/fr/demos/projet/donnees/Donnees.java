@@ -6,6 +6,7 @@ import java.util.List;
 import fr.demos.projet.metier.Article;
 import fr.demos.projet.metier.ArticleDivers;
 import fr.demos.projet.metier.Compte;
+import fr.demos.projet.metier.Etat;
 import fr.demos.projet.metier.Livre;
 
 public class Donnees {
@@ -25,9 +26,9 @@ public class Donnees {
 	
 	public List<Article> remplirCatalogue() {
 		
-		Article livre1 = new Livre("ref1", 25.0, "seigneur des anneaux1", 5, "Tolkien", "575");
-		Article livre2 = new Livre("ref2", 20.0, "seigneur des anneaux2", 6, "Tolkien", "575");
-		Article livre3 = new Livre("ref3", 80.0, "seigneur des anneaux3", 7, "Tolkien", "575");
+		Article livre1 = new Livre("ref1", 25.0, "seigneur des anneaux1", 5, "Tolkien", "matLivre1");
+		Article livre2 = new Livre("ref2", 20.0, "seigneur des anneaux2", 6, Etat.NEUF, "Tolkien", "matOccasLivre1");
+		Article livre3 = new Livre("ref3", 80.0, "seigneur des anneaux3", "kindle", "https://livrevirtuel.fr", "Tolkien","dematLivre1");
 		
 		Article dvd1 = new ArticleDivers("dvd1", 10.0, "Le cinma d'almodovar", 3);
 		Article affiche1 = new ArticleDivers("affiche1", 5.0, "anneau", 1);
@@ -42,6 +43,18 @@ public class Donnees {
 		dvd1.setImage("images/dvd1.jpg");
 		
 		kindle1.setImage("images/kindle1.jpg");
+		
+		livre1.setDescription("La Terre est peuplée d'innombrables créatures étranges. Les Hobbits, apparentés à l'homme, mais proches également des Elfes et des Nains, vivent en paix au nord-ouest de l'Ancien Monde, dans la Comté. Paix précaire et menacée, cependant, depuis que Bilbon Sacquet a dérobé au monstre Gollum l'anneau de Puissance jadis forgé par Sauron de Mordor. Car cet anneau est doté d'un pouvoir immense et maléfique. Il permet à son détenteur de se rendre invisible et lui confère une autorité sans limite sur les possesseurs des autres anneaux. Bref, il fait de lui le Maître du Monde. C'est pourquoi Sauron s'est juré de reconquérir l'anneau par tous les moyens. Déjà ses Cavaliers Noirs rôdent aux frontières de la Comté…. Ainsi débute la trilogie du Seigneur des anneaux.");
+		livre2.setDescription("La Terre est peuplée d'innombrables créatures étranges. Les Hobbits, apparentés à l'homme, mais proches également des Elfes et des Nains, vivent en paix au nord-ouest de l'Ancien Monde, dans la Comté. Paix précaire et menacée, cependant, depuis que Bilbon Sacquet a dérobé au monstre Gollum l'anneau de Puissance jadis forgé par Sauron de Mordor. Car cet anneau est doté d'un pouvoir immense et maléfique. Il permet à son détenteur de se rendre invisible et lui confère une autorité sans limite sur les possesseurs des autres anneaux. Bref, il fait de lui le Maître du Monde. C'est pourquoi Sauron s'est juré de reconquérir l'anneau par tous les moyens. Déjà ses Cavaliers Noirs rôdent aux frontières de la Comté…. Ainsi débute la trilogie du Seigneur des anneaux.");
+		livre3.setDescription("La Terre est peuplée d'innombrables créatures étranges. Les Hobbits, apparentés à l'homme, mais proches également des Elfes et des Nains, vivent en paix au nord-ouest de l'Ancien Monde, dans la Comté. Paix précaire et menacée, cependant, depuis que Bilbon Sacquet a dérobé au monstre Gollum l'anneau de Puissance jadis forgé par Sauron de Mordor. Car cet anneau est doté d'un pouvoir immense et maléfique. Il permet à son détenteur de se rendre invisible et lui confère une autorité sans limite sur les possesseurs des autres anneaux. Bref, il fait de lui le Maître du Monde. C'est pourquoi Sauron s'est juré de reconquérir l'anneau par tous les moyens. Déjà ses Cavaliers Noirs rôdent aux frontières de la Comté…. Ainsi débute la trilogie du Seigneur des anneaux.");
+		
+		
+		
+		dvd1.setDescription("La Terre est peuplée d'innombrables créatures étranges. Les Hobbits, apparentés à l'homme, mais proches également des Elfes et des Nains, vivent en paix au nord-ouest de l'Ancien Monde, dans la Comté. Paix précaire et menacée, cependant, depuis que Bilbon Sacquet a dérobé au monstre Gollum l'anneau de Puissance jadis forgé par Sauron de Mordor. Car cet anneau est doté d'un pouvoir immense et maléfique. Il permet à son détenteur de se rendre invisible et lui confère une autorité sans limite sur les possesseurs des autres anneaux. Bref, il fait de lui le Maître du Monde. C'est pourquoi Sauron s'est juré de reconquérir l'anneau par tous les moyens. Déjà ses Cavaliers Noirs rôdent aux frontières de la Comté…. Ainsi débute la trilogie du Seigneur des anneaux.");
+		
+		kindle1.setDescription("La Terre est peuplée d'innombrables créatures étranges. Les Hobbits, apparentés à l'homme, mais proches également des Elfes et des Nains, vivent en paix au nord-ouest de l'Ancien Monde, dans la Comté. Paix précaire et menacée, cependant, depuis que Bilbon Sacquet a dérobé au monstre Gollum l'anneau de Puissance jadis forgé par Sauron de Mordor. Car cet anneau est doté d'un pouvoir immense et maléfique. Il permet à son détenteur de se rendre invisible et lui confère une autorité sans limite sur les possesseurs des autres anneaux. Bref, il fait de lui le Maître du Monde. C'est pourquoi Sauron s'est juré de reconquérir l'anneau par tous les moyens. Déjà ses Cavaliers Noirs rôdent aux frontières de la Comté…. Ainsi débute la trilogie du Seigneur des anneaux.");
+		
+		
 		
 		liste.add(livre1);
 		liste.add(livre2);

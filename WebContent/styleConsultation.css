@@ -28,3 +28,7 @@ aside
     color: white;
     font-size: 0.9em;
 }
+
+.infoAchat, .infoDetail {
+ border-top: 1px solid #DDD;
+}

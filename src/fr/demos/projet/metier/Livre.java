@@ -59,6 +59,18 @@ public class Livre extends Article {
 	public LocalDate getDateParution() {
 		return dateParution;
 	}
+	public void setGenre(String genre) {
+		this.genre = genre;
+	}
+	public void setFormat(String format) {
+		this.format = format;
+	}
+	public void setNbPages(int nbPages) {
+		this.nbPages = nbPages;
+	}
+	public void setDateParution(LocalDate dateParution) {
+		this.dateParution = dateParution;
+	}
 	
 	
 	// ============== fin getters et setters ============== //

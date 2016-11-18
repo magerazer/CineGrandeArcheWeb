@@ -9,7 +9,7 @@ public class Article {
 	private String nom;
 	private String description;
 	private String image;
-	private Etat etat;
+	
 	
 	public Article(String ref, double prixHT, String nom) {
 		this.ref = ref; 
@@ -24,14 +24,13 @@ public class Article {
 	// article materialisé
 	public Article(String ref, double prixHT, String nom, int stock) {
 		this(ref, prixHT, nom);		
-		this.mat = new Materialise(stock);
-		this.etat = Etat.NEUF;
+		this.mat = new Materialise(Etat.NEUF, stock);
+		
 	}
 	// d'occasion
 	public Article(String ref, double prixHT, String nom, int stock, Etat etat) {
 		this(ref, prixHT, nom);		
-		this.mat = new Materialise(stock);
-		this.etat = etat;
+		this.mat = new Materialise(etat, stock);
 	}
 	
 		
@@ -62,7 +61,7 @@ public class Article {
 	@Override
 	public String toString() {
 		String str = "";
-		str += "ref=" + ref + ", prixHT=" + prixHT + ", nom=" + nom + ", etat=" + etat + ", description="
+		str += "ref=" + ref + ", prixHT=" + prixHT + ", nom=" + nom + ", description="
 				+ description + ", ";
 		if(mat == null) str += demat.toString();
 		if(demat == null) str += mat.toString();
@@ -77,9 +76,9 @@ public class Article {
 		return mat;
 	}
 	
-	public boolean isMat() {
-		return !(mat == null);
-	}
+//	public boolean isMat() {
+//		return !(mat == null);
+//	}
 
 	public double getPrixHT() {
 		return prixHT;

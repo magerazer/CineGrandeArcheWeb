@@ -4,8 +4,10 @@ public class Materialise {
 
 	private int stock;
 	private double coutLivraison;
+	private Etat etat;
 	
-	public Materialise(int stock) {
+	public Materialise(Etat etat, int stock) {
+		this.etat = etat;
 		this.stock = stock;
 	}
 	
@@ -14,6 +16,18 @@ public class Materialise {
 	@Override
 	public String toString() {
 		return "stock=" + stock + ", coutLivraison=" + coutLivraison;
+	}
+
+
+
+	public Etat getEtat() {
+		return etat;
+	}
+
+
+
+	public void setEtat(Etat etat) {
+		this.etat = etat;
 	}
 
 
