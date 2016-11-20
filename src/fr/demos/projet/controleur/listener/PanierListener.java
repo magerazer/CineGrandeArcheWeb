@@ -32,18 +32,17 @@ public class PanierListener implements ServletContextListener, HttpSessionListen
      * @see HttpSessionListener#sessionCreated(HttpSessionEvent)
      */
     public void sessionCreated(HttpSessionEvent arg0)  { 
+    	Donnees donnees = new Donnees();
+		List<Article> listeArticles = donnees.remplirCatalogue();
+		
+		arg0.getSession().setAttribute("donnees", donnees);
+		arg0.getSession().setAttribute("listeArticles", listeArticles);
+    	
     	Panier panier = new Panier();      	
     	arg0.getSession().setAttribute("panier", panier);
 //    	arg0.getSession().setAttribute("qtePanier", panier.getPanier().size());
     	
-		/*
-		 * gestion des erreurs avec la HashMap
-		 */
-		 Map<Article, String> erreurs = new HashMap<Article, String>();
-		arg0.getSession().setAttribute("erreurs", erreurs);
 		
-		Map<String, String> erreursConnexion = new HashMap<String, String>();
-		arg0.getSession().setAttribute("erreursConnexion", erreursConnexion);
 		
     }
 
@@ -65,11 +64,7 @@ public class PanierListener implements ServletContextListener, HttpSessionListen
      * @see ServletContextListener#contextInitialized(ServletContextEvent)
      */
     public void contextInitialized(ServletContextEvent arg0)  {     	
-    	Donnees donnees = new Donnees();
-		List<Article> listeArticles = donnees.remplirCatalogue();
-		
-		arg0.getServletContext().setAttribute("donnees", donnees);
-		arg0.getServletContext().setAttribute("listeArticles", listeArticles);
+    	
 		
     }
 	

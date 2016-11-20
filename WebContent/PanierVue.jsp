@@ -12,34 +12,29 @@
 <body>
 
 	<c:import url="/Menu.jsp" />
-
+<div class = "contentListe">
+<span class="titrePanier"><h1>Votre panier</h1></span>
 	<%-- <p>panier : ${ lignes }</p> --%>
-<div class="conteneurBoutonCommande">
-	<aside>
-	<div>${ panier.prixTotal } €</div>
 
-	<form action="CommandeControleur" method="POST">
-		<input type="submit" value="Commander" name="commander" />
-	</form>
-	</aside>
-</div>
 
 	<div class="listePanier">
 
 		<ul>
-			<li class="liPanier">
-				<div class="conteneur">
-					<div class="imagePanier"></div>
+		<!-- <div class="tabPanier"> -->
+		<!-- 	<li class="liPanier">
+				
+					<div class="imagePanier"><img src="" width="50px" /></div>
 					<div class="infosPanier"></div>
-					<div>Prix</div>
-					<div>Quantite</div>
-					<div>Total Article</div>
-				</div>
-
-			</li>
+					<div class="prixPanier">Prix</div>
+					<div class="qtePanier">Quantite</div>
+					<div class="prixLignePanier">Total Article</div>
+						
+			</li> -->
+				<!-- </div> -->
 			<c:forEach var="lignePanier" items="${panier.iterator()}">
+				 <div class="tabPanier"> 
 				<li class="liPanier">
-					<div class="conteneur">
+					
 						<div class="imagePanier">
 							<img src="${ lignePanier.article.image }" width="50px" />
 						</div>
@@ -47,39 +42,60 @@
 
 							<h2>${lignePanier.article.nom}</h2>
 
-							<form action="PanierControleur" method="POST">
-								<input type="hidden" name="ref"
-									value="${lignePanier.article.ref}" /> <input type="submit"
-									value="Delete" name="delete" />
-							</form>
+							<p class="prixPanier">Prix :  ${lignePanier.article.prixHT} €</p>
 
-
+							<p class="prixLignePanier">
+						Total article: ${ lignePanier.article.prixHT * lignePanier.quantite } €
+						</p>
 
 						</div>
-						<div>${lignePanier.article.prixHT}</div>
+						<%-- <div class="prixPanier">Prix :  ${lignePanier.article.prixHT} €</div> --%>
 
-						<div>
+						<div class="qtePanier">
 							<form action="PanierControleur" method="POST">
 								<input type="hidden" name="ref"
 									value="${lignePanier.article.ref}" /> <input type="number"
 									min="0" name="qte" value="${ lignePanier.quantite }" /> <input
-									type="submit" value="Modifier quantité" name="modifierPanier" />
+									type="submit" value="Modifier quantité" name="modifierPanier" />									
+									<input type="submit" value="Delete" name="delete" /> <br>
+									<span class="erreur">${erreurs[lignePanier.article] }</span>
 							</form>
 
-
+						<span class="erreur">${erreurs[article] }</span>
 
 
 						</div>
-						<div>
-						${ lignePanier.article.prixHT * lignePanier.quantite }
-						</div>
-					</div>
-
+						<%-- <div>
+						<form action="PanierControleur" method="POST">
+								<input type="hidden" name="ref"
+									value="${lignePanier.article.ref}" /> <input type="submit"
+									value="Delete" name="delete" />
+							</form>
+						</div> --%>
+						
+						
+					
 				</li>
+			</div> 
 			</c:forEach>
 		</ul>
 	</div>
 
+<div class="conteneurBoutonCommande">
+	<div>
+	
+	<em>Sous total ( ${ panier.quantite }) </em>
+	
+	<div>Montant : <span class="prixPanier"> ${ panier.prixTotal } €</span></div>
+
+	<form action="CommandeControleur" method="POST">
+		<input type="submit" value="Commander" name="commander" />
+	</form>
+	</div>
+</div>
+
+
+</div>
 <!-- 
 <div class="column-layout">
   <div>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Velit quia, quam delectus sequi odio fugit pariatur architecto, deleniti exercitationem quae adipisci ipsum ullam officia ea!</div>
@@ -88,12 +104,12 @@
 </div>
  -->
 
-	<div>${ panier.prixTotal } €</div>
+	<%-- <div>${ panier.prixTotal } €</div>
 
 	<form action="CommandeControleur" method="POST">
 		<input type="submit" value="Commander" name="commander" />
 	</form>
-
+ --%>
 
 </body>
 </html>

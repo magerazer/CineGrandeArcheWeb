@@ -83,7 +83,8 @@ public class Panier implements Iterable<LignePanier> {
 	}
 
 	public void modifierQte(Article argA, int qte) throws StockException, ArticleInconnuException, DematerialiseException {
-		if(argA.getMat() == null) {
+		if(argA.getMat() == null && qte > 1) {
+			
 			throw new DematerialiseException(argA);
 		}
 		LignePanier l = new LignePanier(argA, qte);
@@ -91,6 +92,7 @@ public class Panier implements Iterable<LignePanier> {
 		if(index==-1) {
 			throw new ArticleInconnuException(argA);
 		}
+		if(argA.getMat() != null)
 		verifStock(argA, qte);
 		LignePanier lp = panier.get(index);
 		lp.setQuantite(qte);
@@ -146,6 +148,15 @@ public class Panier implements Iterable<LignePanier> {
 		return qte;
 	}
 	
-	
+	public int rechercherQte(Article a) {
+		int qte = 0;
+		LignePanier lp = new LignePanier(a, 0);
+		int index = panier.indexOf(lp);
+		if (index != -1) {
+			LignePanier ligneExistante = panier.get(index);
+			qte = ligneExistante.getQuantite();
+		}
+		return qte;
+	}
 
 }

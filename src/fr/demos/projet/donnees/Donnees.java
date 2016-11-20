@@ -27,7 +27,7 @@ public class Donnees {
 	public List<Article> remplirCatalogue() {
 		
 		Article livre1 = new Livre("matLivre1", 25.0, "seigneur des anneaux1", 5, "Tolkien", "matLivre1");
-		Article livre2 = new Livre("matOccasLivre1", 20.0, "seigneur des anneaux2", 6, Etat.NEUF, "Tolkien", "matOccasLivre1");
+		Article livre2 = new Livre("matOccasLivre1", 20.0, "seigneur anneaux2", 6, Etat.NEUF, "Tolkien", "matOccasLivre1");
 		Article livre3 = new Livre("dematLivre1", 80.0, "seigneur des anneaux3", "kindle", "https://livrevirtuel.fr", "Tolkien","dematLivre1");
 		
 		Article dvd1 = new ArticleDivers("dvd1", 10.0, "Le cinma d'almodovar", 3);

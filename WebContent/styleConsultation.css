@@ -1,16 +1,25 @@
-#conteneur {
+body {
+	 font-family:' UniversRoman','Trebuchet MS', Arial, sans-serif;
+}
+
+/* ------------------------------------ debut mise en forme d'un Article -------------*/
+
+#conteneurArticle {
 	display: flex;
 	justify-content: flex-start;
 	
 	
 }
 
-.image {
+/* img {
+	width : 300px;
+} */
+.imageArticle {
 	padding-top: 50px;
 	padding-right: 100px;	
 }
 
-.infos {
+.infosArticle {
 	display: flex;
 	flex-direction: column;
 	align-self: flex-start;
@@ -22,23 +31,78 @@
  border-top: 1px solid #DDD;
 }
 
-.conteneur {
-	border-bottom: 1px solid #DDD;
-	display: flex;	
-	justify-content : space-around;
-	padding-bottom: 10px;
-	padding-top: 10px;
-}
-
 /* .conteneur > div {
 	display : flex;
 	width : 30%;
 	
 } */
 
-.imagePanier {
+@media only screen and (max-width: 768px)
+{
+	#conteneurArticle {
+	display: flex;
+	flex-direction : column;
+	
 	
 }
+	img {
+		width : 100px;
+	}	
+}
+
+/* --------------------------------- fin mise en forme d'un Article -------------*/
+
+/* ----------------------------------- debut mise en forme du panier ------------------ */
+
+.titrePanier {
+	text-align: center;	
+}
+
+.tabPanier .liPanier{
+	border-bottom: 1px solid #DDD;
+	display: flex;	
+	justify-content : space-around;
+	padding-bottom: 10px;
+	padding-top: 10px;
+	width : 100%;
+}
+
+@media only screen and (max-width: 480px) {
+	.liPanier {
+		flex-direction: column;
+	}
+}
+
+.imagePanier {
+	flex: 1;
+}
+
+.infosPanier {
+	flex:2;
+}
+h2 {
+	display: inline;
+}
+
+.prixPanier {
+	flex:1;
+	color: #b12704!important;
+	
+}
+
+/* .prixPanier:nth-child(1) {
+	color: #b12704!important;
+}
+ */
+.qtePanier {
+	flex:2;
+}
+
+.prixLignePanier {
+	flex:0.5;
+}
+
+/* ----------------------------- fin mise en forme du panier -------------------------- */
 
 .conteneurBoutonCommande {
 	display : flex;

@@ -49,7 +49,8 @@ public class CompteControleur extends HttpServlet {
 			throws ServletException, IOException {
 		Donnees d = (Donnees) request.getServletContext().getAttribute("donnees");
 		HttpSession session = request.getSession();
-		Map<String, String> erreursConnexion = (Map<String, String>) session.getAttribute("erreursConnexion");
+		Map<String, String> erreursConnexion = new HashMap<String, String>();
+		request.setAttribute("erreursConnexion", erreursConnexion);
 		String connexion = request.getParameter("connexion");
 		String deconnexion = request.getParameter("deconnexion");
 		Compte compte = null;

@@ -58,7 +58,7 @@ public class PanierControleur extends HttpServlet {
 			throws ServletException, IOException {
 
 		HttpSession session = request.getSession();
-		Donnees d = (Donnees) request.getServletContext().getAttribute("donnees");
+		Donnees d = (Donnees) session.getAttribute("donnees");
 		// List<Article> liste = d.remplirCatalogue();
 	
 		Panier panier = (Panier) session.getAttribute("panier");
@@ -71,8 +71,12 @@ public class PanierControleur extends HttpServlet {
 		String delete = request.getParameter("delete");
 
 		Article a = d.rechercheArticle(reference);
+		/*
+		 * gestion des erreurs avec la HashMap
+		 */
+		 Map<Article, String> erreurs = new HashMap<Article, String>();
+		request.setAttribute("erreurs", erreurs);
 		
-		Map<Article, String> erreurs = (Map<Article, String>) session.getAttribute("erreurs");
 		
 		if (ajouter != null || modifier != null) {
 			String qteStr = request.getParameter("qte");

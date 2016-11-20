@@ -13,9 +13,7 @@
 <!-- <div class="corps"> -->
 	<jsp:include page="/Menu.jsp" />
 
-
-
-
+<div class = "contentListe">
 
 	<c:import url="/RechercheVue.jsp" />
 
@@ -42,12 +40,15 @@
 				<%-- <c:if test="${ not empty article }">${article.getClass().name}</c:if> --%>
 								
 				<%-- <td>${article.auteur}</td> --%>
-				</div>
-				<div>
+				</div>				
 				<c:if test="${ article.type == 'Livre' }">
-					Auteur : ${ article.auteur }
-				</c:if>
+				<div>				
+					Auteur : ${ article.auteur }				
 				</div>
+				</c:if>
+				<c:if test="${not empty article.mat }">
+				<div>Etat : ${ article.mat.etat }</div>
+				</c:if>
 				<div>
 				${article.prixHT}€
 				</div>
@@ -83,7 +84,7 @@
 </ul>
 	
 <!-- </div> -->
-
+</div>
 
 </body>
 </html>

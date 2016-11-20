@@ -1,118 +1,170 @@
 header {
-	height: 100px;
 	width: 100%;
-	position: relative;  	
+	position: fixed;
 	background-color: black;
-	display: block;	
+	display: block;
 	top: 0;
 	left: 0;
-	
 }
 
 body {
-	background-color:antiquewhite;
-	/* font-family:' UniversRoman','Trebuchet MS', Arial, sans-serif;
-	background: #adb9c7 url('images/body_bg.jpg') repeat-y scroll center top;
+	background-color: antiquewhite;
+	font-family: ' UniversRoman', 'Trebuchet MS', Arial, sans-serif;
+	/*background: #adb9c7 url('images/body_bg.jpg') repeat-y scroll center top;
  */
 }
 
 .corps {
-	background-color:antiquewhite;
-    padding:15px;
-    width: 900px;
-    margin: auto;
-	box-shadow:#464040 0px 0px 8px;
+	background-color: antiquewhite;
+	padding: 15px;
+	width: 900px;
+	margin: auto;
+	box-shadow: #464040 0px 0px 8px;
 }
 
 .headerDiv {
 	display: block;
 }
-
-#conteneur {
+/* ---------------------------------- debut Menu ----------------------------------- */
+#conteneurMenu {
+	height: 100px;
 	display: flex;
-	justify-content: center;
+	justify-content: space-around;
 	align-items: center;
 }
-.elementMenu
-{
-    margin: auto;
+
+.logo img {
+	padding-right: 10px;
+}
+
+.connexionMenu {
+
 }
 /* 
-.element:nth-child(2) {
+.logo:nth-child(2) {
 	flex: 1;
 	justify-content: space-around;
 } */
-
-header p
-{
-    font-size: 25px; /* Paragraphes de 14 pixels */
+/* header p {
+	font-size: 25px; Paragraphes de 14 pixels
 	color: white;
-}
-
+} */
 .fLeft {
-    float: left;
+	float: left;
 }
 
-#search {	
+.panierStyle {
+	color: white;
+	text-decoration: none;
+}
+
+@media only screen and (max-width: 480px) {
+	header {
+	position: relative;
+}	
+	#conteneurMenu {
+		height: 300px;
+		flex-direction: column;
+	}
+	.contentListe {
+		padding-top: 0em;
+	}
+	.container {
+		flex-direction: column;
+	}
+	.elementLi1 {
+		flex-direction: column;
+	}
+	.infoListe {
+		width: 100%;
+	}
+}
+
+@media only screen and (max-width: 790px) and (min-width: 480px) {
+	#conteneurMenu {
+		height: 200px;
+	}
+	.contentListe {
+		padding-top: 15em;
+	}
+}
+
+@media only screen and (min-width: 790px) {
+	.contentListe {
+		padding-top: 6em;
+	}
+}
+
+/* --------------------------------------------- fin Menu ---------------------------------------- */
+
+/* -------------------------------------------- debut Recherche  --------------------------------- */
+#search {
 	padding-top: 50px;
 }
 
-.search {	
+.search {
 	padding-left: 100px;
 }
 
 .connecteMsg {
-	color : white;
+	color: white;
 }
 
+.recherche {
+	display: flex;
+	justify-content: space-around;
+}
+/* -------------------------------------------- fin recherche --------------------------------------- */
+
+/* ---------------------------------debut liste ----------------------------- */
 .erreur {
-    color: #900;
+	color: #900;
 }
 
-.img{
+.img {
 	padding-right: 100px;
 	/* border: 1px solid #000; */
 }
 
 li:nth-child(n+2) {
- border-top: 1px solid #DDD;
+	border-top: 1px solid #DDD;
 }
 
 li {
-	
 	backround-color: blue;
 }
 
 ul {
-list-style:none;
-background-color: antiquewhite;
-/* display: flex; */
-
-
+	list-style: none;
+	background-color: antiquewhite;
+	/* display: flex; */
 }
 
 .container {
 	padding: 7px;
 	display: flex;
-	justify-content: space-around; 
+	/* flex-direction : column; */
+	justify-content: space-around;
+	/* width: 100%; */
 }
 
 /* .ajouterADroite:nth-child(3) {
 	align-self: flex-end;
 } */
-
-.elementLi1:nth-child(1){
-	display : flex;
+.elementLi1:nth-child(1) {
+	display: flex;
 	justify-content: space-around;
-	
 }
-.elementLi2:nth-child(1){
-	display : flex;
+
+.elementLi2:nth-child(1) {
+	display: flex;
 	justify-content: space-between;
-	
 }
+
 .elementLi1 {
-	max-width:50%;
+	max-width: 50%;
+	display: flex;
+	/* 	flex-direction : column; */
 }
 
 .imgLi {
@@ -122,19 +174,24 @@ background-color: antiquewhite;
 .nomLi {
 	font-size: 24px;
 }
-.recherche {
-	display: flex;
-	justify-content: space-around;
-}
 
 .infoListe {
-	display : flex;
-	flex-direction : column;
-	justify-content : space-around;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-around;
 	width: 500px;
 }
 
-.panierStyle {
-	color : white;
-	text-decoration: none;
-}
+/* @media only screen and (max-width: 480px) {
+	.container {
+		flex-direction: column;
+	}
+	.elementLi1 {
+		flex-direction: column;
+	}
+	.infoListe {
+		width: 100%;
+	}
+} */
+
+/* -------------------------------------- fin liste ------------------------- */

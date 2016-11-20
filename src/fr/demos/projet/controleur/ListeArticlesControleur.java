@@ -35,23 +35,32 @@ public class ListeArticlesControleur extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		if (request.getParameter("consultation") != null 
-				&& request.getParameter("consultation").equals("true")) {
+		/*
+		 * Redirige vers la page de la liste des articles ou de la consultation
+		 * d'un article selon que le paramètre consultation soit true ou false
+		 * dans la requête
+		 */
+		if (request.getParameter("consultation") != null && request.getParameter("consultation").equals("true")) {
 			HttpSession session = request.getSession();
-			Donnees d = (Donnees) request.getServletContext().getAttribute("donnees");
+			Donnees d = (Donnees) session.getAttribute("donnees");
 			String reference = request.getParameter("ref");
 			System.out.println("ref = " + reference);
 			Article a = d.rechercheArticle(reference);
 			Panier p = (Panier) session.getAttribute("panier");
-			
+
 			request.setAttribute("article", a);
-			
+			/*
+			 * On veut connaitre la quantite dans le cas d'un article
+			 * dématérialisé. Si elle est supérieure à 1, alors le bouton
+			 * ajouter est bloqué.
+			 * */
+			int quantite = p.rechercherQte(a);
+			request.setAttribute("quantite", quantite);
 			
 			RequestDispatcher rd = request.getRequestDispatcher("/ArticleVue.jsp");
 			rd.forward(request, response);
-		}
-		else {
-			
+		} else {
+
 			RequestDispatcher rd = request.getRequestDispatcher("/ListeArticlesVue.jsp");
 			rd.forward(request, response);
 		}
@@ -63,12 +72,15 @@ public class ListeArticlesControleur extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		/*
+		 * Gestion de la recherche
+		 */
 		String action = request.getParameter("action");
 		if (action != null && action.equals("Rechercher")) {
 			RequestDispatcher rd = request.getRequestDispatcher("/ListeArticlesVue.jsp");
 			rd.forward(request, response);
 		}
-		
+
 	}
 
 }

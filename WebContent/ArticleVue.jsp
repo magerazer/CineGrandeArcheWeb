@@ -12,21 +12,23 @@
 </head>
 <body>
 
-<div class="corps">
-	<c:import url="/Menu.jsp" />
+<!-- <div class="corps"> -->
+	<jsp:include page="/Menu.jsp" />
+	
+	<div class = "contentListe">
 <section>
-	<div id="conteneur">
+	<div id="conteneurArticle">
 
-		<div class="image">
-			<img src="${ article.image }" alt="test1" width="300"/>
+		<div class="imageArticle">
+			<img src="${ article.image }" alt="test1" width="300px" />
 		</div>
 
-		<div class="infos">
+		<div class="infosArticle">
 		<h1>
 			${ article.nom } 
 		</h1>
 		 	<div class="infoAvecTitre">
-			<c:if test="${ article.type }">
+			<c:if test="${ article.type == 'Livre' }">
 			Format : ${ article.format } <br>
 			Auteur : ${ article.auteur } <br>
 			</c:if>
@@ -42,16 +44,14 @@
 			<p>
 		Prix : ${ article.prixHT } €
 		</p>
-<c:if test="${ not empty article.mat }">
+<c:if test="${ (not empty article.mat) or (quantite == 0)}">
 		<form action="PanierControleur" method="POST">
 			<p>
 				 <input type="hidden" name="ref" value="${article.ref}" />
 				  <input type="hidden" name="consulter" value="true" /> 
-				  <!-- <label>
-					Quantité : </label> <input type="text" name="qte" value="" /> --> 
-				Quantité : <input type="number" min="0" name="qte" value="${ 1 }"/>
+				 Quantité : <input type="number" min="0" name="qte" value="${ 1 }"/>
 				<input type="submit" value="Ajouter au panier" name="ajouter" />
-
+				<span class="erreur">${erreurs[article] }</span>
  				
 			</p>
 		</form>
@@ -79,6 +79,8 @@
 	</div>
 
 </section>
+
+<!-- </div> -->
 
 </div>
 
