@@ -42,7 +42,7 @@ public class PanierListener implements ServletContextListener, HttpSessionListen
     	arg0.getSession().setAttribute("panier", panier);
 //    	arg0.getSession().setAttribute("qtePanier", panier.getPanier().size());
     	
-		
+		System.out.println("Session creee");
 		
     }
 

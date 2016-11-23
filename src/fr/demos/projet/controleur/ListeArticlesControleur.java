@@ -1,6 +1,9 @@
 package fr.demos.projet.controleur;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -36,31 +39,51 @@ public class ListeArticlesControleur extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		/*
+		 * Gestion du cas dematerialise : le client ne peut pas commander plus d'un article
+		 * la variable quantiteDemat est presente lors de la premiere consultation puis des autres
+		 * donc elle est en-dehors du if
+		 * */
+		int quantiteDemat = 0;
+		HttpSession session = request.getSession();
+		Donnees d = (Donnees) session.getAttribute("donnees");
+		request.setAttribute("quantiteDemat", quantiteDemat);
+		Panier p = (Panier) session.getAttribute("panier");
+		
+		/*
 		 * Redirige vers la page de la liste des articles ou de la consultation
 		 * d'un article selon que le paramètre consultation soit true ou false
 		 * dans la requête
 		 */
 		if (request.getParameter("consultation") != null && request.getParameter("consultation").equals("true")) {
-			HttpSession session = request.getSession();
-			Donnees d = (Donnees) session.getAttribute("donnees");
+			System.out.println("consult qteDemat = " + quantiteDemat);
+					
+			
+			
 			String reference = request.getParameter("ref");
 			System.out.println("ref = " + reference);
 			Article a = d.rechercheArticle(reference);
-			Panier p = (Panier) session.getAttribute("panier");
-
+		
 			request.setAttribute("article", a);
+			
+			RequestDispatcher rd = request.getRequestDispatcher("/ArticleVue.jsp");
+			rd.forward(request, response);
+		} else {
+			System.out.println("liste qteDemat = " + quantiteDemat);
 			/*
 			 * On veut connaitre la quantite dans le cas d'un article
 			 * dématérialisé. Si elle est supérieure à 1, alors le bouton
 			 * ajouter est bloqué.
 			 * */
-			int quantite = p.rechercherQte(a);
-			request.setAttribute("quantite", quantite);
-			
-			RequestDispatcher rd = request.getRequestDispatcher("/ArticleVue.jsp");
-			rd.forward(request, response);
-		} else {
+			Map<Article, Integer> dematListe = new HashMap<Article, Integer>();
+			for(Article a : (List<Article>)session.getAttribute("listeArticles")) {
+				
+				if(a.getMat() == null) {
 
+					quantiteDemat = p.rechercherQte(a);
+					dematListe.put(a, quantiteDemat);
+				}
+				
+			}
 			RequestDispatcher rd = request.getRequestDispatcher("/ListeArticlesVue.jsp");
 			rd.forward(request, response);
 		}

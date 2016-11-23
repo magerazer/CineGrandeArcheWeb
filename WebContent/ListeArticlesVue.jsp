@@ -61,15 +61,26 @@
 				</div>
 			</div>
 				<div class="elementLi2">			
+					<c:choose>
+						<c:when test="${ (not empty article.mat) or ((quantiteDemat == 0 ))  }">
 					<form action="PanierControleur" method="POST">
 						<p>
 							<input type="hidden" name="ref" value="${article.ref}" /> 
 							<input type="hidden" name="qte" value="1" /> 
 							<input type="hidden" name="consulter" value="false" /> 
 							<input type="submit" value="Ajouter" name="ajouter" />
-
 						</p>
 					</form>
+					</c:when>
+					<c:otherwise>
+						<form action="PanierControleur" method="POST">
+						<p>
+							<input type="submit" value="Ajouter" name="ajouter" disabled="true"/>
+						</p>
+						</form>						
+					</c:otherwise>
+					</c:choose>
+				
 				</div>
 				
 				
