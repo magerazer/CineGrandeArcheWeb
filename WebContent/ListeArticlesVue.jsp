@@ -62,7 +62,7 @@
 			</div>
 				<div class="elementLi2">			
 					<c:choose>
-						<c:when test="${ (not empty article.mat) or ((quantiteDemat == 0 ))  }">
+						<c:when test="${ (not empty article.mat) or ((dematListe[article] == 0 ))  }">
 					<form action="PanierControleur" method="POST">
 						<p>
 							<input type="hidden" name="ref" value="${article.ref}" /> 

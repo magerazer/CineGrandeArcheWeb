@@ -46,9 +46,10 @@ public class ListeArticlesControleur extends HttpServlet {
 		int quantiteDemat = 0;
 		HttpSession session = request.getSession();
 		Donnees d = (Donnees) session.getAttribute("donnees");
-		request.setAttribute("quantiteDemat", quantiteDemat);
+		
 		Panier p = (Panier) session.getAttribute("panier");
 		
+		Map<Article, Integer> dematListe = (Map<Article, Integer>) session.getAttribute("dematListe");
 		/*
 		 * Redirige vers la page de la liste des articles ou de la consultation
 		 * d'un article selon que le paramètre consultation soit true ou false
@@ -65,22 +66,29 @@ public class ListeArticlesControleur extends HttpServlet {
 		
 			request.setAttribute("article", a);
 			
+			if(a.getMat() == null) {
+				
+				quantiteDemat = p.rechercherQte(a);
+				dematListe.put(a, quantiteDemat);
+				System.out.println("liste qteDemat = " + quantiteDemat);
+			}
+			
 			RequestDispatcher rd = request.getRequestDispatcher("/ArticleVue.jsp");
 			rd.forward(request, response);
 		} else {
-			System.out.println("liste qteDemat = " + quantiteDemat);
+			
 			/*
 			 * On veut connaitre la quantite dans le cas d'un article
 			 * dématérialisé. Si elle est supérieure à 1, alors le bouton
 			 * ajouter est bloqué.
 			 * */
-			Map<Article, Integer> dematListe = new HashMap<Article, Integer>();
 			for(Article a : (List<Article>)session.getAttribute("listeArticles")) {
 				
 				if(a.getMat() == null) {
-
+					
 					quantiteDemat = p.rechercherQte(a);
 					dematListe.put(a, quantiteDemat);
+					System.out.println("liste qteDemat = " + quantiteDemat);
 				}
 				
 			}
