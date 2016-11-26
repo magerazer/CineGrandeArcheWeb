@@ -38,27 +38,19 @@ public class ListeArticlesControleur extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		/*
-		 * Gestion du cas dematerialise : le client ne peut pas commander plus d'un article
-		 * la variable quantiteDemat est presente lors de la premiere consultation puis des autres
-		 * donc elle est en-dehors du if
-		 * */
-		int quantiteDemat = 0;
+		
 		HttpSession session = request.getSession();
 		Donnees d = (Donnees) session.getAttribute("donnees");
-		
 		Panier p = (Panier) session.getAttribute("panier");
 		
-		Map<Article, Integer> dematListe = (Map<Article, Integer>) session.getAttribute("dematListe");
+		
 		/*
 		 * Redirige vers la page de la liste des articles ou de la consultation
 		 * d'un article selon que le paramètre consultation soit true ou false
 		 * dans la requête
 		 */
 		if (request.getParameter("consultation") != null && request.getParameter("consultation").equals("true")) {
-			System.out.println("consult qteDemat = " + quantiteDemat);
 					
-			
 			
 			String reference = request.getParameter("ref");
 			System.out.println("ref = " + reference);
@@ -66,32 +58,13 @@ public class ListeArticlesControleur extends HttpServlet {
 		
 			request.setAttribute("article", a);
 			
-			if(a.getMat() == null) {
-				
-				quantiteDemat = p.rechercherQte(a);
-				dematListe.put(a, quantiteDemat);
-				System.out.println("liste qteDemat = " + quantiteDemat);
-			}
+			
 			
 			RequestDispatcher rd = request.getRequestDispatcher("/ArticleVue.jsp");
 			rd.forward(request, response);
 		} else {
 			
-			/*
-			 * On veut connaitre la quantite dans le cas d'un article
-			 * dématérialisé. Si elle est supérieure à 1, alors le bouton
-			 * ajouter est bloqué.
-			 * */
-			for(Article a : (List<Article>)session.getAttribute("listeArticles")) {
-				
-				if(a.getMat() == null) {
-					
-					quantiteDemat = p.rechercherQte(a);
-					dematListe.put(a, quantiteDemat);
-					System.out.println("liste qteDemat = " + quantiteDemat);
-				}
-				
-			}
+			
 			RequestDispatcher rd = request.getRequestDispatcher("/ListeArticlesVue.jsp");
 			rd.forward(request, response);
 		}

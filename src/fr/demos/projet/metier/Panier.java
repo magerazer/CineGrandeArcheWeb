@@ -155,7 +155,7 @@ public class Panier implements Iterable<LignePanier> {
 		if (index != -1) {
 			LignePanier ligneExistante = panier.get(index);
 			qte = ligneExistante.getQuantite();
-			System.out.println("qteDemat fonction : " + qte);
+			
 		}
 		
 		return qte;

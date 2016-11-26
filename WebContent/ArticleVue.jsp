@@ -44,8 +44,7 @@
 			<p>
 		Prix : ${ article.prixHT } €
 		</p>
-<c:choose>
-<c:when test="${ (not empty article.mat) or (dematListe[article] == 0)}">
+<c:if test="${ (not empty article.mat) or (quantite == 0)}">
 		<form action="PanierControleur" method="POST">
 			<p>
 				 <input type="hidden" name="ref" value="${article.ref}" />
@@ -56,17 +55,7 @@
  				
 			</p>
 		</form>
-			
-		</c:when>			
-		<c:otherwise>
-						<form action="PanierControleur" method="POST">
-						<p>
-							<input type="submit" value="Ajouter" name="ajouter" disabled="true"/>
-						</p>
-						</form>						
-					</c:otherwise>
-		</c:choose>
-		
+		</c:if>		
 		 <div class="infoDetail">
 		 Détails sur le produit : <br>
 		 <c:if test="${ article.type == 'Livre'}">

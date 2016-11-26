@@ -107,8 +107,7 @@ public class PanierControleur extends HttpServlet {
 				e.printStackTrace();
 			}
 			
-			Map<Article, Integer> dematListe = (Map<Article, Integer>) session.getAttribute("dematListe");
-			dematListe.put(a, qte);
+			
 		}
 		
 //		ArrayList<LignePanier> l = panier.getPanier();

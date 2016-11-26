@@ -42,8 +42,6 @@ public class PanierListener implements ServletContextListener, HttpSessionListen
     	arg0.getSession().setAttribute("panier", panier);
 //    	arg0.getSession().setAttribute("qtePanier", panier.getPanier().size());
     	
-    	Map<Article, Integer> dematListe = new HashMap<Article, Integer>();
-    	arg0.getSession().setAttribute("dematListe", dematListe);
     	
 		System.out.println("Session creee");
 		
