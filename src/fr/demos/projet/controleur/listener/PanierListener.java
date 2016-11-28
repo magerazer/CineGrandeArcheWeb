@@ -12,6 +12,7 @@ import javax.servlet.http.HttpSessionListener;
 
 import fr.demos.projet.donnees.Donnees;
 import fr.demos.projet.metier.Article;
+import fr.demos.projet.metier.Compte;
 import fr.demos.projet.metier.Panier;
 
 /**
@@ -34,10 +35,12 @@ public class PanierListener implements ServletContextListener, HttpSessionListen
     public void sessionCreated(HttpSessionEvent arg0)  { 
     	Donnees donnees = new Donnees();
 		List<Article> listeArticles = donnees.remplirCatalogue();
+		List<Compte> comptes = donnees.getComptes();
 		
 		arg0.getSession().setAttribute("donnees", donnees);
 		arg0.getSession().setAttribute("listeArticles", listeArticles);
-    	
+    	arg0.getSession().setAttribute("listeComptes", comptes);
+		
     	Panier panier = new Panier();      	
     	arg0.getSession().setAttribute("panier", panier);
 //    	arg0.getSession().setAttribute("qtePanier", panier.getPanier().size());

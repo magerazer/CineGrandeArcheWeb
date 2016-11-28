@@ -93,4 +93,11 @@ public class Donnees {
 		}
 		return false;
 	}
+
+	public List<Compte> getComptes() {
+		return comptes;
+	}
+	
+	
+	
 }

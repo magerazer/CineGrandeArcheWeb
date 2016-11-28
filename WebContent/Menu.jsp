@@ -10,6 +10,7 @@
 				alt="CineMag">
 			</a>
 		</div>
+		<!-- Connection de l'utilisateur -->
 		<c:if test="${ empty sessionScope.compte }">
 			<div class="connexionMenu">
 				<form action="CompteControleur" method="POST">
@@ -30,6 +31,7 @@
 				</form>
 			</div>
 		</c:if>
+		<!-- Si l'utilisateur est déjà connecté -->
 		<c:if test="${ not empty sessionScope.compte }">
 			<div class="msgConnecte">
 				<span class="connecteMsg">${sessionScope.compte.mail} est
@@ -41,6 +43,7 @@
 					</p>
 			</div>
 		</c:if>
+		<!-- accéder au panier -->
 		<div class="panierMenu">
 			<p>
 				<a href="PanierControleur" class="panierStyle">Panier : ${ panier.quantite }</a>

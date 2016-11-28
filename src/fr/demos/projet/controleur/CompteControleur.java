@@ -1,6 +1,7 @@
 package fr.demos.projet.controleur;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -62,7 +63,7 @@ public class CompteControleur extends HttpServlet {
 		String validerCompte = request.getParameter("validerCompte");
 		
 		Compte compte = null;
-		
+		ArrayList<Compte> listeComptes = (ArrayList<Compte>) session.getAttribute("listeComptes");
 		
 		boolean erreur = false;
 		// si l'utilisateur de connecte
@@ -108,21 +109,19 @@ public class CompteControleur extends HttpServlet {
 			session.setAttribute("compte", null);
 
 		}
-		// si l'utilisateur veut créer un compte
-		if (creationCompte != null) {
-			
-			String mail = request.getParameter("mail");
+		
+		/*
+		 * Lorsque l'utilisateur crée son compte
+		 * */
+		if(validerCompte != null) {
+			String email = request.getParameter("email");
 			String pwd = request.getParameter("pwd");
-			
-			if(d.userValide(mail)) {
+			if(d.userValide(email)) {
 				erreursCompte.put("mail", "Le mail existe déjà. Veuillez en choisir un autre.");
 			}
+			Compte c = new Compte(email, pwd);
 			
-			RequestDispatcher rd = request.getRequestDispatcher("/CreerCompte.jsp");
-			rd.forward(request, response);
-		}
-		
-		if(validerCompte != null) {
+			listeComptes.add(c);
 			
 			RequestDispatcher rd = request.getRequestDispatcher("/CreerCompte.jsp");
 			rd.forward(request, response);
