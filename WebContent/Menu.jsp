@@ -14,7 +14,7 @@
 			<div class="connexionMenu">
 				<form action="CompteControleur" method="POST">
 					<p>
-						<input type="text" name="mail" value="" placeholder="mail" /> <span
+						<input type="text" name="mail" value="${ param.mail }" placeholder="mail" /> <span
 							class="erreur">${ erreursConnexion['mail'] }</span><br> <input
 							type="text" name="pwd" value="" placeholder="mot de passe" /> <span
 							class="erreur">${ erreursConnexion['pwd'] }</span> <br> <input
@@ -25,7 +25,7 @@
 			<div class="creeMenu">
 				<form action="CompteControleur" method="POST">
 					<p>
-						<input type="submit" value="Creer un compte" name="creationCompte" />
+						<input type="submit" value="Créer un compte" name="creationCompte" />
 					</p>
 				</form>
 			</div>

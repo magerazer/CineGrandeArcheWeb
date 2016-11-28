@@ -47,20 +47,29 @@ public class CompteControleur extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		Donnees d = (Donnees) request.getServletContext().getAttribute("donnees");
+		
 		HttpSession session = request.getSession();
+		Donnees d = (Donnees) session.getAttribute("donnees");
+		
 		Map<String, String> erreursConnexion = new HashMap<String, String>();
 		request.setAttribute("erreursConnexion", erreursConnexion);
+		Map<String, String> erreursCompte = new HashMap<String, String>();
+		request.setAttribute("erreursCompte", erreursCompte);
+		
 		String connexion = request.getParameter("connexion");
 		String deconnexion = request.getParameter("deconnexion");
+		String creationCompte = request.getParameter("creationCompte");
+		String validerCompte = request.getParameter("validerCompte");
+		
 		Compte compte = null;
-		String mail;
-		String pwd;
+		
+		
 		boolean erreur = false;
+		// si l'utilisateur de connecte
 		if (connexion != null) {
 			
-			mail = request.getParameter("mail");
-			pwd = request.getParameter("pwd");
+			String mail = request.getParameter("mail");
+			String pwd = request.getParameter("pwd");
 
 			/*
 			 * gestion de la saisie du mail et du mot de passe renvoyer une
@@ -71,30 +80,54 @@ public class CompteControleur extends HttpServlet {
 				erreur = true;
 				erreursConnexion.put("mail", "Vous devez saisir un mail");
 			} else {
-				if(d.userValide(mail)) {
-					
+				if(!d.userValide(mail)) {
+					erreursConnexion.put("mail", "mail incorrect");
+				} else {
+					if (pwd == null || pwd.equals("")) {
+						erreur = true;
+						erreursConnexion.put("pwd", "Vous devez saisir un mot de passe");
+					}
+					else {
+						if(!d.pwdValide(mail, pwd)) {
+							erreur = true;
+							erreursConnexion.put("pwd", "Votre mot de passe n'est pas valide");
+						}
+						else {
+							erreur = false;
+							Compte c = new Compte(mail, pwd);
+							session.setAttribute("compte", c);
+						}
+					}
 				}
+					
 			}
-			if (pwd == null || pwd.equals("")) {
-				erreur = true;
-				erreursConnexion.put("pwd", "Vous devez saisir un mot de passe");
-			}
-
 			
-			
-			if (!erreur) {
-				compte = new Compte();
-				compte.setMail(mail);
-				compte.setPwd(pwd);
-			}
-			session.setAttribute("compte", compte);
-
 		}
+		// si l'utilisateur se déconnecte
 		if (deconnexion != null) {
 			session.setAttribute("compte", null);
 
 		}
-
+		// si l'utilisateur veut créer un compte
+		if (creationCompte != null) {
+			
+			String mail = request.getParameter("mail");
+			String pwd = request.getParameter("pwd");
+			
+			if(d.userValide(mail)) {
+				erreursCompte.put("mail", "Le mail existe déjà. Veuillez en choisir un autre.");
+			}
+			
+			RequestDispatcher rd = request.getRequestDispatcher("/CreerCompte.jsp");
+			rd.forward(request, response);
+		}
+		
+		if(validerCompte != null) {
+			
+			RequestDispatcher rd = request.getRequestDispatcher("/CreerCompte.jsp");
+			rd.forward(request, response);
+		}
+		
 		RequestDispatcher rd = request.getRequestDispatcher("/ListeArticlesVue.jsp");
 		rd.forward(request, response);
 	}

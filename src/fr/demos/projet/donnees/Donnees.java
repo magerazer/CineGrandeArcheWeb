@@ -84,5 +84,13 @@ public class Donnees {
 		if(comptes.contains(c)) return true;
 		return false;
 	}
-	
+	public boolean pwdValide(String user, String pwd) {
+		Compte c = new Compte(user, "");
+		int index = comptes.indexOf(c);
+		if(index != -1) {
+			Compte compteTrouve = comptes.get(index);
+			if(compteTrouve.getPwd().equals(pwd)) return true;
+		}
+		return false;
+	}
 }
