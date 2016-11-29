@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import fr.demos.projet.data.ArticleDAOMySQL;
 import fr.demos.projet.donnees.Donnees;
 import fr.demos.projet.metier.Article;
 import fr.demos.projet.metier.Panier;
@@ -43,7 +44,16 @@ public class ListeArticlesControleur extends HttpServlet {
 		Donnees d = (Donnees) session.getAttribute("donnees");
 		Panier p = (Panier) session.getAttribute("panier");
 		
-		
+		ArticleDAOMySQL articleDao = null;
+		try {
+			articleDao = new ArticleDAOMySQL();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();		
+		}
+    	List<Article> listeArticles = articleDao.select("");    	
+    	session.setAttribute("listeArticles", listeArticles);
+    	
 		/*
 		 * Redirige vers la page de la liste des articles ou de la consultation
 		 * d'un article selon que le paramètre consultation soit true ou false
@@ -59,12 +69,12 @@ public class ListeArticlesControleur extends HttpServlet {
 			request.setAttribute("article", a);
 			
 			
-			
+			session.setAttribute("pageCourante", "/ArticleVue.jsp");
 			RequestDispatcher rd = request.getRequestDispatcher("/ArticleVue.jsp");
 			rd.forward(request, response);
 		} else {
 			
-			
+			session.setAttribute("pageCourante", "/ListeArticlesVue.jsp");
 			RequestDispatcher rd = request.getRequestDispatcher("/ListeArticlesVue.jsp");
 			rd.forward(request, response);
 		}

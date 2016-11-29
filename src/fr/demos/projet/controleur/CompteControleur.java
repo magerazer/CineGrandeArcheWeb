@@ -109,7 +109,12 @@ public class CompteControleur extends HttpServlet {
 			session.setAttribute("compte", null);
 
 		}
-		
+		// si l'utilisateur veut créer un compte
+		if (creationCompte != null) {
+								
+			RequestDispatcher rd = request.getRequestDispatcher("/CreerCompte.jsp");
+			rd.forward(request, response);
+		}
 		/*
 		 * Lorsque l'utilisateur crée son compte
 		 * */
