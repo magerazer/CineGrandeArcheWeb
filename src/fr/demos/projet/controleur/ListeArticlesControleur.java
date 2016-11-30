@@ -1,9 +1,7 @@
 package fr.demos.projet.controleur;
 
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -44,13 +42,8 @@ public class ListeArticlesControleur extends HttpServlet {
 		Donnees d = (Donnees) session.getAttribute("donnees");
 		Panier p = (Panier) session.getAttribute("panier");
 		
-		ArticleDAOMySQL articleDao = null;
-		try {
-			articleDao = new ArticleDAOMySQL();
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();		
-		}
+		ArticleDAOMySQL articleDao = (ArticleDAOMySQL) request.getServletContext().getAttribute("articleDao");
+		
     	List<Article> listeArticles = articleDao.select("");    	
     	session.setAttribute("listeArticles", listeArticles);
     	
@@ -64,8 +57,9 @@ public class ListeArticlesControleur extends HttpServlet {
 			
 			String reference = request.getParameter("ref");
 			System.out.println("ref = " + reference);
-			Article a = d.rechercheArticle(reference);
-		
+			
+			Article a = articleDao.selectArticle(reference);
+			System.out.println("article bdd " + a);
 			request.setAttribute("article", a);
 			
 			
@@ -86,11 +80,22 @@ public class ListeArticlesControleur extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		
+		HttpSession session = request.getSession();
 		/*
 		 * Gestion de la recherche
 		 */
 		String action = request.getParameter("action");
 		if (action != null && action.equals("Rechercher")) {
+			
+			ArticleDAOMySQL articleDao = (ArticleDAOMySQL) request.getServletContext().getAttribute("articleDao");
+			
+			String critere = request.getParameter("critere");
+			System.out.println("critere ======== " + critere);
+	    	List<Article> listeArticles = articleDao.select(critere);    	
+	    	session.setAttribute("listeArticles", listeArticles);
+	    	
+			
 			RequestDispatcher rd = request.getRequestDispatcher("/ListeArticlesVue.jsp");
 			rd.forward(request, response);
 		}

@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import fr.demos.projet.data.ArticleDAOMySQL;
 import fr.demos.projet.donnees.Donnees;
 import fr.demos.projet.metier.Article;
 import fr.demos.projet.metier.ArticleInconnuException;
@@ -58,7 +59,7 @@ public class PanierControleur extends HttpServlet {
 			throws ServletException, IOException {
 
 		HttpSession session = request.getSession();
-		Donnees d = (Donnees) session.getAttribute("donnees");
+		ArticleDAOMySQL articleDao = (ArticleDAOMySQL) request.getServletContext().getAttribute("articleDao");
 		// List<Article> liste = d.remplirCatalogue();
 	
 		Panier panier = (Panier) session.getAttribute("panier");
@@ -70,7 +71,7 @@ public class PanierControleur extends HttpServlet {
 		String modifier = request.getParameter("modifierPanier");
 		String delete = request.getParameter("delete");
 
-		Article a = d.rechercheArticle(reference);
+		Article a = articleDao.selectArticle(reference);
 		/*
 		 * gestion des erreurs avec la HashMap
 		 */

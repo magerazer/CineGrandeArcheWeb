@@ -50,14 +50,33 @@ public class ArticleDAOMySQL implements ArticleDAO {
 		List<Article> liste = new ArrayList<>();
 
 		try (Connection cx = dataSource.getConnection()) {
-
-			PreparedStatement pstm = cx
+			PreparedStatement pstm = null;
+			if(critere.equals("")) {
+			pstm = cx
 					.prepareStatement("SELECT referenceLivre, prix, nom, stock, description, image, type, stock "
-							+ ", etat, coutLivraison, format, url, isbn, auteur "
+							+ ", etat, coutLivraison, formatLivre, format, url, isbn, auteur "
 							+ " FROM Livre INNER JOIN Article "
-							+ "ON Article.reference = Livre.referenceLivre");
-
-			// pstm.setString(1, critere);
+							+ "ON Article.reference = Livre.referenceLivre "
+							+ "ORDER BY reference DESC");
+			}
+			else {
+				pstm = cx
+						.prepareStatement("SELECT referenceLivre, prix, nom, stock, description, image, type, stock "
+								+ ", etat, coutLivraison, formatLivre, format, url, isbn, auteur "
+								+ " FROM Livre INNER JOIN Article "
+								+ "ON Article.reference = Livre.referenceLivre "
+								+ "WHERE auteur LIKE ? || nom LIKE ? || description LIKE ? "
+								+ "|| formatLivre LIKE ? || format LIKE ? || url LIKE ? "
+								+ "ORDER BY reference DESC");
+				String crit = "%" + critere + "%";
+				pstm.setString(1, crit);
+				pstm.setString(2, crit);
+				pstm.setString(3, crit);
+				pstm.setString(4, crit);
+				pstm.setString(5, crit);
+				pstm.setString(6, crit);
+			}
+			
 
 			ResultSet rs = pstm.executeQuery();
 						
@@ -81,13 +100,17 @@ public class ArticleDAOMySQL implements ArticleDAO {
 				
 				String isbn = rs.getString("isbn");
 				String auteur = rs.getString("auteur");
+				String formatLivre = rs.getString("formatLivre");
 				
 				Livre liv = null;
 				if(type.equals("livre")) {
+					// dans le cas d'un livre materialisé
 					if(url.equals("")) {
 						liv = new Livre(reference, prix, nom, stock, auteur, isbn);
 						liv.setImage(image);
-					} else {
+					} 
+					// dans le cas d'un livre dematérialisé
+					else {
 						liv = new Livre(reference, prix, nom, format, url, auteur, isbn);
 						liv.setImage(image);
 					}
@@ -102,6 +125,68 @@ public class ArticleDAOMySQL implements ArticleDAO {
 		}
 
 		return liste;
+	}
+	
+	@Override
+	public Article selectArticle(String reference) {
+		// TODO Auto-generated method stub
+		Article a = null;
+
+		try (Connection cx = dataSource.getConnection()) {
+			PreparedStatement pstm = null;
+						
+			pstm = cx
+					.prepareStatement("SELECT referenceLivre, prix, nom, stock, description, image, type, stock "
+							+ ", etat, coutLivraison, format, url, isbn, auteur "
+							+ " FROM Livre INNER JOIN Article "
+							+ "ON Article.reference = Livre.referenceLivre "
+							+ "WHERE referenceLivre = ? ");
+			pstm.setString(1, reference);
+			
+			
+
+			ResultSet rs = pstm.executeQuery();						
+			rs.next();
+			
+			
+				String ref = rs.getString("referenceLivre");
+				double prix = rs.getDouble("prix");
+				String nom = rs.getString("nom");
+				String description = rs.getString("description");
+				String image = rs.getString("image");
+				String type = rs.getString("type");
+				
+				int stock = rs.getInt("stock");
+				Etat etat = null;
+				if(rs.getString("etat") != null) {
+					etat = Etat.valueOf(rs.getString("etat"));
+				}
+				int coutLivraison = rs.getInt("coutLivraison");
+				
+				String format = rs.getString("format");
+				String url = rs.getString("url");
+				
+				String isbn = rs.getString("isbn");
+				String auteur = rs.getString("auteur");
+				
+				
+				if(type.equals("livre")) {
+					if(url.equals("")) {
+						a = new Livre(reference, prix, nom, stock, auteur, isbn);
+						a.setImage(image);
+					} else {
+						a = new Livre(reference, prix, nom, format, url, auteur, isbn);
+						a.setImage(image);
+					}
+				}
+				
+				
+			
+		} catch (Exception ex) {
+			ex.printStackTrace();			
+		}
+
+		return a;
 	}
 
 }

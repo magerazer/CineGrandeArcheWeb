@@ -79,6 +79,10 @@ public class Article {
 		return mat;
 	}
 	
+	public Dematerialise getDemat() {
+		return demat;
+	}
+	
 //	public boolean isMat() {
 //		return !(mat == null);
 //	}

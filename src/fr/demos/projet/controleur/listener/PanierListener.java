@@ -70,7 +70,14 @@ public class PanierListener implements ServletContextListener, HttpSessionListen
      * @see ServletContextListener#contextInitialized(ServletContextEvent)
      */
     public void contextInitialized(ServletContextEvent arg0)  {     	
-    	
+    	ArticleDAOMySQL articleDao = null;
+		try {
+			articleDao = new ArticleDAOMySQL();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();		
+		}
+		arg0.getServletContext().setAttribute("articleDao", articleDao);
 		
     }
 	

@@ -30,7 +30,7 @@ public class Donnees {
 		Article livre2 = new Livre("matOccasLivre1", 20.0, "seigneur anneaux2", 6, Etat.NEUF, "Tolkien", "matOccasLivre1");
 		Article livre3 = new Livre("dematLivre1", 80.0, "seigneur des anneaux3", "kindle", "https://livrevirtuel.fr", "Tolkien","dematLivre1");
 		
-		Article dvd1 = new ArticleDivers("dvd1", 10.0, "Le cinma d'almodovar", 3);
+		Article dvd1 = new ArticleDivers("dvd1", 10.0, "Le cinema d'almodovar", 3);
 		Article affiche1 = new ArticleDivers("affiche1", 5.0, "anneau", 1);
 		
 		Article pdf1 = new Livre("demat1", 3.0, "seigneurs des anneaux1", "pdf", "https://pdf1.com", "Tolkien", "123");

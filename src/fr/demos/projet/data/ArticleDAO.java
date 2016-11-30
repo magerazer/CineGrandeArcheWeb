@@ -10,5 +10,6 @@ public interface ArticleDAO {
 	void update(Article a) throws Exception;
 	void delete(Article a) throws Exception;
 	List<Article> select(String critere);
+	Article selectArticle(String reference);
 	
 }

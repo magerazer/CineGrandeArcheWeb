@@ -57,7 +57,10 @@
 				Stock : ${article.mat.stock } <br>
 				<span class="erreur">${erreurs[article] }</span>
 				</c:if>
-				
+				<c:if test="${not empty article.demat }">				
+				<div>Format : ${article.demat.format }</div>	
+				<div>Url : ${article.demat.url }</div>
+				</c:if>
 				</div>
 			</div>
 				<div class="elementLi2">			
