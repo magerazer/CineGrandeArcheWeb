@@ -38,7 +38,7 @@ body {
 }
 
 .connexionMenu {
-
+	
 }
 /* 
 .logo:nth-child(2) {
@@ -60,8 +60,8 @@ body {
 
 @media only screen and (max-width: 480px) {
 	header {
-	position: relative;
-}	
+		position: relative;
+	}
 	#conteneurMenu {
 		height: 300px;
 		flex-direction: column;
@@ -75,24 +75,9 @@ body {
 	.elementLi1 {
 		flex-direction: column;
 	}
-	.infoListe {
-		width: 100%;
-	}
-}
-
-@media only screen and (max-width: 790px) and (min-width: 480px) {
-	#conteneurMenu {
-		height: 200px;
-	}
-	.contentListe {
-		padding-top: 15em;
-	}
-}
-
-@media only screen and (min-width: 790px) {
-	.contentListe {
-		padding-top: 6em;
-	}
+	/* .infoListe {
+		width: auto;
+	} */
 }
 
 /* --------------------------------------------- fin Menu ---------------------------------------- */
@@ -165,6 +150,7 @@ ul {
 	max-width: 50%;
 	display: flex;
 	/* 	flex-direction : column; */
+	/* flex:2; */
 }
 
 .imgLi {
@@ -180,6 +166,41 @@ ul {
 	flex-direction: column;
 	justify-content: space-around;
 	width: 500px;
+	min-width: 100px;
+	flex: 1;
+}
+
+.elementLi2 {
+	padding-left: 10px;
+	/* flex:1; */
+}
+
+@media only screen and (max-width: 790px) and (min-width: 480px) {
+	#conteneurMenu {
+		height: 200px;
+	}
+	.contentListe {
+		padding-top: 15em;
+	}
+	#conteneurArticle {
+		display: flex;
+		flex-direction: column;
+	}
+	img {
+		width: 100px;
+	}
+	.elementLi2 {
+		padding-left: 10px;
+	}
+	.infoListe {
+		width: auto;
+	}
+}
+
+@media only screen and (min-width: 790px) {
+	.contentListe {
+		padding-top: 6em;
+	}
 }
 
 /* @media only screen and (max-width: 480px) {
