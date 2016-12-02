@@ -3,6 +3,7 @@ package fr.demos.projet.controleur;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.RequestDispatcher;
@@ -13,7 +14,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import fr.demos.projet.data.ArticleDAOMySQL;
+import fr.demos.projet.data.CompteDAOMySQL;
 import fr.demos.projet.donnees.Donnees;
+import fr.demos.projet.metier.Article;
 import fr.demos.projet.metier.Compte;
 
 /**
@@ -62,16 +66,24 @@ public class CompteControleur extends HttpServlet {
 		String creationCompte = request.getParameter("creationCompte");
 		String validerCompte = request.getParameter("validerCompte");
 		
-		Compte compte = null;
+		String mail = request.getParameter("mail");
+		String pwd = request.getParameter("pwd");
+		
+		//Compte compte = null;
 		ArrayList<Compte> listeComptes = (ArrayList<Compte>) session.getAttribute("listeComptes");
 		
 		boolean erreur = false;
-		// si l'utilisateur de connecte
+		
+		// liaison avec la base de données
+		CompteDAOMySQL compteDao = (CompteDAOMySQL) request.getServletContext().getAttribute("compteDao");
+
+    	Compte compte = compteDao.select(mail);    	
+    	session.setAttribute("compte", compte);
+		
+		// si l'utilisateur se connecte
 		if (connexion != null) {
 			
-			String mail = request.getParameter("mail");
-			String pwd = request.getParameter("pwd");
-
+			
 			/*
 			 * gestion de la saisie du mail et du mot de passe renvoyer une
 			 * erreur si la saisie est incorrecte : - soit l'utilisateur ne
@@ -81,22 +93,23 @@ public class CompteControleur extends HttpServlet {
 				erreur = true;
 				erreursConnexion.put("mail", "Vous devez saisir un mail");
 			} else {
-				if(!d.userValide(mail)) {
+				if(compte == null) {
 					erreursConnexion.put("mail", "mail incorrect");
 				} else {
 					if (pwd == null || pwd.equals("")) {
 						erreur = true;
 						erreursConnexion.put("pwd", "Vous devez saisir un mot de passe");
+						session.setAttribute("compte", null);
 					}
-					else {
-						if(!d.pwdValide(mail, pwd)) {
+					else {						
+						if(!pwd.equals(compte.getPwd())) {
 							erreur = true;
 							erreursConnexion.put("pwd", "Votre mot de passe n'est pas valide");
+							session.setAttribute("compte", null);
 						}
 						else {
 							erreur = false;
-							Compte c = new Compte(mail, pwd);
-							session.setAttribute("compte", c);
+							session.setAttribute("compte", compte);
 						}
 					}
 				}
@@ -120,7 +133,7 @@ public class CompteControleur extends HttpServlet {
 		 * */
 		if(validerCompte != null) {
 			String email = request.getParameter("email");
-			String pwd = request.getParameter("pwd");
+			
 			if(d.userValide(email)) {
 				erreursCompte.put("mail", "Le mail existe déjà. Veuillez en choisir un autre.");
 			}
@@ -132,7 +145,9 @@ public class CompteControleur extends HttpServlet {
 			rd.forward(request, response);
 		}
 		
-		RequestDispatcher rd = request.getRequestDispatcher("/ListeArticlesVue.jsp");
+		String pageCourante = (String) session.getAttribute("pageCourante");
+		
+		RequestDispatcher rd = request.getRequestDispatcher(pageCourante);
 		rd.forward(request, response);
 	}
 	

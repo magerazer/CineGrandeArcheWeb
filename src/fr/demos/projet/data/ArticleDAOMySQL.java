@@ -35,9 +35,49 @@ public class ArticleDAOMySQL implements ArticleDAO {
 	@Override
 	public void update(Article a) throws Exception {
 		// TODO Auto-generated method stub
+		try (Connection cx = dataSource.getConnection()) {
+			PreparedStatement pstm = null;
+			
+			pstm = cx
+					.prepareStatement("UPDATE article SET stock = ? "
+							+ "WHERE reference = ?");
+							
+			
+		//	pstm.setString(1, a.getMat().getStock() - );
+		//	pstm.setString(2, crit);
 
+			ResultSet rs = pstm.executeQuery();
+			
+				
+			
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
 	}
 
+	@Override
+	public void updateStock(Article a, int qte) throws Exception {
+		// TODO Auto-generated method stub
+		try (Connection cx = dataSource.getConnection()) {
+			PreparedStatement pstm = null;
+			
+			pstm = cx
+					.prepareStatement("UPDATE article SET stock = ? "
+							+ "WHERE reference = ?");
+							
+			
+			pstm.setInt(1, a.getMat().getStock() - qte);
+			pstm.setString(2, a.getRef());
+
+			pstm.executeUpdate();
+			
+				
+			
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+	}
+	
 	@Override
 	public void delete(Article a) throws Exception {
 		// TODO Auto-generated method stub

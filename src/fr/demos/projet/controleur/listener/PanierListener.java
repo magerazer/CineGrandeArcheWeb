@@ -9,8 +9,8 @@ import javax.servlet.http.HttpSessionEvent;
 import javax.servlet.http.HttpSessionListener;
 
 import fr.demos.projet.data.ArticleDAOMySQL;
+import fr.demos.projet.data.CompteDAOMySQL;
 import fr.demos.projet.donnees.Donnees;
-import fr.demos.projet.metier.Article;
 import fr.demos.projet.metier.Compte;
 import fr.demos.projet.metier.Panier;
 
@@ -71,14 +71,18 @@ public class PanierListener implements ServletContextListener, HttpSessionListen
      */
     public void contextInitialized(ServletContextEvent arg0)  {     	
     	ArticleDAOMySQL articleDao = null;
+    	CompteDAOMySQL compteDao = null;
 		try {
 			articleDao = new ArticleDAOMySQL();
+			compteDao = new CompteDAOMySQL();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();		
 		}
 		arg0.getServletContext().setAttribute("articleDao", articleDao);
+		arg0.getServletContext().setAttribute("compteDao", compteDao);
 		
+
     }
 	
 }

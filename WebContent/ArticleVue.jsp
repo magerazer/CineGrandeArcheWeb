@@ -44,7 +44,7 @@
 			<p>
 		Prix : ${ article.prixHT } €
 		</p>
-<c:if test="${ (not empty article.mat) or (quantite == 0)}">
+	<c:if test="${ (not empty article.mat) or (quantite == 0)}">
 		<form action="PanierControleur" method="POST">
 			<p>
 				 <input type="hidden" name="ref" value="${article.ref}" />

@@ -53,14 +53,15 @@ public class ListeArticlesControleur extends HttpServlet {
 		 * dans la requête
 		 */
 		if (request.getParameter("consultation") != null && request.getParameter("consultation").equals("true")) {
-					
+				
+			
 			
 			String reference = request.getParameter("ref");
 			System.out.println("ref = " + reference);
 			
 			Article a = articleDao.selectArticle(reference);
 			System.out.println("article bdd " + a);
-			request.setAttribute("article", a);
+			session.setAttribute("article", a);
 			
 			
 			session.setAttribute("pageCourante", "/ArticleVue.jsp");

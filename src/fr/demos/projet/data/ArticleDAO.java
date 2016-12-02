@@ -11,5 +11,6 @@ public interface ArticleDAO {
 	void delete(Article a) throws Exception;
 	List<Article> select(String critere);
 	Article selectArticle(String reference);
+	void updateStock(Article a, int qte) throws Exception;
 	
 }

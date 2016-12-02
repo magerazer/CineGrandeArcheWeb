@@ -43,12 +43,13 @@ public class PanierControleur extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-				
+		HttpSession session = request.getSession();
 		Panier panier = (Panier) request.getSession().getAttribute("panier");
 		//int prixTotal = panier.getPrixTotal();
 		//request.setAttribute("prixTotal", prixTotal);
 		RequestDispatcher rd = request.getRequestDispatcher("/PanierVue.jsp");
 		rd.forward(request, response);
+		session.setAttribute("pageCourante", "/PanierVue.jsp");
 	}
 
 	/**
@@ -91,7 +92,7 @@ public class PanierControleur extends HttpServlet {
 			//System.out.println("panier rempli : " + panier);
 			
 			//System.out.println("article rempli : " + a);
-			try {
+						try {
 				if(ajouter != null)
 					panier.ajouter(a, qte);
 				if(modifier != null)
@@ -140,8 +141,9 @@ public class PanierControleur extends HttpServlet {
 			rd = request.getRequestDispatcher("/PanierVue.jsp");
 
 		}
+		
 		rd.forward(request, response);
-
+		
 	}
 
 }
