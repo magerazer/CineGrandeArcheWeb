@@ -58,27 +58,6 @@ body {
 	text-decoration: none;
 }
 
-@media only screen and (max-width: 480px) {
-	header {
-		position: relative;
-	}
-	#conteneurMenu {
-		height: 300px;
-		flex-direction: column;
-	}
-	.contentListe {
-		padding-top: 0em;
-	}
-	.container {
-		flex-direction: column;
-	}
-	.elementLi1 {
-		flex-direction: column;
-	}
-	/* .infoListe {
-		width: auto;
-	} */
-}
 
 /* --------------------------------------------- fin Menu ---------------------------------------- */
 
@@ -147,7 +126,7 @@ ul {
 }
 
 .elementLi1 {
-	max-width: 50%;
+	/*max-width: 50%;*/
 	display: flex;
 	/* 	flex-direction : column; */
 	/* flex:2; */
@@ -167,7 +146,7 @@ ul {
 	justify-content: space-around;
 	width: 500px;
 	min-width: 100px;
-	flex: 1;
+	
 }
 
 .elementLi2 {
@@ -175,7 +154,40 @@ ul {
 	/* flex:1; */
 }
 
-@media only screen and (max-width: 790px) and (min-width: 480px) {
+@media only screen and (max-width: 480px) {
+	header {
+		position: relative;
+	}
+	#conteneurMenu {
+		height: 300px;
+		flex-direction: column;
+	}
+	.contentListe {
+		padding-top: 0em;
+	}
+	.container {
+		flex-direction: column;
+	}
+	.elementLi1 {
+		flex-direction: column;
+	}
+	.imageArticle > img {
+		width: 30%;
+	}
+	#conteneurArticle {
+		display: flex;
+		flex-direction: column;
+	}
+	 .infoListe {
+		width: auto;
+	} 
+	.liCde {	
+	flex-direction : column;
+	
+}
+}
+
+@media only screen and (max-width: 850px) and (min-width: 480px) {
 	#conteneurMenu {
 		height: 200px;
 	}
@@ -186,21 +198,25 @@ ul {
 		display: flex;
 		flex-direction: column;
 	}
-	img {
-		width: 100px;
+	.imageArticle > img {
+		width: 30%;
+	}
+	.elementLi1 {
+	max-width: 50%;
 	}
 	.elementLi2 {
 		padding-left: 10px;
 	}
-	.infoListe {
+	 .infoListe {
 		width: auto;
-	}
+	} 
 }
 
-@media only screen and (min-width: 790px) {
+@media only screen and (min-width: 850px) {
 	.contentListe {
 		padding-top: 6em;
 	}
+	
 }
 
 /* @media only screen and (max-width: 480px) {
@@ -216,3 +232,41 @@ ul {
 } */
 
 /* -------------------------------------- fin liste ------------------------- */
+/* -------------------------------------- début Commande ----------------------*/
+.historiqueCentre {
+		display : flex;
+		justify-content : center;
+		flex-wrap : wrap;
+		
+}
+.blocCommande {
+		border: 1px #ddd solid;
+		border-radius: 4px 4px 4px 4px;
+		width : 60%;
+} 
+.enteteBlocCommande {
+	 background-color: #f6f6f6!important;
+	 border-radius: 4px 4px 0 0;
+} 
+.texteCentre {
+	
+	padding: 14px 18px;
+} 
+.texteCentreEntete {
+	display : flex;
+	justify-content : space-between;
+	padding: 14px 18px;
+}  
+.imageCde {
+	padding-right : 100px;
+}
+
+.liCde {
+	display: flex;
+	flex-wrap : wrap;
+	justify-content: space-around;
+	padding-bottom: 10px;
+	padding-top: 10px;
+	width: 100%;
+}
+/* -------------------------------------- fin Commande ------------------------- */

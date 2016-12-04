@@ -82,7 +82,8 @@ public class PanierListener implements ServletContextListener, HttpSessionListen
 		arg0.getServletContext().setAttribute("articleDao", articleDao);
 		arg0.getServletContext().setAttribute("compteDao", compteDao);
 		
-
+		
+		
     }
 	
 }

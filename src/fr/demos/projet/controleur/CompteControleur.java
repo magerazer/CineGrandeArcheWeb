@@ -109,6 +109,7 @@ public class CompteControleur extends HttpServlet {
 						}
 						else {
 							erreur = false;
+							System.out.println("Compte disparait");
 							session.setAttribute("compte", compte);
 						}
 					}

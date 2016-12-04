@@ -6,14 +6,16 @@ import java.util.Iterator;
 public class Panier implements Iterable<LignePanier> {
 
 	private Compte compte;
-	private ArrayList<LignePanier> panier = new ArrayList<>();;
+	private ArrayList<LignePanier> panier = new ArrayList<>();
 	
 	
 	public Panier() {
+		panier = new ArrayList<>();
 		compte = new Compte();
 	}
 
 	public Panier(Compte compte) {
+		panier = new ArrayList<>();
 		this.compte = compte;
 	}
 

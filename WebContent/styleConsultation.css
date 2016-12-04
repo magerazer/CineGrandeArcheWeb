@@ -48,7 +48,7 @@ body {
 /* --------------------------------- fin mise en forme d'un Article -------------*/
 
 /* ----------------------------------- debut mise en forme du panier ------------------ */
-.titrePanier {
+.titre {
 	text-align: center;
 }
 
@@ -97,8 +97,18 @@ h2 {
 }
 
 /* ----------------------------- fin mise en forme du panier -------------------------- */
+
+
 .conteneurBoutonCommande {
 	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction : column;
+}
+
+.erreurCommande {
+	display: flex;
+	flex-direction : column;
 	justify-content: center;
 	align-items: center;
 }

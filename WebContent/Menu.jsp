@@ -41,6 +41,7 @@
 						<input type="submit" value="Se déconnecter" name="deconnexion" />
 
 					</p>
+				</form>
 			</div>
 		</c:if>
 		<!-- accéder au panier -->

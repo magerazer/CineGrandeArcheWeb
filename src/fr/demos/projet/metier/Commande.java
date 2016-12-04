@@ -2,14 +2,15 @@ package fr.demos.projet.metier;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Iterator;
 
-public class Commande {
+public class Commande implements  Iterable<LigneCommande>{
 	
 	ArrayList<LigneCommande> commandes;
-		
+	private LocalDate date;
 	
-	public Commande() {  
-		
+	public Commande(LocalDate date) {  
+		this.date = date;
 		commandes = new ArrayList<>();
 	}
 	
@@ -17,9 +18,17 @@ public class Commande {
 		//commandes.add(new LigneCommande(reference, nom, prixHT));
 		commandes.add(ligne);
 	}
+
+	@Override
+	public Iterator<LigneCommande> iterator() {
+		return commandes.iterator();
+	}
+
+	public LocalDate getDate() {
+		return date;
+	}
 	
 		
 }
-
 
 

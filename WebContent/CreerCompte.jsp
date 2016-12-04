@@ -22,8 +22,14 @@
 					<input type="text" name="nom" value=""/><br/>				
 					<label for="prenom">Prénom </label> <br>
 					<input type="text" name="prenom"/>  <br>
+					
+					<fieldset>
+                    <legend>Adresse de livraison : </legend>
+                                   
 					<label for="adresseLivraison">Adresse de livraison</label><br>
 					<input type="text" name="adresseLivraison"/> <br>
+					 </fieldset>
+					
 					<label for="adresseFacturation">Adresse de facturation</label><br>
 					<input type="text" name="adresseFacturation"/> <br>
 					<label for="email">Adresse email </label><br>

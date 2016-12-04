@@ -13,7 +13,7 @@
 
 	<c:import url="/Menu.jsp" />
 <div class = "contentListe">
-<span class="titrePanier"><h1>Votre panier</h1></span>
+<span class="titre"><h1>Votre panier</h1></span>
 	<%-- <p>panier : ${ lignes }</p> --%>
 
 
@@ -47,7 +47,11 @@
 							<p class="prixLignePanier">
 						Total article: ${ lignePanier.article.prixHT * lignePanier.quantite } €
 						</p>
-
+						<c:if test="${not empty lignePanier.article.mat }">
+						<p>
+						Stock : ${lignePanier.article.mat.stock }
+						</p>
+						</c:if>
 						</div>
 						<%-- <div class="prixPanier">Prix :  ${lignePanier.article.prixHT} €</div> --%>
 
@@ -82,7 +86,7 @@
 	</div>
 
 <div class="conteneurBoutonCommande">
-	<div>
+	<div class="erreurCommande">
 	
 	<em>Sous total ( ${ panier.quantite }) </em>
 	
@@ -90,7 +94,9 @@
 
 	<form action="CommandeControleur" method="POST">
 		<input type="submit" value="Commander" name="commander" />
+		
 	</form>
+	<div><span class="erreur">${ nonConnecte }</span></div>
 	</div>
 </div>
 
