@@ -270,3 +270,22 @@ ul {
 	width: 100%;
 }
 /* -------------------------------------- fin Commande ------------------------- */
+/* -------------------------------------- début Creation compte ------------------------- */
+.compte > input, .adresse > input, .adresse > select {
+	margin-bottom : 14px;	
+	height: 25px;
+    padding: 3px 7px;
+    border-radius: 3px;
+   	width:400px;
+	
+}
+
+.adresse > label {
+	display: block;
+	width: 150px;
+	float: left;
+	text-align : right;
+}
+
+
+/* -------------------------------------- fin Création compte ------------------------- */
