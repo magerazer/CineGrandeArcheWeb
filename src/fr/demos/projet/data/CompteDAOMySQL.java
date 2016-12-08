@@ -24,7 +24,34 @@ public class CompteDAOMySQL implements CompteDAO {
 
 	@Override
 	public void insert(Compte c) throws Exception {
-		// TODO Auto-generated method stub
+
+		try (Connection cx = dataSource.getConnection()) {
+			PreparedStatement pstm = null;
+			System.out.println("avant insert");
+			
+			
+			pstm = cx.prepareStatement("INSERT INTO compte VALUES (?, ?, ?, ?, ?, ?)");
+			
+			pstm.setString(1, c.getMail());
+			pstm.setString(2, c.getPwd());
+			pstm.setString(3, c.getNom());
+			pstm.setString(4, c.getPrenom());			
+			pstm.setString(5, c.getAdrLiv());
+			pstm.setString(6, c.getAdrFact());
+
+			pstm.executeUpdate();
+
+			// ResultSet rs = pstm.executeQuery();
+			//
+			// while (rs.next()) {
+			// String mail = rs.getString("mail");
+			// String pwd = rs.getString("pwd");
+			//
+			// c = new Compte(mail, pwd);
+			// }
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
 
 	}
 
@@ -47,7 +74,9 @@ public class CompteDAOMySQL implements CompteDAO {
 
 		try (Connection cx = dataSource.getConnection()) {
 			PreparedStatement pstm = null;
-			pstm = cx.prepareStatement("SELECT mail, pwd " + "FROM Compte" + " WHERE mail = ?");
+			pstm = cx.prepareStatement("SELECT mail, pwd " 
+			+ "FROM Compte" 
+					+ " WHERE mail = ?");
 			pstm.setString(1, argMail);
 			ResultSet rs = pstm.executeQuery();
 

@@ -29,7 +29,7 @@
 			</div>
 			<div>Total : <br>${ tot } €</div>
 			<div>
-			Livraison à : <br>Valentin Dupont <br>85 rue de la paix <br>75008 Paris
+			Livraison à : ${ compte.adrLiv }
 			</div>
 			</div>
 			

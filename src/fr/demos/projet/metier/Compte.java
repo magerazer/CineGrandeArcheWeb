@@ -2,8 +2,12 @@ package fr.demos.projet.metier;
 
 public class Compte {
 	
+	private String nom;
+	private String prenom;
 	private String mail;
 	private String pwd;
+	private String adrFact;
+	private String adrLiv;
 	
 	public Compte() {
 		
@@ -12,6 +16,15 @@ public class Compte {
 	public Compte(String mail, String pwd) {
 		this.mail = mail;
 		this.pwd = pwd;
+	}
+	
+	public Compte(String nom, String prenom, String mail, String pwd, String fact, String liv) {
+		this.nom = nom;
+		this.prenom = prenom;
+		this.mail = mail;
+		this.pwd = pwd;
+		this.adrFact = fact;
+		this.adrLiv = liv;
 	}
 
 	public String getMail() {
@@ -33,6 +46,32 @@ public class Compte {
 		this.pwd = pwd;
 	}
 	
+	
+	
+	public String getAdrFact() {
+		return adrFact;
+	}
+
+	public void setAdrFact(String adrFact) {
+		this.adrFact = adrFact;
+	}
+
+	public String getAdrLiv() {
+		return adrLiv;
+	}
+
+	public void setAdrLiv(String adrLiv) {
+		this.adrLiv = adrLiv;
+	}
+
+	public String getNom() {
+		return nom;
+	}
+
+	public String getPrenom() {
+		return prenom;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;

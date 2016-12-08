@@ -3,6 +3,7 @@ package fr.demos.projet.data;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,6 +13,7 @@ import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
 import fr.demos.projet.metier.Article;
+import fr.demos.projet.metier.ArticleDivers;
 import fr.demos.projet.metier.Etat;
 import fr.demos.projet.metier.Livre;
 
@@ -80,17 +82,31 @@ public class ArticleDAOMySQL implements ArticleDAO {
 
 		try (Connection cx = dataSource.getConnection()) {
 			PreparedStatement pstm = null;
+			PreparedStatement pstmDivers = null;
 			if (critere.equals("")) {
 				pstm = cx.prepareStatement("SELECT referenceLivre, prix, nom, stock, description, image, type, stock "
 						+ ", etat, coutLivraison, formatLivre, format, url, isbn, auteur, dateParution, genre, nbPages "
 						+ " FROM Livre INNER JOIN Article " + "ON Article.reference = Livre.referenceLivre "
 						+ "ORDER BY reference DESC");
+
+				pstmDivers = cx.prepareStatement("SELECT referenceDivers, prix, nom, description, image, type, stock "
+						+ ", etat, coutLivraison, format, url, typeDivers, caracteristique "
+						+ " FROM Divers INNER JOIN Article " + "ON Article.reference = Divers.referenceDivers "
+						+ "ORDER BY reference DESC");
+
 			} else {
 				pstm = cx.prepareStatement("SELECT referenceLivre, prix, nom, stock, description, image, type, stock "
 						+ ", etat, coutLivraison, formatLivre, format, url, isbn, auteur, dateParution, genre, nbPages"
 						+ " FROM Livre INNER JOIN Article " + "ON Article.reference = Livre.referenceLivre "
 						+ "WHERE auteur LIKE ? || nom LIKE ? || description LIKE ? "
 						+ "|| formatLivre LIKE ? || format LIKE ? || url LIKE ? " + "ORDER BY reference DESC");
+
+				pstmDivers = cx.prepareStatement("SELECT referenceDivers, prix, nom, description, image, type, stock "
+						+ ", etat, coutLivraison, format, url, typeDivers, caracteristique "
+						+ " FROM Divers INNER JOIN Article " + "ON Article.reference = Divers.referenceLivre "
+						+ "WHERE nom LIKE ? || description LIKE ? " + "|| format LIKE ? || url LIKE ? "
+						+ " || type LIKE ? || caracteristique LIKE ? " + "ORDER BY reference DESC");
+
 				String crit = "%" + critere + "%";
 				pstm.setString(1, crit);
 				pstm.setString(2, crit);
@@ -103,59 +119,23 @@ public class ArticleDAOMySQL implements ArticleDAO {
 			ResultSet rs = pstm.executeQuery();
 
 			while (rs.next()) {
-				// attributs communs à tous les articles
-				String reference = rs.getString("referenceLivre");
-				double prix = rs.getDouble("prix");
-				String nom = rs.getString("nom");
-				String description = rs.getString("description");
-				String image = rs.getString("image");
-				
-				String type = rs.getString("type");
-			
-				// attributs communs aux livres
-				String isbn = rs.getString("isbn");
-				String auteur = rs.getString("auteur");
-				String formatLivre = rs.getString("formatLivre");
-				String genre = rs.getString("genre");
-				int nbPages = rs.getInt("nbPages");
-				LocalDate dateParution = rs.getDate("dateParution").toLocalDate();
-				
-				Livre liv = null;
 
-				// dans le cas d'un livre materialisé
-				if (rs.getString("url").equals("")) {
+				Livre liv = creationLivre(rs);
 
-					int stock = rs.getInt("stock");
-					Etat etat = null;
-					if (rs.getString("etat") != null) {
-						etat = Etat.valueOf(rs.getString("etat"));
-					}
-					int coutLivraison = rs.getInt("coutLivraison");
-
-					liv = new Livre(reference, prix, nom, stock, auteur, isbn);
-					
-					
-				}
-				// dans le cas d'un livre dematérialisé
-				else {
-					
-					String format = rs.getString("format");
-					String url = rs.getString("url");
-					
-					liv = new Livre(reference, prix, nom, format, url, auteur, isbn);
-					
-				}
-				// attributs communs aux livres materialises et dematerialises
-				liv.setImage(image);
-				liv.setDescription(description);
-				liv.setGenre(genre);
-				liv.setNbPages(nbPages);
-				liv.setDateParution(dateParution);
-				// Article a = new Article(rs.getString(1), rs.getDouble(2),
-				// rs.getString(3));
 				liste.add(liv);
 
 			}
+
+			ResultSet rsDivers = pstmDivers.executeQuery();
+
+			while (rsDivers.next()) {
+
+				ArticleDivers divers = creationDivers(rsDivers);
+
+				liste.add(divers);
+
+			}
+
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
@@ -163,28 +143,29 @@ public class ArticleDAOMySQL implements ArticleDAO {
 		return liste;
 	}
 
-	@Override
-	public Article selectArticle(String reference) {
-		// TODO Auto-generated method stub
-		Article a = null;
+	public Livre creationLivre(ResultSet rs) throws SQLException {
+		String reference = rs.getString("referenceLivre");
+		double prix = rs.getDouble("prix");
+		String nom = rs.getString("nom");
+		String description = rs.getString("description");
+		String image = rs.getString("image");
 
-		try (Connection cx = dataSource.getConnection()) {
-			PreparedStatement pstm = null;
+		String type = rs.getString("type");
 
-			pstm = cx.prepareStatement("SELECT referenceLivre, prix, nom, stock, description, image, type, stock "
-					+ ", etat, coutLivraison, format, url, isbn, auteur " + " FROM Livre INNER JOIN Article "
-					+ "ON Article.reference = Livre.referenceLivre " + "WHERE referenceLivre = ? ");
-			pstm.setString(1, reference);
+		// attributs communs aux livres
+		String isbn = rs.getString("isbn");
+		String auteur = rs.getString("auteur");
+		String formatLivre = rs.getString("formatLivre");
+		String genre = rs.getString("genre");
+		int nbPages = rs.getInt("nbPages");
+		LocalDate dateParution = null;
+		if (rs.getDate("dateParution") != null)
+			dateParution = rs.getDate("dateParution").toLocalDate();
 
-			ResultSet rs = pstm.executeQuery();
-			rs.next();
+		Livre liv = null;
 
-			String ref = rs.getString("referenceLivre");
-			double prix = rs.getDouble("prix");
-			String nom = rs.getString("nom");
-			String description = rs.getString("description");
-			String image = rs.getString("image");
-			String type = rs.getString("type");
+		// dans le cas d'un livre materialisé
+		if (rs.getString("url").equals("")) {
 
 			int stock = rs.getInt("stock");
 			Etat etat = null;
@@ -193,27 +174,114 @@ public class ArticleDAOMySQL implements ArticleDAO {
 			}
 			int coutLivraison = rs.getInt("coutLivraison");
 
+			liv = new Livre(reference, prix, nom, stock, auteur, isbn);
+
+		}
+		// dans le cas d'un livre dematérialisé
+		else {
+
 			String format = rs.getString("format");
 			String url = rs.getString("url");
 
-			String isbn = rs.getString("isbn");
-			String auteur = rs.getString("auteur");
+			liv = new Livre(reference, prix, nom, format, url, auteur, isbn);
 
-			if (type.equals("livre")) {
-				if (url.equals("")) {
-					a = new Livre(reference, prix, nom, stock, auteur, isbn);
-					a.setImage(image);
-				} else {
-					a = new Livre(reference, prix, nom, format, url, auteur, isbn);
-					a.setImage(image);
-				}
+		}
+		// attributs communs aux livres materialises et dematerialises
+		liv.setImage(image);
+		liv.setDescription(description);
+		liv.setGenre(genre);
+		liv.setNbPages(nbPages);
+		liv.setDateParution(dateParution);
+		return liv;
+	}
+
+	public ArticleDivers creationDivers(ResultSet rs) throws SQLException {
+		// attributs communs à tous les articles
+		String reference = rs.getString("referenceDivers");
+		double prix = rs.getDouble("prix");
+		String nom = rs.getString("nom");
+		String description = rs.getString("description");
+		String image = rs.getString("image");
+
+		String type = rs.getString("type");
+
+		// attributs communs aux articles divers
+		String typeDivers = rs.getString("typeDivers");
+		String caracteristique = rs.getString("caracteristique");
+
+		ArticleDivers div = null;
+
+		// dans le cas d'un article divers materialisé
+		if (rs.getString("url").equals("")) {
+
+			int stock = rs.getInt("stock");
+			Etat etat = null;
+			if (rs.getString("etat") != null) {
+				etat = Etat.valueOf(rs.getString("etat"));
 			}
+			int coutLivraison = rs.getInt("coutLivraison");
+
+			div = new ArticleDivers(reference, prix, nom, stock);
+
+		}
+		// dans le cas d'un article divers dematérialisé
+		else {
+
+			String format = rs.getString("format");
+			String url = rs.getString("url");
+
+			div = new ArticleDivers(reference, prix, nom, format, url, typeDivers, caracteristique);
+
+		}
+		// attributs communs aux livres materialises et dematerialises
+		div.setImage(image);
+		div.setDescription(description);
+
+		return div;
+	}
+
+	@Override
+	public Article selectArticle(String reference) {
+		// TODO Auto-generated method stub
+		Article art = null;
+
+		try (Connection cx = dataSource.getConnection()) {
+			PreparedStatement pstm = null;
+			PreparedStatement pstmDivers = null;
+
+			pstm = cx.prepareStatement("SELECT referenceLivre, prix, nom, stock, description, image, type, stock "
+					+ ", etat, coutLivraison, formatLivre, format, url, isbn, auteur, dateParution, genre, nbPages "
+					+ " FROM Livre INNER JOIN Article " + "ON Article.reference = Livre.referenceLivre "
+					+ "WHERE referenceLivre = ? ");
+			pstm.setString(1, reference);
+
+			pstmDivers = cx.prepareStatement("SELECT referenceDivers, prix, nom, description, image, type, stock "
+					+ ", etat, coutLivraison, format, url, typeDivers, caracteristique "
+					+ " FROM Divers INNER JOIN Article " + "ON Article.reference = Divers.referenceDivers "
+					+ "WHERE referenceDivers = ? ");
+
+			pstmDivers.setString(1, reference);
+
+			ResultSet rs = pstm.executeQuery();
+			ResultSet rs2 = pstmDivers.executeQuery();
+
+			rs.next();
+			rs2.next();
+
+			if (rs.getString("type").equals("livre")) {
+				art = creationLivre(rs);
+			}
+
+			if (rs2.getString("type").equals("divers"))
+				art = creationDivers(rs2);
+
+			System.out.println("article null ? = " + art);
 
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
 
-		return a;
+		return art;
 	}
 
 }

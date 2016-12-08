@@ -1,9 +1,7 @@
 package fr.demos.projet.controleur;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.servlet.RequestDispatcher;
@@ -14,10 +12,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import fr.demos.projet.data.ArticleDAOMySQL;
 import fr.demos.projet.data.CompteDAOMySQL;
 import fr.demos.projet.donnees.Donnees;
-import fr.demos.projet.metier.Article;
+import fr.demos.projet.metier.Adresse;
 import fr.demos.projet.metier.Compte;
 
 /**
@@ -55,6 +52,7 @@ public class CompteControleur extends HttpServlet {
 		
 		HttpSession session = request.getSession();
 		Donnees d = (Donnees) session.getAttribute("donnees");
+		String pageCourante = (String) session.getAttribute("pageCourante");
 		
 		Map<String, String> erreursConnexion = new HashMap<String, String>();
 		request.setAttribute("erreursConnexion", erreursConnexion);
@@ -83,7 +81,8 @@ public class CompteControleur extends HttpServlet {
 			
 			Compte compte = compteDao.select(mail);    	
 	    	session.setAttribute("compte", compte);
-			/*
+			System.out.println("compte nul ? " + compte);
+	    	/*
 			 * gestion de la saisie du mail et du mot de passe renvoyer une
 			 * erreur si la saisie est incorrecte : - soit l'utilisateur ne
 			 * saisi rien - soit le compte n'est pas présent en bdd
@@ -115,16 +114,21 @@ public class CompteControleur extends HttpServlet {
 				}
 					
 			}
-			
+			RequestDispatcher rd = request.getRequestDispatcher(pageCourante);
+			rd.forward(request, response);
 		}
 		// si l'utilisateur se déconnecte
 		if (deconnexion != null) {
 			session.setAttribute("compte", null);
-
+			
+			
+			RequestDispatcher rd = request.getRequestDispatcher(pageCourante);
+			rd.forward(request, response);
 		}
 		// si l'utilisateur veut créer un compte
 		if (creationCompte != null) {
-				
+			
+			
 			
 			
 			RequestDispatcher rd = request.getRequestDispatcher("/CreerCompte.jsp");
@@ -142,18 +146,30 @@ public class CompteControleur extends HttpServlet {
 				
 				erreursCompte.put("mail", "Le mail existe déjà. Veuillez en choisir un autre.");
 			}
-			Compte c = new Compte(email, pwd);
+			//Compte c = new Compte(email, pwd);
 			
 			//listeComptes.add(c);
+			
+			String nom = request.getParameter("nom");
+			String prenom = request.getParameter("prenom");
+			String adrFact = request.getParameter("adrFact");
+			String adrLiv = request.getParameter("adrLiv");
+			
+			//Adresse adrFact = new Adresse(rueFacturation, codePostalFacturation, villeFacturation, paysFacturation);
+			//Adresse adrLiv = new Adresse(rueLivraison, codePostalLivraison, villeLivraison, paysLivraison);
+			Compte c = new Compte(nom, prenom, email, pwd, adrFact, adrLiv);
+			
+			try {
+				compteDao.insert(c);
+			} catch (Exception e) {				
+				e.printStackTrace();
+			}
 			
 			RequestDispatcher rd = request.getRequestDispatcher("/CreerCompte.jsp");
 			rd.forward(request, response);
 		}
 		
-		String pageCourante = (String) session.getAttribute("pageCourante");
 		
-		RequestDispatcher rd = request.getRequestDispatcher(pageCourante);
-		rd.forward(request, response);
 	}
 	
 	
