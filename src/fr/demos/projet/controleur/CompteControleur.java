@@ -66,24 +66,23 @@ public class CompteControleur extends HttpServlet {
 		String creationCompte = request.getParameter("creationCompte");
 		String validerCompte = request.getParameter("validerCompte");
 		
-		String mail = request.getParameter("mail");
-		String pwd = request.getParameter("pwd");
-		
-		//Compte compte = null;
-		ArrayList<Compte> listeComptes = (ArrayList<Compte>) session.getAttribute("listeComptes");
+				//Compte compte = null;
+		//ArrayList<Compte> listeComptes = (ArrayList<Compte>) session.getAttribute("listeComptes");
 		
 		boolean erreur = false;
 		
 		// liaison avec la base de données
 		CompteDAOMySQL compteDao = (CompteDAOMySQL) request.getServletContext().getAttribute("compteDao");
-
-    	Compte compte = compteDao.select(mail);    	
-    	session.setAttribute("compte", compte);
 		
+    	
 		// si l'utilisateur se connecte
 		if (connexion != null) {
 			
+			String mail = request.getParameter("mail");
+			String pwd = request.getParameter("pwd");
 			
+			Compte compte = compteDao.select(mail);    	
+	    	session.setAttribute("compte", compte);
 			/*
 			 * gestion de la saisie du mail et du mot de passe renvoyer une
 			 * erreur si la saisie est incorrecte : - soit l'utilisateur ne
@@ -125,7 +124,9 @@ public class CompteControleur extends HttpServlet {
 		}
 		// si l'utilisateur veut créer un compte
 		if (creationCompte != null) {
-								
+				
+			
+			
 			RequestDispatcher rd = request.getRequestDispatcher("/CreerCompte.jsp");
 			rd.forward(request, response);
 		}
@@ -133,14 +134,17 @@ public class CompteControleur extends HttpServlet {
 		 * Lorsque l'utilisateur crée son compte
 		 * */
 		if(validerCompte != null) {
-			String email = request.getParameter("email");
-			
-			if(d.userValide(email)) {
+			String email = request.getParameter("email");		
+			String pwd = request.getParameter("pwd");			
+			Compte compte = compteDao.select(email);    	
+	    	
+			if(compte != null) {				
+				
 				erreursCompte.put("mail", "Le mail existe déjà. Veuillez en choisir un autre.");
 			}
 			Compte c = new Compte(email, pwd);
 			
-			listeComptes.add(c);
+			//listeComptes.add(c);
 			
 			RequestDispatcher rd = request.getRequestDispatcher("/CreerCompte.jsp");
 			rd.forward(request, response);
