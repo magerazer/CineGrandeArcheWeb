@@ -29,7 +29,7 @@
 			</div>
 			<div>Total : <br>${ tot } €</div>
 			<div>
-			Livraison à : ${ compte.adrLiv }
+			Livraison à : ${ commande.adrLiv }
 			</div>
 			</div>
 			

@@ -15,11 +15,10 @@
 			<div class="connexionMenu">
 				<form action="CompteControleur" method="POST">
 					<p>
-						<input type="text" name="mail" value="${ param.mail }" placeholder="mail" /> <span
-							class="erreur">${ erreursConnexion['mail'] }</span><br> <input
-							type="text" name="pwd" value="" placeholder="mot de passe" /> <span
-							class="erreur">${ erreursConnexion['pwd'] }</span> <br> <input
-							type="submit" value="Se connecter" name="connexion" />
+					<span class="erreur">${ loginErreur }</span><br>
+						<input type="text" name="mail" value="${ param.mail }" placeholder="mail" /><br> 
+						 <input type="text" name="pwd" value="" placeholder="mot de passe" /><br>  
+						 <input type="submit" value="Se connecter" name="connexion" />
 					</p>
 				</form>
 			</div>

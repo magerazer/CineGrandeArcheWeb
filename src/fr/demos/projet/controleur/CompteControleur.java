@@ -14,8 +14,11 @@ import javax.servlet.http.HttpSession;
 
 import fr.demos.projet.data.CompteDAOMySQL;
 import fr.demos.projet.donnees.Donnees;
-import fr.demos.projet.metier.Adresse;
+import fr.demos.projet.metier.Authentification;
 import fr.demos.projet.metier.Compte;
+import fr.demos.projet.metier.CreationCompte;
+import fr.demos.projet.metier.LoginException;
+import fr.demos.projet.metier.UtilisateurException;
 
 /**
  * Servlet implementation class CompteControleur
@@ -54,8 +57,8 @@ public class CompteControleur extends HttpServlet {
 		Donnees d = (Donnees) session.getAttribute("donnees");
 		String pageCourante = (String) session.getAttribute("pageCourante");
 		
-		Map<String, String> erreursConnexion = new HashMap<String, String>();
-		request.setAttribute("erreursConnexion", erreursConnexion);
+		//Map<String, String> erreursConnexion = new HashMap<String, String>();
+		//request.setAttribute("erreursConnexion", erreursConnexion);
 		Map<String, String> erreursCompte = new HashMap<String, String>();
 		request.setAttribute("erreursCompte", erreursCompte);
 		
@@ -66,11 +69,10 @@ public class CompteControleur extends HttpServlet {
 		
 				//Compte compte = null;
 		//ArrayList<Compte> listeComptes = (ArrayList<Compte>) session.getAttribute("listeComptes");
-		
+		CompteDAOMySQL compteDao = (CompteDAOMySQL) request.getServletContext().getAttribute("compteDao");
 		boolean erreur = false;
 		
-		// liaison avec la base de données
-		CompteDAOMySQL compteDao = (CompteDAOMySQL) request.getServletContext().getAttribute("compteDao");
+		
 		
     	
 		// si l'utilisateur se connecte
@@ -79,41 +81,16 @@ public class CompteControleur extends HttpServlet {
 			String mail = request.getParameter("mail");
 			String pwd = request.getParameter("pwd");
 			
-			Compte compte = compteDao.select(mail);    	
-	    	session.setAttribute("compte", compte);
-			System.out.println("compte nul ? " + compte);
-	    	/*
-			 * gestion de la saisie du mail et du mot de passe renvoyer une
-			 * erreur si la saisie est incorrecte : - soit l'utilisateur ne
-			 * saisi rien - soit le compte n'est pas présent en bdd
-			 */
-			if (mail == null || mail.equals("")) {
-				erreur = true;
-				erreursConnexion.put("mail", "Vous devez saisir un mail");
-			} else {
-				if(compte == null) {
-					erreursConnexion.put("mail", "mail incorrect");
-				} else {
-					if (pwd == null || pwd.equals("")) {
-						erreur = true;
-						erreursConnexion.put("pwd", "Vous devez saisir un mot de passe");
-						session.setAttribute("compte", null);
-					}
-					else {						
-						if(!pwd.equals(compte.getPwd())) {
-							erreur = true;
-							erreursConnexion.put("pwd", "Votre mot de passe n'est pas valide");
-							session.setAttribute("compte", null);
-						}
-						else {
-							erreur = false;
-							System.out.println("Compte disparait");
-							session.setAttribute("compte", compte);
-						}
-					}
-				}
-					
+			Compte compte = null;
+			try {
+				compte = new Authentification().login(mail, pwd);
+			} catch (LoginException e) {
+				String loginErreur = e.getMessage();
+				request.setAttribute("loginErreur", loginErreur);
 			}
+			
+			session.setAttribute("compte", compte);
+			
 			RequestDispatcher rd = request.getRequestDispatcher(pageCourante);
 			rd.forward(request, response);
 		}
@@ -140,37 +117,35 @@ public class CompteControleur extends HttpServlet {
 		if(validerCompte != null) {
 			String email = request.getParameter("email");		
 			String pwd = request.getParameter("pwd");			
-			Compte compte = compteDao.select(email);    	
-	    	
-			if(compte != null) {				
-				
-				erreursCompte.put("mail", "Le mail existe déjà. Veuillez en choisir un autre.");
-			}
-			//Compte c = new Compte(email, pwd);
-			
-			//listeComptes.add(c);
-			
+			String pwdConfirm = request.getParameter("pwdConfirm");			
 			String nom = request.getParameter("nom");
 			String prenom = request.getParameter("prenom");
 			String adrFact = request.getParameter("adrFact");
 			String adrLiv = request.getParameter("adrLiv");
 			
-			//Adresse adrFact = new Adresse(rueFacturation, codePostalFacturation, villeFacturation, paysFacturation);
-			//Adresse adrLiv = new Adresse(rueLivraison, codePostalLivraison, villeLivraison, paysLivraison);
-			Compte c = new Compte(nom, prenom, email, pwd, adrFact, adrLiv);
+			CreationCompte creeCompte = new CreationCompte();
+			Compte compte = creeCompte.creationCompte(nom, prenom, email, pwd, pwdConfirm, adrLiv, adrFact);
 			
+			erreursCompte = creeCompte.getErreurs();			
+			System.out.println("erreursCompte vide ? " + erreursCompte);
+			request.setAttribute("erreursCompte", erreursCompte);
+			//Compte c = new Compte(nom, prenom, email, pwd, adrFact, adrLiv);
+			if(erreursCompte.size() == 0) {
 			try {
-				compteDao.insert(c);
+				compteDao.insert(compte);
 			} catch (Exception e) {				
 				e.printStackTrace();
 			}
-			
+			}
 			RequestDispatcher rd = request.getRequestDispatcher("/CreerCompte.jsp");
 			rd.forward(request, response);
 		}
 		
 		
 	}
+	
+	
+	
 	
 	
 

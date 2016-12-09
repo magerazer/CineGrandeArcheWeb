@@ -7,8 +7,7 @@ public class Panier implements Iterable<LignePanier> {
 
 	private Compte compte;
 	private ArrayList<LignePanier> panier = new ArrayList<>();
-	
-	
+
 	public Panier() {
 		panier = new ArrayList<>();
 		compte = new Compte();
@@ -56,16 +55,18 @@ public class Panier implements Iterable<LignePanier> {
 
 		// 1) cas d'une ligne existante
 		if (index != -1) {
-			LignePanier ligneExistante = panier.get(index);
-			qte = ligneExistante.getQuantite() + qte;
-
-			// gestion de l'erreur sur le stock dans le cas d'une ligne
-			// existante
 			if (a.getMat() != null) {
+				LignePanier ligneExistante = panier.get(index);
+				qte = ligneExistante.getQuantite() + qte;
+
+				// gestion de l'erreur sur le stock dans le cas d'une ligne
+				// existante
+
 				verifStock(a, qte);
-				//a.getMat().diminuerStock(qte);
+				// a.getMat().diminuerStock(qte);
+
+				ligneExistante.setQuantite(qte);
 			}
-			ligneExistante.setQuantite(qte);
 		}
 		// 2) cas d'une ligne inexistante
 		else {
@@ -84,18 +85,19 @@ public class Panier implements Iterable<LignePanier> {
 			panier.remove(index);
 	}
 
-	public void modifierQte(Article argA, int qte) throws StockException, ArticleInconnuException, DematerialiseException {
-		if(argA.getMat() == null && qte > 1) {
-			
+	public void modifierQte(Article argA, int qte)
+			throws StockException, ArticleInconnuException, DematerialiseException {
+		if (argA.getMat() == null && qte > 1) {
+
 			throw new DematerialiseException(argA);
 		}
 		LignePanier l = new LignePanier(argA, qte);
 		int index = panier.indexOf(l);
-		if(index==-1) {
+		if (index == -1) {
 			throw new ArticleInconnuException(argA);
 		}
-		if(argA.getMat() != null)
-		verifStock(argA, qte);
+		if (argA.getMat() != null)
+			verifStock(argA, qte);
 		LignePanier lp = panier.get(index);
 		lp.setQuantite(qte);
 
@@ -145,11 +147,11 @@ public class Panier implements Iterable<LignePanier> {
 	public int getQuantite() {
 		int qte = 0;
 		for (LignePanier lignePanier : panier) {
-			qte += lignePanier.getQuantite() ;
+			qte += lignePanier.getQuantite();
 		}
 		return qte;
 	}
-	
+
 	public int rechercherQte(Article a) {
 		int qte = 0;
 		LignePanier lp = new LignePanier(a, 0);
@@ -157,9 +159,9 @@ public class Panier implements Iterable<LignePanier> {
 		if (index != -1) {
 			LignePanier ligneExistante = panier.get(index);
 			qte = ligneExistante.getQuantite();
-			
+
 		}
-		
+
 		return qte;
 	}
 

@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import fr.demos.projet.data.ArticleDAOMySQL;
-import fr.demos.projet.metier.AuthentificationException;
+import fr.demos.projet.metier.LoginException;
 import fr.demos.projet.metier.Commande;
 import fr.demos.projet.metier.Compte;
 import fr.demos.projet.metier.Panier;
@@ -52,14 +52,14 @@ public class CommandeControleur extends HttpServlet {
 		Panier p = (Panier) session.getAttribute("panier");
 		
 		Compte compte = (Compte) session.getAttribute("compte");
-		ArticleDAOMySQL articleDao = (ArticleDAOMySQL) request.getServletContext().getAttribute("articleDao");
-		
-		PassageCommande creationCommande = new PassageCommande(p, compte);
+		//ArticleDAOMySQL articleDao = (ArticleDAOMySQL) request.getServletContext().getAttribute("articleDao");
+		System.out.println("compte = " + compte.getMail() + " adr " + compte.getAdrLiv());
 		Commande com = null;
 		boolean erreurConnecte = false;
 		try {
-			com = creationCommande.creerCommande(articleDao);
-		} catch (AuthentificationException e) {
+			PassageCommande creationCommande = new PassageCommande(p);			
+			com = creationCommande.creerCommande(compte);
+		} catch (LoginException e) {
 			// TODO Auto-generated catch block
 			erreurConnecte = true;			
 			request.setAttribute("nonConnecte", "Vous devez vous connecter pour commander.");

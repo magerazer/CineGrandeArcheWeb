@@ -68,24 +68,31 @@ public class CompteDAOMySQL implements CompteDAO {
 	}
 
 	@Override
-	public Compte select(String argMail) {
+	public Compte select(String argMail, String argPwd) {
 		// TODO Auto-generated method stub
 		Compte c = null;
 
 		try (Connection cx = dataSource.getConnection()) {
 			PreparedStatement pstm = null;
-			pstm = cx.prepareStatement("SELECT mail, pwd " 
+			pstm = cx.prepareStatement("SELECT * " 
 			+ "FROM Compte" 
-					+ " WHERE mail = ?");
+			+ " WHERE mail = ? AND pwd = ? ");
 			pstm.setString(1, argMail);
+			pstm.setString(2, argPwd);
+			
 			ResultSet rs = pstm.executeQuery();
 
 			while (rs.next()) {
 				String mail = rs.getString("mail");
 				String pwd = rs.getString("pwd");
+				String nom = rs.getString("nom");
+				String prenom = rs.getString("prenom");
+				String adrLiv = rs.getString("adrLiv");
+				String adrFact = rs.getString("adrFact");
 
-				c = new Compte(mail, pwd);
+				c = new Compte(nom, prenom, mail, pwd, adrLiv, adrFact);
 			}
+			System.out.println("Compte c = " + c);
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}

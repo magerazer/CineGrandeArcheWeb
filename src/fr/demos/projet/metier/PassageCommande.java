@@ -4,27 +4,37 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import fr.demos.projet.data.ArticleDAOMySQL;
+import fr.demos.projet.data.CompteDAOMySQL;
 
 public class PassageCommande {
 
 	Panier panier;
-	Compte compte;
 	
-	public PassageCommande(Panier panier, Compte compte) {
+	
+	public PassageCommande(Panier panier) {
 		this.panier = panier;
-		this.compte = compte;
+		
 	}
 	
-	public Commande creerCommande(ArticleDAOMySQL articleDao) throws AuthentificationException {
-		System.out.println("erreur Compte disparait bouton commande");
+	public Commande creerCommande(Compte compte) throws LoginException {
+		
+		ArticleDAOMySQL articleDao = null;
+    	try {
+			articleDao = new ArticleDAOMySQL();			
+		} catch (Exception e) {
+			e.printStackTrace();		
+		}
+		
+		System.out.println("erreur Compte " + compte);
 		LocalDateTime currentTime = LocalDateTime.now();
 		LocalDate dateCde = currentTime.toLocalDate();
-		Commande commande = new Commande(dateCde);
+		if(compte == null) {
+			throw new LoginException("Pas authentifié");
+		}
+		Commande commande = new Commande(compte, dateCde);
 		System.out.println("erreur Compte disparait bouton commande");
 		
-		if(compte == null) {
-			throw new AuthentificationException("Pas authentifié");
-		}
+		
 		System.out.println("erreur Compte disparait bouton commande");
 		/*
 		 ajout du panier à la commande

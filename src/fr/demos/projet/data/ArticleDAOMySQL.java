@@ -257,24 +257,25 @@ public class ArticleDAOMySQL implements ArticleDAO {
 
 			pstmDivers = cx.prepareStatement("SELECT referenceDivers, prix, nom, description, image, type, stock "
 					+ ", etat, coutLivraison, format, url, typeDivers, caracteristique "
-					+ " FROM Divers INNER JOIN Article " + "ON Article.reference = Divers.referenceDivers "
+					+ " FROM Divers INNER JOIN Article " 
+					+ "ON Article.reference = Divers.referenceDivers "
 					+ "WHERE referenceDivers = ? ");
 
 			pstmDivers.setString(1, reference);
 
 			ResultSet rs = pstm.executeQuery();
 			ResultSet rs2 = pstmDivers.executeQuery();
-
-			rs.next();
-			rs2.next();
-
+					
+			
+			if(rs.next()) {
 			if (rs.getString("type").equals("livre")) {
 				art = creationLivre(rs);
 			}
-
+			}
+			if(rs2.next()) {
 			if (rs2.getString("type").equals("divers"))
 				art = creationDivers(rs2);
-
+			}
 			System.out.println("article null ? = " + art);
 
 		} catch (Exception ex) {
