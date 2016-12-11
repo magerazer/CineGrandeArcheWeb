@@ -192,6 +192,7 @@ public class ArticleDAOMySQL implements ArticleDAO {
 		liv.setGenre(genre);
 		liv.setNbPages(nbPages);
 		liv.setDateParution(dateParution);
+		liv.setFormat(formatLivre);
 		return liv;
 	}
 

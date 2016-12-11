@@ -34,11 +34,11 @@
 		<c:if test="${ not empty sessionScope.compte }">
 			<div class="msgConnecte">
 				<span class="connecteMsg">${sessionScope.compte.mail} est
-					connecté</span> <a href="CompteControleur"> Compte </a>
+					connecté</span> 
 				<form action="CompteControleur" method="POST">
 					<p>
 						<input type="submit" value="Se déconnecter" name="deconnexion" />
-
+						<input type="submit" value="Consulter votre compte" name="consulterCompte" />
 					</p>
 				</form>
 			</div>

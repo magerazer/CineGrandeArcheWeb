@@ -154,6 +154,11 @@ ul {
 	/* flex:1; */
 }
 
+.prix {
+	font-weight: 700!important;
+	color: #b12704!important;	
+}
+
 @media only screen and (max-width: 480px) {
 	header {
 		position: relative;

@@ -57,7 +57,30 @@ public class CompteDAOMySQL implements CompteDAO {
 
 	@Override
 	public void update(Compte c) throws Exception {
-		// TODO Auto-generated method stub
+		System.out.println("update ..." + c);
+		try (Connection cx = dataSource.getConnection()) {
+			PreparedStatement pstm = null;
+			pstm = cx.prepareStatement("UPDATE compte SET "
+					+ "nom = ? "
+//					+ "prenom = ? "					
+//					+ "pwd = ? "
+//					+ "adrLiv = ? "
+//					+ "adrFact = ? "
+					+ "WHERE mail = ?");
+			pstm.setString(1, c.getNom());
+//			pstm.setString(2, c.getPrenom());
+//			//pstm.setString(3, c.getMail());
+//			pstm.setString(3, c.getPwd());
+//			pstm.setString(4, c.getAdrLiv());
+//			pstm.setString(5, c.getAdrFact());
+			pstm.setString(2, c.getMail());
+			System.out.println("update ..." + c.getAdrLiv());
+			pstm.executeUpdate();
+			System.out.println("update ..." + c.getAdrLiv());
+			
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
 
 	}
 

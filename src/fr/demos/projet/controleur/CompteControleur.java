@@ -52,35 +52,36 @@ public class CompteControleur extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		
+
 		HttpSession session = request.getSession();
 		Donnees d = (Donnees) session.getAttribute("donnees");
 		String pageCourante = (String) session.getAttribute("pageCourante");
-		
-		//Map<String, String> erreursConnexion = new HashMap<String, String>();
-		//request.setAttribute("erreursConnexion", erreursConnexion);
+
+		// Map<String, String> erreursConnexion = new HashMap<String, String>();
+		// request.setAttribute("erreursConnexion", erreursConnexion);
 		Map<String, String> erreursCompte = new HashMap<String, String>();
 		request.setAttribute("erreursCompte", erreursCompte);
-		
+
 		String connexion = request.getParameter("connexion");
 		String deconnexion = request.getParameter("deconnexion");
 		String creationCompte = request.getParameter("creationCompte");
 		String validerCompte = request.getParameter("validerCompte");
+		String consulterCompte = request.getParameter("consulterCompte");
+		String modifierCompte = request.getParameter("modifierCompte");
+		String modifier = request.getParameter("modifier");
 		
-				//Compte compte = null;
-		//ArrayList<Compte> listeComptes = (ArrayList<Compte>) session.getAttribute("listeComptes");
+		// Compte compte = null;
+		// ArrayList<Compte> listeComptes = (ArrayList<Compte>)
+		// session.getAttribute("listeComptes");
 		CompteDAOMySQL compteDao = (CompteDAOMySQL) request.getServletContext().getAttribute("compteDao");
 		boolean erreur = false;
-		
-		
-		
-    	
+
 		// si l'utilisateur se connecte
 		if (connexion != null) {
-			
+
 			String mail = request.getParameter("mail");
 			String pwd = request.getParameter("pwd");
-			
+
 			Compte compte = null;
 			try {
 				compte = new Authentification().login(mail, pwd);
@@ -88,65 +89,110 @@ public class CompteControleur extends HttpServlet {
 				String loginErreur = e.getMessage();
 				request.setAttribute("loginErreur", loginErreur);
 			}
-			
+
 			session.setAttribute("compte", compte);
-			
+
 			RequestDispatcher rd = request.getRequestDispatcher(pageCourante);
 			rd.forward(request, response);
 		}
 		// si l'utilisateur se déconnecte
 		if (deconnexion != null) {
 			session.setAttribute("compte", null);
-			
-			
+
 			RequestDispatcher rd = request.getRequestDispatcher(pageCourante);
 			rd.forward(request, response);
 		}
-		// si l'utilisateur veut créer un compte
+		// si l'utilisateur veut créer un compte et qu'il n'est pas connecté
 		if (creationCompte != null) {
-			
-			
-			
-			
+
 			RequestDispatcher rd = request.getRequestDispatcher("/CreerCompte.jsp");
 			rd.forward(request, response);
 		}
 		/*
-		 * Lorsque l'utilisateur crée son compte
-		 * */
-		if(validerCompte != null) {
-			String email = request.getParameter("email");		
-			String pwd = request.getParameter("pwd");			
-			String pwdConfirm = request.getParameter("pwdConfirm");			
+		 * Lorsque l'utilisateur valide le compte qu'il vient de créer
+		 */
+		if (validerCompte != null) {
+			String email = request.getParameter("email");
+			String pwd = request.getParameter("pwd");
+			String pwdConfirm = request.getParameter("pwdConfirm");
 			String nom = request.getParameter("nom");
 			String prenom = request.getParameter("prenom");
 			String adrFact = request.getParameter("adrFact");
 			String adrLiv = request.getParameter("adrLiv");
+
 			
-			CreationCompte creeCompte = new CreationCompte();
+			
+			CreationCompte creeCompte = new CreationCompte(false);
 			Compte compte = creeCompte.creationCompte(nom, prenom, email, pwd, pwdConfirm, adrLiv, adrFact);
-			
-			erreursCompte = creeCompte.getErreurs();			
-			System.out.println("erreursCompte vide ? " + erreursCompte);
+
+			erreursCompte = creeCompte.getErreurs();
+
 			request.setAttribute("erreursCompte", erreursCompte);
-			//Compte c = new Compte(nom, prenom, email, pwd, adrFact, adrLiv);
-			if(erreursCompte.size() == 0) {
-			try {
-				compteDao.insert(compte);
-			} catch (Exception e) {				
-				e.printStackTrace();
-			}
-			}
+			// Compte c = new Compte(nom, prenom, email, pwd, adrFact, adrLiv);
+			if (erreursCompte.size() == 0) {
+				try {
+					request.setAttribute("consultationCompte", true);					
+						compteDao.insert(compte);					
+						
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}	
+			request.setAttribute("modifier", false);
 			RequestDispatcher rd = request.getRequestDispatcher("/CreerCompte.jsp");
 			rd.forward(request, response);
 		}
 		
+		if (consulterCompte != null) {			
+			request.setAttribute("consultationCompte", true);
+			RequestDispatcher rd = request.getRequestDispatcher("/CreerCompte.jsp");
+			rd.forward(request, response);
+		}
 		
+		if (modifierCompte != null) {			
+			request.setAttribute("consultationCompte", false);
+			request.setAttribute("modifier", true);
+			
+			
+			
+			RequestDispatcher rd = request.getRequestDispatcher("/CreerCompte.jsp");
+			rd.forward(request, response);
+		}
+		
+		if (modifier != null) {			
+						
+			String email = request.getParameter("email");
+			String pwd = request.getParameter("pwd");
+			String pwdConfirm = request.getParameter("pwdConfirm");
+			String nom = request.getParameter("nom");
+			String prenom = request.getParameter("prenom");
+			String adrFact = request.getParameter("adrFact");
+			String adrLiv = request.getParameter("adrLiv");
+
+			
+			
+			CreationCompte creeCompte = new CreationCompte(true);
+			Compte compte = creeCompte.creationCompte(nom, prenom, email, pwd, pwdConfirm, adrLiv, adrFact);
+
+			erreursCompte = creeCompte.getErreurs();
+
+			request.setAttribute("erreursCompte", erreursCompte);
+			// Compte c = new Compte(nom, prenom, email, pwd, adrFact, adrLiv);
+			if (erreursCompte.size() == 0) {
+				try {
+					request.setAttribute("consultationCompte", true);					
+						compteDao.update(compte);	
+						session.setAttribute("compte", compte);
+						
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}	
+			
+			RequestDispatcher rd = request.getRequestDispatcher("/CreerCompte.jsp");
+			rd.forward(request, response);
+		}
+
 	}
-	
-	
-	
-	
-	
 
 }

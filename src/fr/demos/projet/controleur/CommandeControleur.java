@@ -53,7 +53,7 @@ public class CommandeControleur extends HttpServlet {
 		
 		Compte compte = (Compte) session.getAttribute("compte");
 		//ArticleDAOMySQL articleDao = (ArticleDAOMySQL) request.getServletContext().getAttribute("articleDao");
-		System.out.println("compte = " + compte.getMail() + " adr " + compte.getAdrLiv());
+		
 		Commande com = null;
 		boolean erreurConnecte = false;
 		try {

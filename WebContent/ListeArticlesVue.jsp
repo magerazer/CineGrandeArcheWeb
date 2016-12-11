@@ -40,6 +40,9 @@
 				<%-- <c:if test="${ not empty article }">${article.getClass().name}</c:if> --%>
 								
 				<%-- <td>${article.auteur}</td> --%>
+				<c:if test="${ article.type == 'Livre' }">
+				${ article.format } - ${ article.dateParution }
+				</c:if>
 				</div>				
 				<c:if test="${ article.type == 'Livre' }">
 				<div>				
@@ -49,8 +52,8 @@
 				<c:if test="${not empty article.mat }">
 				<div>Etat : ${ article.mat.etat }</div>
 				</c:if>
-				<div>
-				${article.prixHT}€
+				<div class="prix">
+				Prix : ${article.prixHT}€
 				</div>
 				<c:if test="${not empty article.mat }">
 				
