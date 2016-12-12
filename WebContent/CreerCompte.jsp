@@ -17,47 +17,49 @@
 	<h1>Créer un compte</h1>
 	
 	
-	<c:if test="${ !consultationCompte }">
+	<c:if test="${ !consultationCompte && !validationConfirm}">
 			<form action="CompteControleur" method="post">
 			<fieldset class="compte">
-					<label for="nom">Nom </label> <br>
-					<input type="text" name="nom" value="${ compte.nom }"/><br/>
-					<span class="erreur">${erreursCompte['nom']}</span> <br>
+					<label for="nom">Nom : </label> 
+					<input type="text" name="nom" value="${ compte.nom }"/>
+					<span class="erreur">${erreursCompte['nom']}</span> <br><br>
 									
-					<label for="prenom">Prénom </label> <br>
-					<input type="text" name="prenom" value="${ compte.prenom }"/>  <br>
+					<label for="prenom">Prénom  : </label> 
+					<input type="text" name="prenom" value="${ compte.prenom }"/>  <br><br>
 					
-					<label for="email">Adresse email </label><br>
-					<input type="email" name="email" value="${ compte.mail }"/> <br>
-					<span class="erreur">${erreursCompte['mail']}</span> <br>
+					<label for="email">Adresse email : </label>
+					<input type="email" name="email" value="${ compte.mail }"/> 
+					<span class="erreur">${erreursCompte['mail']}</span> <br><br>
 					
-					<label for="pwd">Mot de passe </label> <br>
-					<input type="password" name="pwd" value="${ compte.pwd }"/> <br>
+					<label for="pwd">Mot de passe : </label> 
+					<input type="password" name="pwd" value="${ compte.pwd }"/> <br><br>
 					
-					<label for="pwdConfirm">Confirmez le mot de passe</label><br>
-					<input type="password" name="pwdConfirm" value="${ compte.pwd }"/> <br>
-					<span class="erreur">${erreursCompte['pwd']}</span> <br>
+					<label for="pwdConfirm">Confirmez le mot de passe : </label>
+					<input type="password" name="pwdConfirm" value="${ compte.pwd }"/>
+					<span class="erreur">${erreursCompte['pwd']}</span> <br> <br>
 					
-					<label for="adrLiv">Adresse de livraison </label> <br>
-					<input type="text" name="adrLiv" value="${ compte.adrLiv }"/>  <br>
+					<label for="adrLiv">Adresse de livraison : </label>
+					<input type="text" name="adrLiv" value="${ compte.adrLiv }"/>  <br><br>
 					
-					<label for="adrFact">Adresse de facturation </label> <br>
-					<input type="text" name="adrFact" value="${ compte.adrFact }"/>  <br>	
+					<label for="adrFact">Adresse de facturation </label> 
+					<input type="text" name="adrFact" value="${ compte.adrFact }"/> <br><br>	
 													
-					<c:if test="${ valider }">
-						<input type=submit value="Valider" name="validerCompte" />
+					<c:if test="${ !modifier }">
+						<input type=submit value="Valider le compte" name="validerCompte" />
 					</c:if>
-					<c:if test="${ !valider }">
-						<input type=submit value="Valider" name="modifier" />
+					<c:if test="${ modifier }">
+						<input type=submit value="Valider modifications" name="modifier" />
 					</c:if>
 					
 					<span class="erreur">${erreursCompte['formNonRempli']}</span> <br>
 				 </fieldset>
 					</form>
 	</c:if>
-	<c:if test="${ consultationCompte }">
+	<c:if test="${ consultationCompte && !validationConfirm}">
 	<fieldset class="compte">
-		<form action="CompteControleur" method="post">
+		
+					<h2>Votre compte a été crée avec succès.</h2>
+		
 					<label>Nom : ${ compte.nom } </label><br>									
 									
 					<label>Prénom : ${ compte.prenom } </label> <br>
@@ -69,11 +71,26 @@
 					<label>Adresse de facturation : ${ compte.adrFact }</label> <br>
 													
 					
+	</fieldset>
+	</c:if>
+	<c:if test="${ validationConfirm }">
+	<fieldset class="compte">
+		<form action="CompteControleur" method="post">
+					<label>Nom : ${ confirmCompte.nom } </label><br>									
+									
+					<label>Prénom : ${ confirmCompte.prenom } </label> <br>
+					
+					<label>Adresse email : ${ confirmCompte.mail } </label> <br>
+										
+					<label>Adresse de livraison : ${ confirmCompte.adrLiv }</label> <br>
+					
+					<label>Adresse de facturation : ${ confirmCompte.adrFact }</label> <br>
+													
+					
 					<input type=submit value="Modifier votre compte" name="modifierCompte" />
 		</form>
 	</fieldset>
 	</c:if>
-
 
 </div>
 </body>

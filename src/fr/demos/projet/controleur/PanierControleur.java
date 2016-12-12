@@ -100,6 +100,7 @@ public class PanierControleur extends HttpServlet {
 				
 			} catch (StockException e) {
 				erreurs.put(a, e.getMessage());
+				System.out.println("map erreurs panier : " + erreurs);
 				
 			} catch (ArticleInconnuException e) {
 				// TODO Auto-generated catch block

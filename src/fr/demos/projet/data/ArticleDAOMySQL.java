@@ -103,7 +103,7 @@ public class ArticleDAOMySQL implements ArticleDAO {
 
 				pstmDivers = cx.prepareStatement("SELECT referenceDivers, prix, nom, description, image, type, stock "
 						+ ", etat, coutLivraison, format, url, typeDivers, caracteristique "
-						+ " FROM Divers INNER JOIN Article " + "ON Article.reference = Divers.referenceLivre "
+						+ " FROM Divers INNER JOIN Article " + "ON Article.reference = Divers.referenceDivers "
 						+ "WHERE nom LIKE ? || description LIKE ? " + "|| format LIKE ? || url LIKE ? "
 						+ " || type LIKE ? || caracteristique LIKE ? " + "ORDER BY reference DESC");
 
@@ -114,6 +114,13 @@ public class ArticleDAOMySQL implements ArticleDAO {
 				pstm.setString(4, crit);
 				pstm.setString(5, crit);
 				pstm.setString(6, crit);
+				
+				pstmDivers.setString(1, crit);
+				pstmDivers.setString(2, crit);
+				pstmDivers.setString(3, crit);
+				pstmDivers.setString(4, crit);
+				pstmDivers.setString(5, crit);
+				pstmDivers.setString(6, crit);
 			}
 
 			ResultSet rs = pstm.executeQuery();
@@ -222,7 +229,7 @@ public class ArticleDAOMySQL implements ArticleDAO {
 			}
 			int coutLivraison = rs.getInt("coutLivraison");
 
-			div = new ArticleDivers(reference, prix, nom, stock);
+			div = new ArticleDivers(reference, typeDivers, prix, nom, stock);
 
 		}
 		// dans le cas d'un article divers dematérialisé

@@ -131,14 +131,17 @@ public class CompteControleur extends HttpServlet {
 			// Compte c = new Compte(nom, prenom, email, pwd, adrFact, adrLiv);
 			if (erreursCompte.size() == 0) {
 				try {
-					request.setAttribute("consultationCompte", true);					
-						compteDao.insert(compte);					
+					request.setAttribute("consultationCompte", true);
+					request.setAttribute("modifier", true);
+					request.setAttribute("validationConfirm", true);
+					request.setAttribute("confirmCompte", compte);
+					compteDao.insert(compte);					
 						
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
 			}	
-			request.setAttribute("modifier", false);
+			
 			RequestDispatcher rd = request.getRequestDispatcher("/CreerCompte.jsp");
 			rd.forward(request, response);
 		}
@@ -151,6 +154,7 @@ public class CompteControleur extends HttpServlet {
 		
 		if (modifierCompte != null) {			
 			request.setAttribute("consultationCompte", false);
+			
 			request.setAttribute("modifier", true);
 			
 			

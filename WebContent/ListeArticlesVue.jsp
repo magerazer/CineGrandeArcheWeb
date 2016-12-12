@@ -34,16 +34,31 @@
 				
 				</div>
 				<div class="infoListe">
-				<div class="nomLi">
+				<div>
+				<span class="nomLi">
 				<a
 					href="ListeArticlesControleur?consultation=true&ref=${ article.ref }">${article.nom}</a>
 				<%-- <c:if test="${ not empty article }">${article.getClass().name}</c:if> --%>
 								
 				<%-- <td>${article.auteur}</td> --%>
+				</span>
+				<span class="dateEtFormat">
 				<c:if test="${ article.type == 'Livre' }">
-				${ article.format } - ${ article.dateParution }
+				<c:if test="${ not empty article.mat }">
+				${ article.format } 
 				</c:if>
-				</div>				
+				<c:if test="${ empty article.mat }">
+				${ article.demat.format }
+				</c:if>
+				- ${ article.dateParution }
+				</c:if>
+				<c:if test="${ article.type == 'Divers' }">
+				
+				${ article.typeDivers }
+				
+				</c:if>
+				</span>
+				</div>								
 				<c:if test="${ article.type == 'Livre' }">
 				<div>				
 					Auteur : ${ article.auteur }				

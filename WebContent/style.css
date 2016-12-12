@@ -139,7 +139,10 @@ ul {
 .nomLi {
 	font-size: 24px;
 }
-
+.dateEtFormat {
+	font-weight: 400!important;
+	font-size: 17px!important;	
+}
 .infoListe {
 	display: flex;
 	flex-direction: column;
