@@ -18,7 +18,7 @@ public class Compte {
 		this.pwd = pwd;
 	}
 	
-	public Compte(String nom, String prenom, String mail, String pwd, String fact, String liv) {
+	public Compte(String nom, String prenom, String mail, String pwd, String liv, String fact) {
 		this.nom = nom;
 		this.prenom = prenom;
 		this.mail = mail;

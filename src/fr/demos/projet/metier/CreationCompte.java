@@ -26,17 +26,25 @@ public class CreationCompte {
 		}
 
 		if (!existant) {
-			Compte c = compteDao.select(mail, pwd);
+			Compte c = compteDao.selectMail(mail);
 			System.out.println("Compte = " + c + " mail = " + mail + " pwd = " + pwd);
 			if (c != null) {
 
 				erreurs.put("mail", "Le mail existe déjà. Veuillez en choisir un autre.");
 			}
 		}
+		
+		
 		try {
-			validationMotsDePasse(pwd, pwdConfirm);
+			validationMotsDePasse(pwd);
 		} catch (UtilisateurException e) {
 			erreurs.put("pwd", e.getMessage());
+		}
+		
+		try {
+			confirmationMotsDePasse(pwd, pwdConfirm);
+		} catch (UtilisateurException e) {
+			erreurs.put("pwdConfirm", e.getMessage());
 		}
 
 		try {
@@ -51,14 +59,35 @@ public class CreationCompte {
 
 	}
 
-	private void validationMotsDePasse(String motDePasse, String confirmation) throws UtilisateurException {
+	
+	private void validationMotsDePasse(String motDePasse) throws UtilisateurException {
+		if (motDePasse != null && motDePasse != "" ) {
+			if (motDePasse.length() < 8) {
+				throw new UtilisateurException("Les mots de passe doivent contenir au moins 8 caractères.");
+			}
+			 if (!motDePasse.matches( 
+			 		//+ "([^.@]+)(\\.[^.@]+)*@([^.@]+\\.)+([^.@]+)" +
+					 	
+		               ".*[a-z]{2,}.*"   //contient au moins deux minuscule
+		               //"(?=.*[0-9])"  // + //contient au moins deux chiffres
+		               //"(?=(.*\\W)+})"       + //contient au moins un caractère spécial
+		             //  "(?!.*\\|)"
+					 )  || !motDePasse.matches(  ".*[0-9]{2,}.*" )  ) {
+		            throw new UtilisateurException( "Merci de saisir un mot de passe valide." );
+		        }
+		} else {
+			throw new UtilisateurException("Merci de saisir et confirmer votre mot de passe.");
+		}
+	}
+	
+	private void confirmationMotsDePasse(String motDePasse, String confirmation) throws UtilisateurException {
 		if (motDePasse != null && confirmation != null && motDePasse != "" && confirmation != "") {
 			if (!motDePasse.equals(confirmation)) {
 				throw new UtilisateurException(
 						"Les mots de passe entrés sont différents, merci de les saisir à nouveau.");
-			} else if (motDePasse.length() < 2) {
-				throw new UtilisateurException("Les mots de passe doivent contenir au moins 2 caractères.");
-			}
+			} //else if (motDePasse.length() < 8) {
+//				throw new UtilisateurException("Les mots de passe doivent contenir au moins 8 caractères.");
+//			}
 		} else {
 			throw new UtilisateurException("Merci de saisir et confirmer votre mot de passe.");
 		}

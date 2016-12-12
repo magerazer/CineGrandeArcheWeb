@@ -61,19 +61,20 @@ public class CompteDAOMySQL implements CompteDAO {
 		try (Connection cx = dataSource.getConnection()) {
 			PreparedStatement pstm = null;
 			pstm = cx.prepareStatement("UPDATE compte SET "
-					+ "nom = ? "
-//					+ "prenom = ? "					
-//					+ "pwd = ? "
-//					+ "adrLiv = ? "
-//					+ "adrFact = ? "
+					+ "nom = ?, "
+					+ "prenom = ?, "				
+					+ "mail = ?, "
+					+ "pwd = ?, "
+					+ "adrLiv = ?, "
+					+ "adrFact = ? "
 					+ "WHERE mail = ?");
 			pstm.setString(1, c.getNom());
-//			pstm.setString(2, c.getPrenom());
-//			//pstm.setString(3, c.getMail());
-//			pstm.setString(3, c.getPwd());
-//			pstm.setString(4, c.getAdrLiv());
-//			pstm.setString(5, c.getAdrFact());
-			pstm.setString(2, c.getMail());
+			pstm.setString(2, c.getPrenom());
+			pstm.setString(3, c.getMail());
+			pstm.setString(4, c.getPwd());
+			pstm.setString(5, c.getAdrLiv());
+			pstm.setString(6, c.getAdrFact());
+			pstm.setString(7, c.getMail());
 			System.out.println("update ..." + c.getAdrLiv());
 			pstm.executeUpdate();
 			System.out.println("update ..." + c.getAdrLiv());
@@ -102,6 +103,37 @@ public class CompteDAOMySQL implements CompteDAO {
 			+ " WHERE mail = ? AND pwd = ? ");
 			pstm.setString(1, argMail);
 			pstm.setString(2, argPwd);
+			
+			ResultSet rs = pstm.executeQuery();
+
+			while (rs.next()) {
+				String mail = rs.getString("mail");
+				String pwd = rs.getString("pwd");
+				String nom = rs.getString("nom");
+				String prenom = rs.getString("prenom");
+				String adrLiv = rs.getString("adrLiv");
+				String adrFact = rs.getString("adrFact");
+
+				c = new Compte(nom, prenom, mail, pwd, adrLiv, adrFact);
+			}
+			System.out.println("Compte c = " + c);
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+
+		return c;
+	}
+	
+	public Compte selectMail(String argMail) {
+		// TODO Auto-generated method stub
+		Compte c = null;
+
+		try (Connection cx = dataSource.getConnection()) {
+			PreparedStatement pstm = null;
+			pstm = cx.prepareStatement("SELECT * " 
+			+ "FROM Compte" 
+			+ " WHERE mail = ? ");
+			pstm.setString(1, argMail);
 			
 			ResultSet rs = pstm.executeQuery();
 
