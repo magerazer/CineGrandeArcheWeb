@@ -1,10 +1,11 @@
 
-alert('i');
+
 // Fonction de désactivation de l'affichage des "tooltips"
 function deactivateTooltips() {
-alert('i');
-    var tooltips = document.getElementsByName('tooltip');
-    alert('i' + tooltips.length);
+	
+//	alert('ji');
+    var tooltips = document.querySelectorAll('.contentListe');
+  //  alert('iJK' + tooltips.length + '' + document);
     var   tooltipsLength = tooltips.length;
    
     for (var i = 0; i < tooltipsLength; i++) {
@@ -16,12 +17,12 @@ alert('i');
 (function() { // Utilisation d'une IIFE pour éviter les variables globales.
 var myForm = document.getElementById('myForm');
 
-//myForm.addEventListener('submit', function() {
-//	alert("oops");
-//
-//    deactivateTooltips();
-//
-//});
+myForm.addEventListener('submit', function() {
+	alert("oops");
+
+    deactivateTooltips();
+
+});
 
 
 });

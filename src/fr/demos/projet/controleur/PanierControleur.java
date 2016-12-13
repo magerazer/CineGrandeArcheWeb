@@ -66,12 +66,14 @@ public class PanierControleur extends HttpServlet {
 		Panier panier = (Panier) session.getAttribute("panier");
 		// permet de se repositionner sur la page à partir de laquelle on a
 		// ajoute l'article
-		String ajouter = request.getParameter("ajouter");
-		String consulter = request.getParameter("consulter");
-		String reference = request.getParameter("ref");
+		String ajouter = request.getParameter("ajouter");				
 		String modifier = request.getParameter("modifierPanier");
 		String delete = request.getParameter("delete");
 
+		String consulter = request.getParameter("consulter");
+		
+		String reference = request.getParameter("ref");
+		
 		Article a = articleDao.selectArticle(reference);
 		/*
 		 * gestion des erreurs avec la HashMap
@@ -99,9 +101,7 @@ public class PanierControleur extends HttpServlet {
 					panier.modifierQte(a, qte);
 				
 			} catch (StockException e) {
-				erreurs.put(a, e.getMessage());
-				System.out.println("map erreurs panier : " + erreurs);
-				
+				erreurs.put(a, e.getMessage());				
 			} catch (ArticleInconnuException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -118,6 +118,7 @@ public class PanierControleur extends HttpServlet {
 //			
 		
 		RequestDispatcher rd = null;
+		
 		if (consulter != null) {
 			if (consulter.equals("false")) {
 

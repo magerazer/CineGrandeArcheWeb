@@ -41,9 +41,9 @@ public class CompteControleur extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-
-		RequestDispatcher rd = request.getRequestDispatcher("/ListeArticlesVue.jsp");
-		rd.forward(request, response);
+//
+//		RequestDispatcher rd = request.getRequestDispatcher("/ListeArticlesVue.jsp");
+//		rd.forward(request, response);
 	}
 
 	/**
@@ -54,7 +54,7 @@ public class CompteControleur extends HttpServlet {
 			throws ServletException, IOException {
 
 		HttpSession session = request.getSession();
-		Donnees d = (Donnees) session.getAttribute("donnees");
+		
 		String pageCourante = (String) session.getAttribute("pageCourante");
 
 		// Map<String, String> erreursConnexion = new HashMap<String, String>();
@@ -76,7 +76,7 @@ public class CompteControleur extends HttpServlet {
 		CompteDAOMySQL compteDao = (CompteDAOMySQL) request.getServletContext().getAttribute("compteDao");
 		boolean erreur = false;
 
-		// si l'utilisateur se connecte
+		// si l'utilisateur se connecte via le menu
 		if (connexion != null) {
 
 			String mail = request.getParameter("mail");

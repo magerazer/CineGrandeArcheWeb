@@ -290,7 +290,7 @@ ul {
 */
 
 .compte {
-	width : 1900px
+	/*width : 1900px*/
 }
 
 .compte input {
@@ -312,9 +312,14 @@ form .compte label {
 	float: left;
 	text-align : right;
 }
-
+input+.tooltip{
+    display: none;
+}
+input:focus+.tooltip{
+    display: block;
+}
 	
-.tooltip {
+/* .tooltip {
 	display: inline-block;
 	margin-left: 20px;
 	padding: 2px 4px;
@@ -322,6 +327,6 @@ form .compte label {
 	background-color: #CCC;
 	border-radius: 4px;
 	max-width : 300px;
-}
+} */
 
 /* -------------------------------------- fin Création compte ------------------------- */

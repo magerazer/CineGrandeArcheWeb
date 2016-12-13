@@ -118,7 +118,7 @@
 		<p>
 		Description du produit : <br>
 			${ article.description }
-		</p> --%>
+		</p> 
 			
 			</c:if>
 		</c:if>

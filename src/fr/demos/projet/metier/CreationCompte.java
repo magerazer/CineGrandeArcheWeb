@@ -68,11 +68,11 @@ public class CreationCompte {
 			 if (!motDePasse.matches( 
 			 		//+ "([^.@]+)(\\.[^.@]+)*@([^.@]+\\.)+([^.@]+)" +
 					 	
-		               ".*[a-z]{2,}.*"   //contient au moins deux minuscule
+		               ".*[a-z]{1,}.*"   //contient au moins deux minuscule
 		               //"(?=.*[0-9])"  // + //contient au moins deux chiffres
 		               //"(?=(.*\\W)+})"       + //contient au moins un caractère spécial
 		             //  "(?!.*\\|)"
-					 )  || !motDePasse.matches(  ".*[0-9]{2,}.*" )  ) {
+					 )  || !motDePasse.matches(  ".*[0-9]{1,}.*" )  ) {
 		            throw new UtilisateurException( "Merci de saisir un mot de passe valide." );
 		        }
 		} else {

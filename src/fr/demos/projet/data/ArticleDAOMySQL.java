@@ -24,7 +24,8 @@ public class ArticleDAOMySQL implements ArticleDAO {
 	private DataSource dataSource;
 
 	public ArticleDAOMySQL() throws Exception {
-		context = new InitialContext();
+		context = new InitialContext
+				();
 		dataSource = (DataSource) context.lookup("java:comp/env/jdbc/CineGrandeArche");
 	}
 
@@ -227,7 +228,7 @@ public class ArticleDAOMySQL implements ArticleDAO {
 
 		// attributs communs aux articles divers
 		String typeDivers = rs.getString("typeDivers");
-		String caracteristique = rs.getString("caracteristique");
+		String caracteristiques = rs.getString("caracteristique");
 
 		ArticleDivers div = null;
 
@@ -250,12 +251,13 @@ public class ArticleDAOMySQL implements ArticleDAO {
 			String format = rs.getString("format");
 			String url = rs.getString("url");
 
-			div = new ArticleDivers(reference, prix, nom, format, url, typeDivers, caracteristique);
+			div = new ArticleDivers(reference, prix, nom, format, url, typeDivers, caracteristiques);
 
 		}
-		// attributs communs aux livres materialises et dematerialises
+		// attributs communs aux articles divers materialises et dematerialises
 		div.setImage(image);
 		div.setDescription(description);
+		div.setCaracteristiques(caracteristiques);
 
 		return div;
 	}
