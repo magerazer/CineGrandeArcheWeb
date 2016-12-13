@@ -38,9 +38,9 @@ public class PanierListener implements ServletContextListener, HttpSessionListen
     	
     	
 		
-		arg0.getSession().setAttribute("donnees", donnees);
+	//	arg0.getSession().setAttribute("donnees", donnees);
 //		arg0.getSession().setAttribute("listeArticles", listeArticles);
-    	arg0.getSession().setAttribute("listeComptes", comptes);
+    //	arg0.getSession().setAttribute("listeComptes", comptes);
 		
     	Panier panier = new Panier();      	
     	arg0.getSession().setAttribute("panier", panier);

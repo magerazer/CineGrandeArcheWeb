@@ -19,11 +19,12 @@ public class Panier implements Iterable<LignePanier> {
 	}
 
 	// recalcule à chaque fois le prix total
-	public int getPrixTotal() {
-		int prixTotal = 0;
+	public double getPrixTotal() {
+		double prixTotal = 0;
 		for (LignePanier l : panier) {
 			prixTotal += l.getArticle().getPrixHT() * l.getQuantite();
 		}
+		prixTotal = Math.rint(prixTotal*100)/100;
 		return prixTotal;
 	}
 

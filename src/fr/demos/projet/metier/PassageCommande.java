@@ -2,6 +2,8 @@ package fr.demos.projet.metier;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.Map;
 
 import fr.demos.projet.data.ArticleDAOMySQL;
 import fr.demos.projet.data.CompteDAOMySQL;
@@ -9,6 +11,10 @@ import fr.demos.projet.data.CompteDAOMySQL;
 public class PassageCommande {
 
 	Panier panier;
+	/*
+	 * gestion des erreurs avec la HashMap
+	 */
+	 Map<Article, String> erreursCommandeStock = new HashMap<Article, String>();
 	
 	
 	public PassageCommande(Panier panier) {
@@ -50,7 +56,12 @@ public class PassageCommande {
 			
 			try {
 				articleDao.updateStock(article, lignePanier.getQuantite());
-			} catch (Exception e) {
+			} 
+			catch(StockException e) {
+				
+				erreursCommandeStock.put(a, "Cet article n'est plus disponible.");
+			}
+			catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 				
@@ -66,4 +77,10 @@ public class PassageCommande {
 		return commande;
 	}
 
+	public Map<Article, String> getErreursCommandeStock() {
+		return erreursCommandeStock;
+	}
+
+	
+	
 }

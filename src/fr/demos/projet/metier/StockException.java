@@ -17,6 +17,16 @@ public class StockException extends Exception {
 		
 	}
 
+	public StockException(int stock, int qte) {
+		
+		this.stock = stock;
+		this.quantite = qte;
+		
+		message = "Commande de " + quantite + 
+			" articles impossible car le stock est de " + stock + " articles";
+		
+	}
+	
 	public String getMessage() {
 		return message;
 	}

@@ -45,7 +45,7 @@
 							<p class="prixPanier">Prix :  ${lignePanier.article.prixHT} €</p>
 
 							<p class="prixLignePanier">
-						Total article: ${ lignePanier.article.prixHT * lignePanier.quantite } €
+						Total article: ${ lignePanier.prixTot } €
 						</p>
 						<c:if test="${not empty lignePanier.article.mat }">
 						<p>
@@ -63,6 +63,7 @@
 									type="submit" value="Modifier quantité" name="modifierPanier" />									
 									<input type="submit" value="Delete" name="delete" /> <br>
 									<span class="erreur">${erreurs[lignePanier.article] }</span>
+									<span class="erreur">${erreurStock[lignePanier.article] }</span>
 							</form>
 
 						<span class="erreur">${erreurs[article] }</span>

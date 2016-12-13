@@ -42,7 +42,85 @@
 								
 				<%-- <td>${article.auteur}</td> --%>
 				</span>
-				<span class="dateEtFormat">
+				
+				<!-- =================si c'est un article materialisé ============== -->
+			<c:if test="${ not empty article.mat }">
+				<!-- =================si c'est un article livre materialisé ============== -->
+				<c:if test="${ article.type == 'Livre' }">
+					<span class="dateEtFormat">				
+					${ article.format } - ${ article.dateParution }				
+					</span>
+					</div>					
+					<div>				
+						Auteur : ${ article.auteur }				
+					</div>					
+					<div>Etat : ${ article.mat.etat }</div>				
+					<div class="prix">
+					Prix : ${article.prixHT}€
+					</div>				
+					Stock : ${article.mat.stock } <br>
+					<span class="erreur">${erreurs[article] }</span>
+				</c:if>
+				
+				<!-- =================si c'est un article divers materialisé ============== -->
+				<c:if test="${ article.type == 'Divers' }">
+					<span class="dateEtFormat">
+										
+					${ article.typeDivers }
+								
+					</span>
+					</div>	
+					
+					<div>Etat : ${ article.mat.etat }</div>
+					
+					<div class="prix">
+					Prix : ${article.prixHT}€
+					</div>				
+					Stock : ${article.mat.stock } <br>
+					<span class="erreur">${erreurs[article] }</span>
+								
+				</c:if>
+			</c:if>
+				<!-- =================si c'est un article dématerialisé ============== -->
+			<c:if test="${ empty article.mat }">
+				<!-- =================si c'est un article livre dématerialisé ============== -->
+				<c:if test="${ article.type == 'Livre' }">
+					<span class="dateEtFormat">				
+					${ article.demat.format }				
+					- ${ article.dateParution }
+								
+					</span>
+					</div>					
+					<div>				
+						Auteur : ${ article.auteur }				
+					</div>			
+					
+					<div class="prix">
+					Prix : ${article.prixHT}€
+					</div>
+									
+					<div>Format : ${article.demat.format }</div>	
+					<div>Url : ${article.demat.url }</div>
+				
+				</c:if>
+				
+				<!-- =================si c'est un article divers dématerialisé ============== -->
+				<c:if test="${ article.type == 'Divers' }">
+					<span class="dateEtFormat">
+					${ article.typeDivers }
+					</span>
+					</div>				
+					<div class="prix">
+					Prix : ${article.prixHT}€
+					</div>								
+					<div>Format : ${article.demat.format }</div>	
+					<div>Url : ${article.demat.url }</div>			
+				</c:if>
+				
+			</c:if>
+
+
+				<%-- <span class="dateEtFormat">
 				<c:if test="${ article.type == 'Livre' }">
 				<c:if test="${ not empty article.mat }">
 				${ article.format } 
@@ -78,7 +156,7 @@
 				<c:if test="${not empty article.demat }">				
 				<div>Format : ${article.demat.format }</div>	
 				<div>Url : ${article.demat.url }</div>
-				</c:if>
+				</c:if> --%>
 				</div>
 			</div>
 				<div class="elementLi2">			

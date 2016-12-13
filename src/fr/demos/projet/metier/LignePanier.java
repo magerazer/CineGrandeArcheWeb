@@ -38,6 +38,12 @@ public class LignePanier {
 	}
 
 
+	public double getPrixTot() {
+		double tot = 0;
+		tot = quantite * article.getPrixHT();
+		tot = Math.rint(tot*100)/100;
+		return tot;
+	}
 
 	@Override
 	public int hashCode() {

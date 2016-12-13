@@ -16,6 +16,7 @@ import fr.demos.projet.metier.Article;
 import fr.demos.projet.metier.ArticleDivers;
 import fr.demos.projet.metier.Etat;
 import fr.demos.projet.metier.Livre;
+import fr.demos.projet.metier.StockException;
 
 public class ArticleDAOMySQL implements ArticleDAO {
 
@@ -34,7 +35,7 @@ public class ArticleDAOMySQL implements ArticleDAO {
 	}
 
 	@Override
-	public void update(Article a) throws Exception {
+	public synchronized void update(Article a) throws Exception {
 		// TODO Auto-generated method stub
 		try (Connection cx = dataSource.getConnection()) {
 			PreparedStatement pstm = null;
@@ -46,26 +47,37 @@ public class ArticleDAOMySQL implements ArticleDAO {
 
 			ResultSet rs = pstm.executeQuery();
 
-		} catch (Exception ex) {
-			ex.printStackTrace();
-		}
+		} 
 	}
 
 	@Override
-	public void updateStock(Article a, int qte) throws Exception {
+	public synchronized void  updateStock(Article a, int qte) throws Exception, StockException {
 		// TODO Auto-generated method stub
 		try (Connection cx = dataSource.getConnection()) {
 			PreparedStatement pstm = null;
-
-			pstm = cx.prepareStatement("UPDATE article SET stock = ? " + "WHERE reference = ?");
+			
+			pstm = cx.prepareStatement("SELECT stock FROM article WHERE reference = ? ");
+			pstm.setString(1, a.getRef());
+			ResultSet rs = pstm.executeQuery();
+			int stock = 0;
+			if(rs.next()) {
+				stock = rs.getInt("stock");
+			}
+			
+			if(stock - qte < 0) {
+				System.out.println("Le stock - qte < 0");
+				throw new StockException(stock, qte);
+			}
+			
+			pstm = cx.prepareStatement("UPDATE article SET stock = ? " + "WHERE reference = ? "
+					+ "AND (stock - ?) ");
 
 			pstm.setInt(1, a.getMat().getStock() - qte);
 			pstm.setString(2, a.getRef());
-
+			pstm.setInt(3, qte);
+			
 			pstm.executeUpdate();
 
-		} catch (Exception ex) {
-			ex.printStackTrace();
 		}
 	}
 

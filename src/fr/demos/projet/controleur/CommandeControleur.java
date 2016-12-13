@@ -47,29 +47,37 @@ public class CommandeControleur extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-	
+
 		HttpSession session = request.getSession();
 		Panier p = (Panier) session.getAttribute("panier");
-		
+
 		Compte compte = (Compte) session.getAttribute("compte");
-		//ArticleDAOMySQL articleDao = (ArticleDAOMySQL) request.getServletContext().getAttribute("articleDao");
-		
+		// ArticleDAOMySQL articleDao = (ArticleDAOMySQL)
+		// request.getServletContext().getAttribute("articleDao");
+
 		Commande com = null;
+		PassageCommande creationCommande = null;
 		boolean erreurConnecte = false;
 		try {
-			PassageCommande creationCommande = new PassageCommande(p);			
+			creationCommande = new PassageCommande(p);
 			com = creationCommande.creerCommande(compte);
 		} catch (LoginException e) {
 			// TODO Auto-generated catch block
-			erreurConnecte = true;			
+			erreurConnecte = true;
 			request.setAttribute("nonConnecte", "Vous devez vous connecter pour commander.");
+			RequestDispatcher rd = request.getRequestDispatcher("/PanierVue.jsp");
+			rd.forward(request, response);
+		}
+		if (creationCommande.getErreursCommandeStock().size() > 0) {
+			erreurConnecte = true;
+			request.setAttribute("erreurStock", creationCommande.getErreursCommandeStock());
 			RequestDispatcher rd = request.getRequestDispatcher("/PanierVue.jsp");
 			rd.forward(request, response);
 		}
 		if (!erreurConnecte) {
 			request.setAttribute("tot", p.getPrixTotal());
 			request.setAttribute("commande", com);
-			
+
 			session.setAttribute("panier", new Panier());
 			// System.out.println("quantite panier = " + p.getQuantite());
 			RequestDispatcher rd = request.getRequestDispatcher("/CommandeVue.jsp");
