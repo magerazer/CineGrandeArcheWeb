@@ -190,11 +190,11 @@ public class ArticleDAOMySQL implements ArticleDAO {
 			int stock = rs.getInt("stock");
 			Etat etat = null;
 			if (rs.getString("etat") != null) {
-				etat = Etat.valueOf(rs.getString("etat"));
+				etat = Etat.valueOf(rs.getString("etat"));				
 			}
 			int coutLivraison = rs.getInt("coutLivraison");
 
-			liv = new Livre(reference, prix, nom, stock, auteur, isbn);
+			liv = new Livre(reference, prix, nom, stock, etat, auteur, isbn);
 
 		}
 		// dans le cas d'un livre dematérialisé

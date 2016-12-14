@@ -76,7 +76,7 @@ public class CreationCompte {
 		            throw new UtilisateurException( "Merci de saisir un mot de passe valide." );
 		        }
 		} else {
-			throw new UtilisateurException("Merci de saisir et confirmer votre mot de passe.");
+			throw new UtilisateurException("Merci de saisir votre mot de passe.");
 		}
 	}
 	
@@ -89,19 +89,19 @@ public class CreationCompte {
 //				throw new UtilisateurException("Les mots de passe doivent contenir au moins 8 caractères.");
 //			}
 		} else {
-			throw new UtilisateurException("Merci de saisir et confirmer votre mot de passe.");
+			throw new UtilisateurException("Merci de confirmer votre mot de passe.");
 		}
 	}
 
 	private void validationNom(String nom) throws UtilisateurException {
-		if (nom == "") {
-			throw new UtilisateurException("Merci de saisir un nom d'utilisateur");
+		if (nom.length() < 2) {
+			throw new UtilisateurException("Merci de saisir un nom d'utilisateur valide");
 		}
 	}
 
 	private void validationMail(String mail) throws UtilisateurException {
-		if (mail == "") {
-			throw new UtilisateurException("Merci de saisir un nom d'utilisateur");
+		if (mail.length() < 2) {
+			throw new UtilisateurException("Merci de saisir un nom d'utilisateur valide");
 		}
 	}
 

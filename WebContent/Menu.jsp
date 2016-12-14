@@ -17,7 +17,7 @@
 					<p>
 					<span class="erreur">${ loginErreur }</span><br>
 						<input type="text" name="mail" value="${ param.mail }" placeholder="mail" /><br> 
-						 <input type="text" name="pwd" value="" placeholder="mot de passe" /><br>  
+						 <input type="password" name="pwd" value="" placeholder="mot de passe" /><br>  
 						 <input type="submit" value="Se connecter" name="connexion" />
 					</p>
 				</form>

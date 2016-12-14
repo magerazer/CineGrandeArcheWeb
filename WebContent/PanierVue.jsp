@@ -66,7 +66,7 @@
 									<span class="erreur">${erreurStock[lignePanier.article] }</span>
 							</form>
 
-						<span class="erreur">${erreurs[article] }</span>
+					<%-- 	<span class="erreur">${erreurs[article] }</span> --%>
 
 
 						</div>

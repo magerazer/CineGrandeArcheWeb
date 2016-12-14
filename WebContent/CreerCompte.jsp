@@ -8,7 +8,7 @@
 <title>Insert title here</title>
 <link type="text/css" rel="stylesheet" href="style.css" />
 <link type="text/css" rel="stylesheet" href="styleConsultation.css" />
-<script type="text/javascript" src="regles.js"></script>
+<!-- <script type="text/javascript" src="regles.js"></script> -->
 </head>
 <body>
 <div class = "contentListe">
