@@ -47,7 +47,7 @@ public class PassageCommande {
 		 */
 		LigneCommande ligCde;
 		for (LignePanier lignePanier : panier) {
-			System.out.println("erreur Compte disparait bouton commande");
+			
 			ligCde = new LigneCommande(dateCde, lignePanier.getArticle().getRef(), lignePanier.getArticle().getNom(), lignePanier.getArticle().getPrixHT(), lignePanier.getQuantite(), lignePanier.getArticle().getImage());
 			commande.ajouter(ligCde);
 			

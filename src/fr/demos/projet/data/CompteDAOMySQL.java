@@ -116,7 +116,7 @@ public class CompteDAOMySQL implements CompteDAO {
 
 				c = new Compte(nom, prenom, mail, pwd, adrLiv, adrFact);
 			}
-			System.out.println("Compte c = " + c);
+			
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}

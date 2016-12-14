@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import fr.demos.projet.data.ArticleDAOMySQL;
-import fr.demos.projet.donnees.Donnees;
+
 import fr.demos.projet.metier.Article;
 import fr.demos.projet.metier.ArticleInconnuException;
 import fr.demos.projet.metier.DematerialiseException;

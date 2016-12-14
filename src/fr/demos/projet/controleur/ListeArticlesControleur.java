@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import fr.demos.projet.data.ArticleDAOMySQL;
-import fr.demos.projet.donnees.Donnees;
+
 import fr.demos.projet.metier.Article;
 import fr.demos.projet.metier.Panier;
 
@@ -39,7 +39,7 @@ public class ListeArticlesControleur extends HttpServlet {
 			throws ServletException, IOException {
 		
 		HttpSession session = request.getSession();
-		Donnees d = (Donnees) session.getAttribute("donnees");
+		
 		Panier p = (Panier) session.getAttribute("panier");
 		
 		ArticleDAOMySQL articleDao = (ArticleDAOMySQL) request.getServletContext().getAttribute("articleDao");
@@ -53,12 +53,10 @@ public class ListeArticlesControleur extends HttpServlet {
 		 * dans la requête
 		 */
 		if (request.getParameter("consultation") != null && request.getParameter("consultation").equals("true")) {
-				
-			
+						
 			
 			String reference = request.getParameter("ref");
-			System.out.println("ref = " + reference);
-			
+						
 			Article a = articleDao.selectArticle(reference);
 			System.out.println("article bdd " + a);
 			session.setAttribute("article", a);

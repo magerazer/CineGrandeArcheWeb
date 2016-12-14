@@ -10,7 +10,7 @@ import javax.servlet.http.HttpSessionListener;
 
 import fr.demos.projet.data.ArticleDAOMySQL;
 import fr.demos.projet.data.CompteDAOMySQL;
-import fr.demos.projet.donnees.Donnees;
+
 import fr.demos.projet.metier.Compte;
 import fr.demos.projet.metier.Panier;
 
@@ -32,9 +32,9 @@ public class PanierListener implements ServletContextListener, HttpSessionListen
      * @see HttpSessionListener#sessionCreated(HttpSessionEvent)
      */
     public void sessionCreated(HttpSessionEvent arg0)  { 
-    	Donnees donnees = new Donnees();
+    	
 		//List<Article> listeArticles = donnees.remplirCatalogue();
-    	List<Compte> comptes = donnees.getComptes();
+    
     	
     	
 		
