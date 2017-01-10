@@ -8,8 +8,8 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.annotation.Resource;
 import javax.naming.Context;
-import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
 import fr.demos.projet.metier.Article;
@@ -19,20 +19,23 @@ import fr.demos.projet.metier.Livre;
 import fr.demos.projet.metier.StockException;
 
 public class ArticleDAOMySQL implements ArticleDAO {
-
+	
 	private Context context;
+	@Resource(mappedName="jdbc/CineGrandeArche") 
 	private DataSource dataSource;
 
 	public ArticleDAOMySQL() throws Exception {
+		/*
 		context = new InitialContext
 				();
 		dataSource = (DataSource) context.lookup("java:comp/env/jdbc/CineGrandeArche");
+		*/
 	}
-
+	
 	@Override
 	public void insert(Article a) throws Exception {
 		// TODO Auto-generated method stub
-
+		
 	}
 
 	@Override
