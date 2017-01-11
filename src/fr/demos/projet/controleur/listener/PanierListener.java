@@ -1,15 +1,17 @@
 package fr.demos.projet.controleur.listener;
 
-import javax.inject.Inject;
+import java.util.List;
+
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;
 import javax.servlet.http.HttpSessionEvent;
 import javax.servlet.http.HttpSessionListener;
 
-import fr.demos.projet.data.ArticleDAO;
 import fr.demos.projet.data.ArticleDAOMySQL;
 import fr.demos.projet.data.CompteDAOMySQL;
+
+import fr.demos.projet.metier.Compte;
 import fr.demos.projet.metier.Panier;
 
 /**
@@ -19,8 +21,6 @@ import fr.demos.projet.metier.Panier;
 @WebListener
 public class PanierListener implements ServletContextListener, HttpSessionListener {
 
-	@Inject private ArticleDAO dao;
-	
     /**
      * Default constructor. 
      */
@@ -70,18 +70,16 @@ public class PanierListener implements ServletContextListener, HttpSessionListen
      * @see ServletContextListener#contextInitialized(ServletContextEvent)
      */
     public void contextInitialized(ServletContextEvent arg0)  {     	
-    //	ArticleDAOMySQL articleDao = null;
+    	ArticleDAOMySQL articleDao = null;
     	CompteDAOMySQL compteDao = null;
 		try {
-		//	articleDao = new ArticleDAOMySQL();
+			articleDao = new ArticleDAOMySQL();
 			compteDao = new CompteDAOMySQL();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();		
 		}
-    	
-    	
-		arg0.getServletContext().setAttribute("articleDao", dao);
+		arg0.getServletContext().setAttribute("articleDao", articleDao);
 		arg0.getServletContext().setAttribute("compteDao", compteDao);
 		
 		
